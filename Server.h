@@ -1,10 +1,11 @@
-#ifndef SERVER_INCLUDED
-#define SERVER_INCLUDED 
+#include "Event.h"
 #include "FEL.h"
 #include "Queue.h"
 #include "SimulationData.h"
 #include "ListNode.h"
-#include "Event.h"
+
+#ifndef SERVER_INCLUDED
+#define SERVER_INCLUDED 
 
 typedef struct Server_st{
   int processors;
