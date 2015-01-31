@@ -6,3 +6,8 @@ Event* Event_Create(char type, int priority, int time)
 }
 
 void Event_Destroy(Event* event) { }
+
+int Event_CompTime(Event* event1, Event* event2)
+{
+	return event2->Time - event1->Time;
+}

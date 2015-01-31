@@ -19,14 +19,20 @@ ListNode* ListNode_Create(Event* event);
 // for the destruction of the Event structure associated with each node.
 void ListNode_DestroyList(ListNode* head);
 
-// Inserts the list node into the list in a sorted manner where the head has the lowest event time
-// and the tail has the greatest event time. Returns the new list head in case the insert changes it.
-ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listhead);
+// Inserts the list node into the list in a sorted manner according to a comparison function.
+// A lower comparison value equates to a position closer to the head of the list.
+// Returns the new list head in case the insert changes it.
+ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listHead, int (*compFunc)(ListNode*, ListNode*));
 
 // Appends the node to the tail of the list. Returns the new tail of the list.
 ListNode* ListNode_AppendTail(ListNode* node, ListNode* listTail);
 
 // Pops off the head node of the list. Returns the new list head.
 ListNode* ListNode_PopHead(ListNode* headNode);
+
+// Compares two ListNodes according to the event time. Returns a positive integer if
+// node1 has a lower event time than node2, negative integer if node2 has a lower event time
+// than node1, and 0 if they have the same event time.
+int ListNode_CompEventTime(ListNode* node1, ListNode* node2);
 
 #endif /* LISTNODE_INCLUDED */
