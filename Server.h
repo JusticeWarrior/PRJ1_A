@@ -13,7 +13,7 @@ struct Server_st{
   int processors;  //The total number of processors this server has
   int available;   //The number of available processors
   ListNode* Tasks; //A list of tasks currently in the server
-} Server;
+};
 
 
 

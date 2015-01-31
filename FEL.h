@@ -15,7 +15,7 @@ struct FEL_st{
   int Lambda0;
   int Lambda1;
   int Mu;
-} FEL;
+};
 
 FEL* FEL_Create(int TotalArrivals, int Lambda0, int Lambda1, int mu);
 

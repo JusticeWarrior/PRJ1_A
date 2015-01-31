@@ -14,6 +14,6 @@ struct SimulationData_st{
   int WaitingTime0;
   int WaitingTime1;
   int CPUTime;
-} SimulationData;
+};
 
 #endif /* SIMULATIONDATA_INCLUDED */
