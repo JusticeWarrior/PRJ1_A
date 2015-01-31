@@ -9,7 +9,7 @@
 #include "SimulationData.h"
 
 typedef struct Event_st{
-	int gsdag;
+	char type;
 } Event;
 
 #endif /* EVENT_INCLUDED */
