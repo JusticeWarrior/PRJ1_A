@@ -21,7 +21,7 @@ void ListNode_DestroyList(ListNode* head)
 	free(head);
 }
 
-ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listhead, int* compFunc(ListNode*, ListNode*))
+ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listhead, int (*compFunc)(ListNode*, ListNode*))
 {
 	return NULL;
 }
@@ -40,4 +40,9 @@ ListNode* ListNode_PopHead(ListNode* headNode)
 	headNode->Next = NULL;
 
 	return newHead;
+}
+
+int ListNode_CompEventTime(ListNode* node1, ListNode node2)
+{
+	return 0;
 }
