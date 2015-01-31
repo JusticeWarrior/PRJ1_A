@@ -1,13 +1,8 @@
 #ifndef FEL_INCLUDED
 #define FEL_INCLUDED 
 
-#include "Server.h"
-#include "Queue.h"
-#include "SimulationData.h"
-#include "ListNode.h"
 #include "Event.h"
-
-
+#include "ListNode.h"
 
 typedef struct FEL_st{
   int ArrivalsLeft0;
