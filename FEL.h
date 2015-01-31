@@ -1,4 +1,11 @@
-#include <>
+#include <Event.h>
+#include <Server.h>
+#include <Queue.h>
+#include <SimulationData.h>
+#include <ListNode.h>
+
+#ifndef FEL_INCLUDED
+#define FEL_INLCUDED 
 
 
 
@@ -19,3 +26,5 @@ void FEL_AddEvent(FEL futureEvents, Event event);
 int FEL_isEmpty(FEL futureEvents);
 
 Event* FEL_popEvent(FEL futureEvents);
+
+#endif /* FEL_INCLUDED */
