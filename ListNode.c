@@ -26,9 +26,16 @@ ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listhead)
 	return NULL;
 }
 
-ListNode* ListNode_Append(ListNode* node, ListNode* listhead)
+ListNode* ListNode_Append(ListNode* node, ListNode* listTail)
 {
 	return NULL;
 }
 
-void ListNode_TailPop(ListNode* tailNode) { }
+ListNode* ListNode_HeadPop(ListNode* headNode)
+{
+	ListNode* newHead = headNode->Next;
+
+	headNode->Next = NULL;
+
+	return newHead;
+}

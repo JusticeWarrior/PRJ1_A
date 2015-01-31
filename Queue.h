@@ -21,7 +21,7 @@ void Queue_Destroy(Queue* queue);
 // Calls ListNode_Append to append the node to the front of the queue's head.
 ListNode* Queue_Append(Queue* queue, ListNode* node);
 
-// Pops the tail node off of the queue and returns it as output.
+// Pops the head node off of the queue and returns it as output.
 ListNode* Queue_Pop();
 
 #endif /* QUEUE_INCLUDED */
