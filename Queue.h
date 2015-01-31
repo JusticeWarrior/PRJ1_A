@@ -1,6 +1,7 @@
 #ifndef QUEUE_INCLUDED
 #define QUEUE_INCLUDED
 
+// A structure to hold overhead data about a queue.
 typedef struct Queue_st Queue;
 
 #include "ListNode.h"
