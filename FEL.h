@@ -1,11 +1,12 @@
-#include "Event.h"
+#ifndef FEL_INCLUDED
+#define FEL_INCLUDED 
+
 #include "Server.h"
 #include "Queue.h"
 #include "SimulationData.h"
 #include "ListNode.h"
+#include "Event.h"
 
-#ifndef FEL_INCLUDED
-#define FEL_INCLUDED 
 
 
 typedef struct FEL_st{
