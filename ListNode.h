@@ -20,8 +20,9 @@ ListNode* ListNode_Create(Event* event);
 void ListNode_DestroyList(ListNode* head);
 
 // Inserts the list node into the list in a sorted manner according to a comparison function.
+// A lower comparison value equates to a position closer to the head of the list.
 // Returns the new list head in case the insert changes it.
-ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listhead, int (*compFunc)(ListNode*, ListNode*));
+ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listHead, int (*compFunc)(ListNode*, ListNode*));
 
 // Appends the node to the tail of the list. Returns the new tail of the list.
 ListNode* ListNode_AppendTail(ListNode* node, ListNode* listTail);
