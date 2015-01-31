@@ -25,8 +25,8 @@ FEL* FEL_Create(int totalArrivals, int lambda0, int lambda1, int mu)
 
 void FEL_Destroy(FEL* futureEvents)
 {
-  //EventList_Destroy(futureEvents_EventList);
-  free(futureEvents);
+  ListNode_DestroyList(futureEvents -> EventList);
+  free(futureEvents); 
 }
 
 void FEL_GenerateNewArrival(FEL* futureEvents, int  priority);
