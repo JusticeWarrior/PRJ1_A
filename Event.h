@@ -16,6 +16,4 @@ Event* Event_Create(char type, int priority, int time);
 // Destroys the current instance of Event.
 void Event_Destroy(Event* event);
 
-
-
 #endif /* EVENT_INCLUDED */
