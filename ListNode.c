@@ -21,7 +21,7 @@ void ListNode_DestroyList(ListNode* head)
 	free(head);
 }
 
-ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listhead)
+ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listhead, int* compFunc(ListNode*, ListNode*))
 {
 	return NULL;
 }
