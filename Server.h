@@ -7,7 +7,10 @@
 #ifndef SERVER_INCLUDED
 #define SERVER_INLCUDED 
 
-typedef Struct Server_st{
+typedef struct Server_st{
+  int processors;
+  int available;
+  ListNode* Tasks;
 } Server;
 
 #endif /* SERVER_INCLUDED */

@@ -8,8 +8,7 @@
 #define FEL_INLCUDED 
 
 
-
-typedef Struct FEL_st{
+typedef struct FEL_st{
   int ArrivalsLeft0;
   int ArrivalsLeft1;
   int Lambda0;
