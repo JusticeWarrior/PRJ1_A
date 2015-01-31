@@ -2,10 +2,19 @@
 
 Event* Event_Create(char type, int priority, int time)
 {
-	return NULL;
+	Event* event = malloc(sizeof(Event));
+
+	event->Type = type;
+	event->Priority = priority;
+	event->Time = time;
+
+	return event;
 }
 
-void Event_Destroy(Event* event) { }
+void Event_Destroy(Event* event)
+{
+	free(event);
+}
 
 int Event_CompTime(Event* event1, Event* event2)
 {
