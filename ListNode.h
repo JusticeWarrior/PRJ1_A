@@ -24,9 +24,9 @@ void ListNode_DestroyList(ListNode* head);
 ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listhead);
 
 // Appends the node to the tail of the list. Returns the new tail of the list.
-ListNode* ListNode_Append(ListNode* node, ListNode* listTail);
+ListNode* ListNode_AppendTail(ListNode* node, ListNode* listTail);
 
 // Pops off the head node of the list. Returns the new list head.
-ListNode* ListNode_HeadPop(ListNode* headNode);
+ListNode* ListNode_PopHead(ListNode* headNode);
 
 #endif /* LISTNODE_INCLUDED */
