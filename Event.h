@@ -3,10 +3,10 @@
 
 typedef struct Event_st Event;
 
-typedef struct Event_st{
+struct Event_st{
 	char Type;
 	int Priority;
 	int Time;
-} Event;
+};
 
 #endif /* EVENT_INCLUDED */
