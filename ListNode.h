@@ -9,7 +9,7 @@
 #include "SimulationData.h"
 
 typedef struct ListNode_st{
-	ListNode_st* Next;
+	struct ListNode_st* Next;
 	Event* Event;
 } ListNode;
 
