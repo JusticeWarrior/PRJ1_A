@@ -16,4 +16,8 @@ struct SimulationData_st{
   int CPUTime;
 };
 
+SimulationData* SimulationData_Create();
+
+void SimulationData_Destroy(SimulationData* data);
+
 #endif /* SIMULATIONDATA_INCLUDED */

@@ -15,6 +15,8 @@ struct Server_st{
   ListNode* Tasks; //A list of tasks currently in the server
 };
 
+Server* Server_Create(int processors);
 
+void Server_Destroy(Server* server);
 
 #endif /* SERVER_INCLUDED */
