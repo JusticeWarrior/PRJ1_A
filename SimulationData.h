@@ -1,10 +1,5 @@
 #ifndef SIMULATIONDATA_INCLUDED
-#define SIMULATIONDATA_INCLUDED 
-#include "FEL.h"
-#include "Queue.h"
-#include "Server.h"
-#include "ListNode.h"
-#include "Event.h"
+#define SIMULATIONDATA_INCLUDED
 
 typedef struct SimulationData_st{
   int CurrentTime;
