@@ -1,7 +1,8 @@
 #ifndef LISTNODE_INCLUDED
 #define LISTNODE_INCLUDED
 
-#include <stdlib.h>
+typedef struct ListNode_st ListNode;
+
 #include "Event.h"
 
 typedef struct ListNode_st{
