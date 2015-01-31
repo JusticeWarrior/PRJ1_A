@@ -23,11 +23,24 @@ void ListNode_DestroyList(ListNode* head)
 
 ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listHead, int (*compFunc)(ListNode*, ListNode*))
 {
+	if (listHead == NULL)
+		return node;
+
+	if (compFunc(node, listHead) >= 0)
+	{
+		node->Next = listHead;
+		return node;
+	}
+
 	ListNode* current = listHead;
+	ListNode* prevNode = listHead;
 
 	while (current != NULL)
 	{
-		
+		if (compFunc(node, current) >= 1)
+		{
+			
+		}
 	}
 
 	return NULL;
