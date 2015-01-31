@@ -9,7 +9,7 @@ typedef struct FEL_st FEL;
 #include "ListNode.h"
 #include "Server.h"
 
-typedef struct FEL_st{
+struct FEL_st{
   int ArrivalsLeft0;
   int ArrivalsLeft1;
   int Lambda0;

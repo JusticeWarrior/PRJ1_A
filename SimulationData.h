@@ -9,7 +9,7 @@ typedef struct SimulationData_st SimulationData;
 #include "ListNode.h"
 #include "Server.h"
 
-typedef struct SimulationData_st{
+struct SimulationData_st{
   int CurrentTime;
   int WaitingTime0;
   int WaitingTime1;
