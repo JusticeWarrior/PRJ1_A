@@ -5,7 +5,7 @@
 #include "ListNode.h"
 
 #ifndef SERVER_INCLUDED
-#define SERVER_INLCUDED 
+#define SERVER_INCLUDED 
 
 typedef struct Server_st{
   int processors;

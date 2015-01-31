@@ -5,7 +5,7 @@
 #include "ListNode.h"
 
 #ifndef SIMULATIONDATA_INCLUDED
-#define SIMULATIONDATA_INLCUDED 
+#define SIMULATIONDATA_INCLUDED 
 
 typedef struct SimulationData_st{
   int CurrentTime;

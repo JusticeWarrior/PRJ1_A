@@ -1,2 +1,2 @@
 all:
-	gcc -Wall -Wshadow -g main.c -o output
+	gcc -Wall -Wshadow -g -lm FEL.h ListNode.h Event.h Queue.h SimulationData.h Server.h main.c -o output
