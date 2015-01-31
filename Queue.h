@@ -18,6 +18,10 @@ Queue* Queue_Create(Queue* queue);
 // Destroys the current instance of queue and all data that it still contains.
 void Queue_Destroy(Queue* queue);
 
+// Calls ListNode_Append to append the node to the front of the queue's head.
+ListNode* Queue_Append(Queue* queue, ListNode* node);
 
+// Pops the tail node off of the queue and returns it as output.
+ListNode* Queue_Pop();
 
 #endif /* QUEUE_INCLUDED */

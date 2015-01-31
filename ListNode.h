@@ -19,9 +19,12 @@ void ListNode_Destroy(ListNode* node);
 
 // Inserts the list node into the list in a sorted manner where the head has the lowest event time
 // and the tail has the greatest event time. Returns the new list head in case the insert changes it.
-ListNode* ListNode_Insert(ListNode* node, ListNode* listhead);
+ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listhead);
 
-// Pops off the head node of the list.
-void ListNode_Pop(ListNode* headNode);
+// Appends the node to the head of the list. Returns the new head of the list.
+ListNode* ListNode_Append(ListNode* node, ListNode* listhead);
+
+// Pops off the tail node of the list.
+void ListNode_TailPop(ListNode* tailNode);
 
 #endif /* LISTNODE_INCLUDED */
