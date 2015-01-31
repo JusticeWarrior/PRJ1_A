@@ -4,6 +4,7 @@
 // A structure to hold a node of singley linked-list of event data.
 typedef struct ListNode_st ListNode;
 
+#include <stdlib.h>
 #include "Event.h"
 
 struct ListNode_st{
@@ -14,8 +15,9 @@ struct ListNode_st{
 // Creates an instance of a list node with the given event.
 ListNode* ListNode_Create(Event* event);
 
-// Destroys the instance of list node.
-void ListNode_Destroy(ListNode* node);
+// Destroys the entire list of nodes by recursively calling to destroy the next node. Also calls
+// for the destruction of the Event structure associated with each node.
+void ListNode_DestroyList(ListNode* head);
 
 // Inserts the list node into the list in a sorted manner where the head has the lowest event time
 // and the tail has the greatest event time. Returns the new list head in case the insert changes it.

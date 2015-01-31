@@ -4,6 +4,8 @@
 // A structure to hold event data of a particular event.
 typedef struct Event_st Event;
 
+#include<stdlib.h>
+
 struct Event_st{
 	char Type;
 	int Priority;
