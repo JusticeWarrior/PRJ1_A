@@ -42,7 +42,7 @@ ListNode* ListNode_PopHead(ListNode* headNode)
 	return newHead;
 }
 
-int ListNode_CompEventTime(ListNode* node1, ListNode node2)
+int ListNode_CompEventTime(ListNode* node1, ListNode* node2)
 {
-	return 0;
+	return Event_CompTime(node1->Event, node2->Event);
 }
