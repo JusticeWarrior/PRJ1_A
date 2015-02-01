@@ -11,11 +11,12 @@ int main(int argc, char** argv)
   for(i=0;i<10;i++)
   {
     FEL_GenerateNewArrival(futureList,i%2,0);
+    FEL_GenerateNewDeparture(futureList,0);
   }
 
   ListNode_PrintList(futureList->EventList, "Event List");
 
-  for(i=0;i<100000;i++)
+  for(i=0;i<20;i++)
   {
     printf("Removing first item from the list\n");
     event = FEL_PopEvent(futureList);
