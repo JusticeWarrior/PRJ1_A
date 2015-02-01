@@ -15,16 +15,16 @@ struct FEL_st{
 static int expDist(float constant);
 static ListNode* FEL_PopNode(FEL* futureList);
 
-FEL* FEL_Create(int totalArrivals, float mu, float lambda0, float lambda1)
+FEL* FEL_Create(int arrivals0, int arrivals1, float mu, float lambda0, float lambda1)
 {
   //Allocate structures
   FEL* futureEvents = malloc(sizeof(FEL));
   futureEvents -> Lambda = malloc(sizeof(float)*PRIORITY_LEVELS);
-  futureEvents -> ArrivalsLeft = malloc(sizeof(float)*PRIORITY_LEVELS);
+  futureEvents -> NumberArrivals = malloc(sizeof(int)*PRIORITY_LEVELS);
 
   //Initialize components of structure
-  futureEvents -> ArrivalsLeft[0] = totalArrivals;
-  futureEvents -> ArrivalsLeft[1] = totalArrivals;
+  futureEvents -> NumberArrivals[0] = arrivals0;
+  futureEvents -> NumberArrivals[1] = arrivals1;
 
   futureEvents -> Lambda[0] = lambda0;
   futureEvents -> Lambda[1] = lambda1;
@@ -43,7 +43,7 @@ void FEL_Destroy(FEL* futureEvents)
 		return;
 
   ListNode_DestroyList(futureEvents -> EventList);
-  free(futureEvents -> ArrivalsLeft);
+  free(futureEvents -> NumberArrivals);
   free(futureEvents -> Lambda); 
   free(futureEvents);
 }

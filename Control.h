@@ -9,7 +9,9 @@ typedef struct Output_st Output;
 #include "SimulationData.h"
 #include "ListNode.h"
 #include "Server.h"
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 //A structure to hold the output metrics calculated from the simulation
 struct Output_st{

@@ -1,9 +1,9 @@
 #include "Control.h"
-
+#define BUFFER_LEN 1000
   
 FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTasks)
 {
-  FEL* fel = FEL_Create(numTasks, mu, lambda0, lambda1);
+  FEL* fel = FEL_Create(numTasks, numTasks, mu, lambda0, lambda1);
   Event* event;
   int prevTime0 = -1;
   int prevTime1 = -1;
@@ -33,13 +33,50 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
   FILE* file = fopen(filename, "rb");
   FEL* fel;
   Event* event;
-  int error = 0; //Whether or not an error has occured
-  char* line;
-  char* token;
+  
+  //Keep track of the number of each priority that have arrived
+  int arrivals0 = 0;
+  int arrivals1 = 0;
 
+  //int error = 0; //Whether or not an error has occured
+
+  char buffer[BUFFER_LEN];
   
+  int arrivalTime;
+  int priority;
+  int duration;
+
+  fel = FEL_Create(0,0,0,0,0);
+
+  fgets(buffer, BUFFER_LEN, file);
+  while(!feof(file))
+  {
+    arrivalTime = atoi(strtok(buffer, " "));
+    priority = atoi(strtok(NULL, " "));
+    duration = atoi(strtok(NULL, "\n"));
+
+    if(priority==0)
+    {
+      arrivals0++;
+    }
+    else
+    {
+      arrivals1++;
+    }
+
+    event = Event_Create(ARRIVAL, arrivalTime, priority, duration);
+    FEL_AddEvent(fel, event);
+
+    fgets(buffer, BUFFER_LEN, file);
+  }
   
-  return NULL;
+  fel -> NumberArrivals[0] = arrivals0;
+  fel -> NumberArrivals[1] = arrivals1;
+  
+  //Cleanup
+  fclose(file);
+
+  return fel;
 }
 
 
