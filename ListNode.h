@@ -6,6 +6,7 @@ typedef struct ListNode_st ListNode;
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <assert.h>
 #include "Event.h"
 
 struct ListNode_st{
@@ -36,7 +37,11 @@ ListNode* ListNode_PopHead(ListNode* headNode);
 // than node1, and 0 if they have the same event time.
 int ListNode_CompEventTime(ListNode* node1, ListNode* node2);
 
-// Prints the entire list starting with the head. Used for testing purposes.
-void ListNode_PrintList(ListNode* head);
+// Prints the entire list starting with the head and prints the provided name.
+// Used for testing purposes.
+void ListNode_PrintList(ListNode* head, const char* name);
+
+// Gets the length of the list and returns it as an integer.
+int ListNode_GetLength(ListNode* head);
 
 #endif /* LISTNODE_INCLUDED */

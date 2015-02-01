@@ -58,7 +58,12 @@ ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listHead, int (*compFu
 
 ListNode* ListNode_AppendTail(ListNode* node, ListNode* listTail)
 {
-	node->Next = listTail;
+	if (listTail == NULL)
+		return node;
+
+	assert(node != NULL);
+
+	listTail->Next = node;
 
 	return node;
 }
@@ -77,9 +82,9 @@ int ListNode_CompEventTime(ListNode* node1, ListNode* node2)
 	return Event_CompTime(node1->Event, node2->Event);
 }
 
-void ListNode_PrintList(ListNode* head)
+void ListNode_PrintList(ListNode* head, const char* name)
 {
-	fprintf(stdout, "Printing List...\n");
+	fprintf(stdout, "Printing %s...\n", name);
 	int node = 1;
 
 	while (head != NULL && head->Event != NULL)
@@ -89,4 +94,17 @@ void ListNode_PrintList(ListNode* head)
 		node++;
 		head = head->Next;
 	}
+}
+
+int ListNode_GetLength(ListNode* head)
+{
+	int length = 0;
+
+	while (head != NULL)
+	{
+		head = head->Next;
+		length++;
+	}
+
+	return length;
 }
