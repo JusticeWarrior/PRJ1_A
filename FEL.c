@@ -49,34 +49,27 @@ void FEL_Destroy(FEL* futureEvents)
 
 
 
-void FEL_GenerateNewArrival(FEL* futureEvents, int  priority, int currentTime)
+Event* FEL_GenerateRandomArrival(FEL* futureEvents, int  priority, int previousTime)
 {
-  int time = currentTime; //The time that the new event will occur
+  int time = previousTime; //The time that the new event will occur
+  int duration;            //How long this task will spend in the server
   float lambda = futureEvents -> Lambda[priority];
   Event* event;
   
-  //If there are still some events of that priority level that need to arrive
-  if(futureEvents -> ArrivalsLeft[priority] != 0)
-  {
-    futureEvents -> ArrivalsLeft[priority]--;
-    time += expDist(lambda);
-    event = Event_Create(ARRIVAL, priority, time,0);
-    FEL_AddEvent(futureEvents, event); 
-  }
+  time += expDist(lambda);
+  duration = time + expDist(futureEvents->Mu);
+  event = Event_Create(ARRIVAL, priority, time, duration);
 }
 
 
 
-void FEL_GenerateNewDeparture(FEL* futureEvents, int currentTime)
+Event* FEL_GenerateDeparture(FEL* futureEvents, int departureTime)
 { 
-  int time = currentTime; //The time that the new event will occur
-  float mu = futureEvents -> Mu;
   Event* event;
+  event = Event_Create(DEPARTURE, 12345, departureTime,54321);
+  //Non used fields marked with peculiar numbers
+  return event;
 
-  time += (int)ceil(-(log(1 - (((float)rand()+1))/RAND_MAX)) / (mu));
-  event = Event_Create(DEPARTURE, 12345, time,0);
-
-  FEL_AddEvent(futureEvents, event); 
 }
 
 

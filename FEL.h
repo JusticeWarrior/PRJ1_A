@@ -30,10 +30,10 @@ FEL* FEL_Create(int totalArrivals, float mu, float lambda0, float lambda1);
 void FEL_Destroy(FEL* FutureEvents);
 
 //Randomly generate a new arrival event of the given prority using the 
-void FEL_GenerateNewArrival(FEL* futureEvents, int  priority, int currentTime);
+Event* FEL_GenerateRandomArrival(FEL* futureEvents, int  priority, int previousTime);
 
 //Randomly generate a new departute event
-void FEL_GenerateNewDeparture(FEL* futureEvents, int currentTime);
+Event* FEL_GenerateDeparture(FEL* futureEvents, int departureTime);
 
 //Add an event that already exists to the FEL strucure
 void FEL_AddEvent(FEL* futureEvents, Event* event);

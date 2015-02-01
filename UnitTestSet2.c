@@ -10,18 +10,18 @@ int main(int argc, char** argv)
   FEL* futureList = FEL_Create(100,1,0.03,0.003);
   for(i=0;i<10;i++)
   {
-    FEL_GenerateNewArrival(futureList,i%2,0);
-    FEL_GenerateNewDeparture(futureList,0);
+    //FEL_GenerateNewArrival(futureList,i%2,0);
+    //FEL_GenerateNewDeparture(futureList,0);
   }
 
   ListNode_PrintList(futureList->EventList, "Event List");
 
   for(i=0;i<20;i++)
   {
-    printf("Removing first item from the list\n");
-    event = FEL_PopEvent(futureList);
-    Event_Destroy(event);
-    ListNode_PrintList(futureList->EventList, "Event List");
+    //printf("Removing first item from the list\n");
+    //event = FEL_PopEvent(futureList);
+    //Event_Destroy(event);
+    //ListNode_PrintList(futureList->EventList, "Event List");
     
   }
   printf("Ending Test\n\n");
