@@ -46,4 +46,6 @@ int FEL_IsEmpty(FEL* futureEvents);
 //Return the first event from the FEL and remove it from the FEL list
 Event* FEL_PopEvent(FEL* futureEvents);
 
+//float FEL_AverageEventTime();
+
 #endif /* FEL_INCLUDED */
