@@ -230,6 +230,7 @@ int main(int argc, char** argv)
 	// Print the output in the correct format
 	printOutput(output);
 
+	// Destroy the output structure
 	Output_Destroy(output);
 
 	return EXIT_SUCCESS;
