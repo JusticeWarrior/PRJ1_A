@@ -1,4 +1,4 @@
-#include "Event.h"
+﻿#include "Event.h"
 #include "FEL.h"
 #include "Queue.h"
 #include "SimulationData.h"
@@ -17,6 +17,7 @@
 #define ERRORTOOFEWARGS 5
 #define ERRORINCORRECTNUMARGS 6
 #define ERRORCANTFINDFILE 7
+#define ERRORRATIO 8
 #define NUMARGSMODE1 5
 #define NUMARGSMODE2 2
 
@@ -104,15 +105,69 @@ static Args* parseArgs(char ** args, int numArgs)
 			return parsedArgs;
 		}
 		parsedArgs->NumTasks = numTasks;
+
+		if (parsedArgs->Lambda0 + parsedArgs->Lambda1 >= parsedArgs->Mu)
+		{
+			parsedArgs->Error = ERRORRATIO;
+			return parsedArgs;
+		}
 	}
 
 	return parsedArgs;
 }
 
+static void printUsageMessage()
+{
+	fprintf(stdout, "USAGE:\n\n");
+	fprintf(stdout, "Mode 1:\t\t<executable name> <lambda0> <lambda1 > <mu> <total tasks in a priority group>\n");
+	fprintf(stdout, "Example:\t\tproject1-A 0.5 0.3 1 10000\n\n");
+
+	fprintf(stdout, "Mode 2:\t\t<executable name> <input file name>\n");
+	fprintf(stdout, "Example:\t\tproject1-A input.txt\n\n");
+}
+
+static void printParsingErrors(int error)
+{
+	switch (error)
+	{
+		case ERRORCANTFINDFILE:
+			fprintf(stderr, "Error: Could not open the file specified.\n\n");
+			break;
+		case ERRORINCORRECTNUMARGS:
+			fprintf(stderr, "Error: An incorrect number of arguments was provided.\n\n");
+			break;
+		case ERRORLAMBDA0:
+			fprintf(stderr, "Error: Could not understand the provided Lambda0 value.\n\n");
+			break;
+		case ERRORLAMBDA1:
+			fprintf(stderr, "Error: Could not understand the provided Lambda1 value.\n\n");
+			break;
+		case ERRORMU:
+			fprintf(stderr, "Error: Could not understand the provided Mu value.\n\n");
+			break;
+		case ERRORNUMTASKS:
+			fprintf(stderr, "Error: Could not understand the provided Number of Tasks value.\n\n");
+			break;
+		case ERRORTOOFEWARGS:
+			fprintf(stderr, "Error: Too few arguments were provided for either mode.\n\n");
+			break;
+		case ERRORTOOMANYARGS:
+			fprintf(stderr, "Error: Too many arguments were provided for either mode.\n\n");
+			break;
+		case ERRORRATIO:
+			fprintf(stderr, "Error: Lambda0 + Lambda1 was greater than or equal to Mu. System is unstable.\n\n");
+			break;
+		case ERRORNONE:
+			return;
+	}
+
+	printUsageMessage();
+}
+
 int main(int argc, char** argv)
 {
+	Args* args = parseArgs(argv, argc);
+	printParsingErrors(args->Error);
 
-
-	printf("\nWoo!\n");
 	return EXIT_SUCCESS;
 }
