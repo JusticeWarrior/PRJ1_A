@@ -9,9 +9,11 @@ struct FEL_st{
 };
 */
 
-//ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listHead, int (*compFunc)(ListNode*, ListNode*))
 
-static int eventComp(ListNode* nodeA, ListNode* nodeB);
+
+//This function will return a random exponentially distributed variable
+static int expDist(float constant);
+static ListNode* FEL_PopNode(FEL* futureList);
 
 FEL* FEL_Create(int totalArrivals, float mu, float lambda0, float lambda1)
 {
@@ -46,7 +48,7 @@ void FEL_Destroy(FEL* futureEvents)
 
 void FEL_GenerateNewArrival(FEL* futureEvents, int  priority, int currentTime)
 {
-  float time = currentTime; //The time that the new event will occur
+  int time = currentTime; //The time that the new event will occur
   float lambda = futureEvents -> Lambda[priority];
   Event* event;
   
@@ -54,7 +56,7 @@ void FEL_GenerateNewArrival(FEL* futureEvents, int  priority, int currentTime)
   if(futureEvents -> ArrivalsLeft[priority] != 0)
   {
     futureEvents -> ArrivalsLeft[priority]--;
-    time += - ceil((log(1 - rand())) / (lambda));
+    time += expDist(lambda);
     event = Event_Create(ARRIVAL, priority, time);
     FEL_AddEvent(futureEvents, event); 
   }
@@ -64,11 +66,11 @@ void FEL_GenerateNewArrival(FEL* futureEvents, int  priority, int currentTime)
 
 void FEL_GenerateNewDeparture(FEL* futureEvents, int currentTime)
 { 
-  float time = currentTime; //The time that the new event will occur
+  int time = currentTime; //The time that the new event will occur
   float mu = futureEvents -> Mu;
   Event* event;
 
-  time += - ceil((log(1 - rand())) / (mu));
+  time += ceil(-(log(1 - (((float)rand()+1))/RAND_MAX)) / (mu));
   event = Event_Create(DEPARTURE, 12345, time);
 
   FEL_AddEvent(futureEvents, event); 
@@ -79,7 +81,7 @@ void FEL_GenerateNewDeparture(FEL* futureEvents, int currentTime)
 void FEL_AddEvent(FEL* futureEvents, Event* event)
 {  
   ListNode* node = ListNode_Create(event);
-  ListNode_InsertSorted(node, futureEvents -> EventList, eventComp);
+  futureEvents -> EventList = ListNode_InsertSorted(node, futureEvents -> EventList, ListNode_CompEventTime);
 }
 
 
@@ -100,7 +102,7 @@ int FEL_IsEmpty(FEL* futureEvents)
 
 Event* FEL_PopEvent(FEL* futureEvents)
 {
-  ListNode* node = ListNode_PopHead(futureEvents -> EventList);
+  ListNode* node = FEL_PopNode(futureEvents);
   Event* event = node->Event;
   free(node);  //The destroy function should not becalled because it will free the event as well
   return event;
@@ -108,7 +110,16 @@ Event* FEL_PopEvent(FEL* futureEvents)
 
 
 
-static int eventComp(ListNode* nodeA, ListNode* nodeB)
+static int expDist(float constant)
 {
-  return (nodeB -> Event -> Time) - (nodeB -> Event -> Time);
+  //A uniformly distributed random float
+  float uniform = (1 - ((float)rand())/RAND_MAX);
+  return(ceil(-log(uniform)/constant));
+}
+
+ListNode* FEL_PopNode(FEL* futureList)
+{
+  ListNode* poppedNode = futureList->EventList;
+  futureList->EventList = ListNode_PopHead(futureList->EventList);
+  return poppedNode;
 }

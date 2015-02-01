@@ -18,7 +18,8 @@ struct Server_st{
 //Create a Server structure with the given number of processors
 Server* Server_Create(int processors);
 
-//Destroy the givin Server structure
+//Destroy the given Server structure
 void Server_Destroy(Server* server);
+
 
 #endif /* SERVER_INCLUDED */
