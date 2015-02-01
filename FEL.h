@@ -42,6 +42,6 @@ void FEL_AddEvent(FEL* futureEvents, Event* event);
 int FEL_IsEmpty(FEL* futureEvents);
 
 //Return the first event from the FEL and remove it from the FEL list
-Event* FEL_popEvent(FEL* futureEvents);
+Event* FEL_PopEvent(FEL* futureEvents);
 
 #endif /* FEL_INCLUDED */
