@@ -5,6 +5,7 @@
 typedef struct Queue_st Queue;
 
 #include "ListNode.h"
+#include <assert.h>
 
 #define DEFAULTCOUNT 0
 
@@ -23,7 +24,8 @@ void Queue_Destroy(Queue* queue);
 // Calls ListNode_AppendTail to append a node to the tail of the queue.
 void Queue_Add(Queue* queue, ListNode* node);
 
-// Pops the head node off of the queue and returns it as output.
+// Pops the head node off of the queue and returns it as output. Returns NULL if
+// the queue is empty.
 ListNode* Queue_Pop(Queue* queue);
 
 #endif /* QUEUE_INCLUDED */

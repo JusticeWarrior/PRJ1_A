@@ -145,11 +145,20 @@ void Test3()
 	ListNode_DestroyList(head);
 }
 
+// Tests queue create, destroy, add, and pop functions.
+void Test4()
+{
+	//int success, success2, success3;
+
+	//Queue* testQueue1 = Queue
+}
+
 int main(int argc, char** argv)
 {
 	Test1();
 	Test2();
 	Test3();
+	Test4();
 
 	return EXIT_SUCCESS;
 }

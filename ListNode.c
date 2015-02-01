@@ -61,7 +61,7 @@ ListNode* ListNode_AppendTail(ListNode* node, ListNode* listTail)
 	if (listTail == NULL)
 		return node;
 
-	assert(node != NULL);
+	assert(node != NULL); // Make sure you don't add a NULL node!
 
 	listTail->Next = node;
 

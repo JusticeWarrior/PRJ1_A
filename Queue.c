@@ -23,11 +23,18 @@ void Queue_Destroy(Queue* queue)
 
 void Queue_Add(Queue* queue, ListNode* node)
 {
+	assert(node != NULL); // Make sure you don't add a NULL node!
+
+	queue->Count++;
 	queue->Tail = ListNode_AppendTail(node, queue->Tail);
 }
 
 ListNode* Queue_Pop(Queue* queue)
 {
+	if (queue->Count == 0)
+		return NULL;
+
+	queue->Count--;
 	ListNode* poppedNode = queue->Head;
 
 	queue->Head = ListNode_PopHead(queue->Head);
