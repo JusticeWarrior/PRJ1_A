@@ -16,15 +16,15 @@ struct FEL_st{
   int* ArrivalsLeft;
 
   //The variables used in the exponential distribution functions
-  int* Lambda;
-  int Mu;
+  float* Lambda;
+  float Mu;
 
   //The list of events, ordered by time, of events that will occur in the future
   ListNode* EventList;
 };
 
 //Create an FEL structure with the given values
-FEL* FEL_Create(int totalArrivals, int mu, int lambda0, int lambda1);
+FEL* FEL_Create(int totalArrivals, float mu, float lambda0, float lambda1);
 
 //Destroy the FEL structure
 void FEL_Destroy(FEL* FutureEvents);

@@ -13,13 +13,14 @@ struct FEL_st{
 
 static int eventComp(ListNode* nodeA, ListNode* nodeB);
 
-FEL* FEL_Create(int totalArrivals, int mu, int lambda0, int lambda1)
+FEL* FEL_Create(int totalArrivals, float mu, float lambda0, float lambda1)
 {
+  //Allocate structures
   FEL* futureEvents = malloc(sizeof(FEL));
+  futureEvents -> Lambda = malloc(sizeof(float)*PRIORITY_LEVELS);
+  futureEvents -> ArrivalsLeft = malloc(sizeof(float)*PRIORITY_LEVELS);
 
-  futureEvents -> Lambda = malloc(sizeof(int)*PRIORITY_LEVELS);
-  futureEvents -> ArrivalsLeft = malloc(sizeof(int)*PRIORITY_LEVELS);
-
+  //Initialize components of structure
   futureEvents -> ArrivalsLeft[0] = totalArrivals;
   futureEvents -> ArrivalsLeft[1] = totalArrivals;
 
@@ -45,28 +46,26 @@ void FEL_Destroy(FEL* futureEvents)
 
 void FEL_GenerateNewArrival(FEL* futureEvents, int  priority, int currentTime)
 {
-  int time = currentTime; //The time that the new event will occur
-  int lambda = futureEvents -> Lambda[priority];
-  int arrivalsLeft = futureEvents -> ArrivalsLeft[priority];
+  float time = currentTime; //The time that the new event will occur
+  float lambda = futureEvents -> Lambda[priority];
   Event* event;
   
   //If there are still some events of that priority level that need to arrive
-  if(arrivalsLeft != 0)
+  if(futureEvents -> ArrivalsLeft[priority] != 0)
   {
-    arrivalsLeft--;
+    futureEvents -> ArrivalsLeft[priority]--;
     time += - ceil((log(1 - rand())) / (lambda));
     event = Event_Create(ARRIVAL, priority, time);
+    FEL_AddEvent(futureEvents, event); 
   }
-  
-  FEL_AddEvent(futureEvents, event); 
 }
 
 
 
 void FEL_GenerateNewDeparture(FEL* futureEvents, int currentTime)
 { 
-  int time = currentTime; //The time that the new event will occur
-  int mu = futureEvents -> Mu;
+  float time = currentTime; //The time that the new event will occur
+  float mu = futureEvents -> Mu;
   Event* event;
 
   time += - ceil((log(1 - rand())) / (mu));
@@ -87,7 +86,14 @@ void FEL_AddEvent(FEL* futureEvents, Event* event)
 
 int FEL_IsEmpty(FEL* futureEvents)
 {
-
+  if(futureEvents->EventList == NULL)
+  {
+    return 1;
+  }
+  else
+  {
+    return 0;
+  }
 }
 
 
