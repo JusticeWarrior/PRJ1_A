@@ -6,6 +6,7 @@
 #define TRUE 1
 #define FALSE 0
 
+// Tests Creating and Destroying a node.
 void Test1()
 {
 	int success;
@@ -35,6 +36,7 @@ void Test1()
 	}
 }
 
+// Tests inserting and popping nodes from a list.
 void Test2()
 {
 	int success, success2, success3;
@@ -91,11 +93,12 @@ void Test2()
 		fprintf(stdout, "\nFailure\n");
 }
 
+// Tests inserting nodes in a sorted manner.
 void Test3()
 {
 	int success, success2;
 
-	fprintf(stdout, "\nTest 3: Insert Sorted\n");
+	fprintf(stdout, "\nTest 3: Inserting in a Sorted Manner\n");
 
 	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2);
 	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3);
@@ -138,6 +141,8 @@ void Test3()
 		fprintf(stdout, "\nSuccess\n");
 	else
 		fprintf(stdout, "\nFailure\n");
+
+	ListNode_DestroyList(head);
 }
 
 int main(int argc, char** argv)
