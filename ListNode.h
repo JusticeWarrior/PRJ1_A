@@ -1,7 +1,7 @@
 #ifndef LISTNODE_INCLUDED
 #define LISTNODE_INCLUDED
 
-// A structure to hold a node of singley linked-list of event data.
+// A structure to hold a node of singley linked-list event data.
 typedef struct ListNode_st ListNode;
 
 #include <stdlib.h>
@@ -45,7 +45,8 @@ void ListNode_PrintList(ListNode* head, const char* name);
 int ListNode_GetLength(ListNode* head);
 
 // Strips the Event structure from the current node and returns the Event.
-// Destroys only the current instance of the ListNode.
+// Destroys only the current instance of the ListNode. MAKE SURE THE NODE IS
+// POPPED FROM THE LIST ALREADY!!
 Event* ListNode_StripEvent(ListNode* node);
 
 #endif /* LISTNODE_INCLUDED */

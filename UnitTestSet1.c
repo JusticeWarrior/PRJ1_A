@@ -146,10 +146,15 @@ void Test3()
 	ListNode_DestroyList(head);
 }
 
-// Tests queue create and destroy functions.
 void Test4()
 {
-	fprintf(stdout, "\nTest 4: Creating and Destroying a Queue\n");
+
+}
+
+// Tests queue create and destroy functions.
+void Test5()
+{
+	fprintf(stdout, "\nTest 5: Creating and Destroying a Queue\n");
 
 	Queue* testQueue1 = Queue_Create();
 	if (testQueue1->Count == DEFAULTCOUNT)
@@ -160,7 +165,7 @@ void Test4()
 	Queue_Destroy(testQueue1);
 }
 
-void Test5()
+void Test6()
 {
 	int success, success2, success3;
 }
@@ -171,6 +176,7 @@ int main(int argc, char** argv)
 	Test2();
 	Test3();
 	Test4();
+	Test5();
 
 	return EXIT_SUCCESS;
 }

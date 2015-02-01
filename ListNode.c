@@ -117,6 +117,7 @@ int ListNode_GetLength(ListNode* head)
 Event* ListNode_StripEvent(ListNode* node)
 {
 	assert(node != NULL); // Make sure you don't strip a NULL node!
+	assert(node->Next == NULL); // Make sure that you Pop the node off from the list before trying to strip it!
 
 	Event* event = node->Event;
 	node->Event = NULL;
