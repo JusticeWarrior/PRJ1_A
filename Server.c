@@ -11,6 +11,6 @@ Server* Server_Create(int processors)
 
 void Server_Destroy(Server* server)
 {
-  ListNode_DestroyList(Tasks);
+  ListNode_DestroyList(server->Tasks);
   free(server);
 }
