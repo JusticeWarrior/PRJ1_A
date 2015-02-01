@@ -12,8 +12,8 @@ typedef struct FEL_st FEL;
 #include <stdlib.h>
 
 struct FEL_st{
-  //The number of people that still have to arrive in each priority queue
-  int* ArrivalsLeft;
+  //The number of people that have arrived in each priority queue
+  int* NumberArrivals;
 
   //The variables used in the exponential distribution functions
   float* Lambda;
@@ -24,7 +24,7 @@ struct FEL_st{
 };
 
 //Create an FEL structure with the given values
-FEL* FEL_Create(int totalArrivals, float mu, float lambda0, float lambda1);
+FEL* FEL_Create(int arrivals0, int arrivals1, float mu, float lambda0, float lambda1);
 
 //Destroy the FEL structure
 void FEL_Destroy(FEL* FutureEvents);
