@@ -1,6 +1,7 @@
 #ifndef SIMULATIONDATA_INCLUDED
 #define SIMULATIONDATA_INCLUDED
 
+#define PRIORITY_LEVELS 2 //The number of prority levels
 typedef struct SimulationData_st SimulationData;
 
 #include "Event.h"
