@@ -123,14 +123,41 @@ static void printParsingErrors(int error)
 {
 	switch (error)
 	{
-	default:
-		break;
+		case ERRORCANTFINDFILE:
+			fprintf(stderr, "Error: Could not open the file specified.\n\n");
+			break;
+		case ERRORINCORRECTNUMARGS:
+			fprintf(stderr, "Error: An incorrect number of arguments was provided.\n\n");
+			break;
+		case ERRORLAMBDA0:
+			fprintf(stderr, "Error: Could not understand the provided Lambda0 value.\n\n");
+			break;
+		case ERRORLAMBDA1:
+			fprintf(stderr, "Error: Could not understand the provided Lambda1 value.\n\n");
+			break;
+		case ERRORMU:
+			fprintf(stderr, "Error: Could not understand the provided Mu value.\n\n");
+			break;
+		case ERRORNUMTASKS:
+			fprintf(stderr, "Error: Could not understand the provided Number of Tasks value.\n\n");
+			break;
+		case ERRORTOOFEWARGS:
+			fprintf(stderr, "Error: Too few arguments were provided for either mode.\n\n");
+			break;
+		case ERRORTOOMANYARGS:
+			fprintf(stderr, "Error: Too many arguments were provided for either mode.\n\n");
+			break;
+		case ERRORNONE:
+			return;
 	}
+
+	printUsageMessage();
 }
 
 int main(int argc, char** argv)
 {
-	printUsageMessage();
+	Args* args = parseArgs(argv, argc);
+	printParsingErrors(args->Error);
 
 	return EXIT_SUCCESS;
 }
