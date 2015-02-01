@@ -102,10 +102,10 @@ int FEL_IsEmpty(FEL* futureEvents)
 
 Event* FEL_PopEvent(FEL* futureEvents)
 {
-  ListNode* node = FEL_PopNode(futureEvents);
-  Event* event = node->Event;
-  free(node);  //The destroy function should not becalled because it will free the event as well
-  return event;
+	if (futureEvents->EventList == NULL)
+		return NULL;
+
+	return ListNode_StripEvent(futureEvents->EventList);
 }
 
 
