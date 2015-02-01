@@ -113,3 +113,12 @@ int ListNode_GetLength(ListNode* head)
 
 	return length;
 }
+
+Event* ListNode_StripEvent(ListNode* node)
+{
+	assert(node != NULL); // Make sure you don't strip a NULL node!
+
+
+
+	return NULL;
+}
