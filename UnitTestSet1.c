@@ -93,7 +93,7 @@ void Test2()
 
 void Test3()
 {
-	int success;
+	int success, success2;
 
 	fprintf(stdout, "\nTest 3: Insert Sorted\n");
 
@@ -109,20 +109,35 @@ void Test3()
 	head = ListNode_InsertSorted(testNode3, head, ListNode_CompEventTime);
 	head = ListNode_InsertSorted(testNode4, head, ListNode_CompEventTime);
 
-	ListNode_PrintList(testNode1, "4 Element List");
+	ListNode_PrintList(head, "4 Element List");
 
 	Event* testEvent5 = Event_Create(ARRIVAL, 0, 3);
 	ListNode* testNode5 = ListNode_Create(testEvent5);
 	head = ListNode_InsertSorted(testNode5, head, ListNode_CompEventTime);
+	ListNode_PrintList(head, "Same List With Inserted 3 Second Event");
+	if (head->Next->Event->Time == 3 && head->Next->Next->Event->Time == 3)
+		success = TRUE;
+	else
+		success = FALSE;
 
 
 	Event* testEvent6 = Event_Create(ARRIVAL, 0, 1);
 	ListNode* testNode6 = ListNode_Create(testEvent6);
 	head = ListNode_InsertSorted(testNode6, head, ListNode_CompEventTime);
+	ListNode_PrintList(head, "Same List With Inserted 1 Second Event");
+	if (head->Event->Time == 1)
+		success2 = TRUE;
+	else
+		success2 = FALSE;
 
 	Event* testEvent7 = Event_Create(ARRIVAL, 0, 20);
 	ListNode* testNode7 = ListNode_Create(testEvent7);
 	head = ListNode_InsertSorted(testNode7, head, ListNode_CompEventTime);
+	ListNode_PrintList(head, "Same List With Inserted 20 Second Event");
+	if (head->Next->Next->Next->Next->Next->Next->Event->Time == 20 && success == TRUE && success2 == TRUE)
+		fprintf(stdout, "\nSuccess\n");
+	else
+		fprintf(stdout, "\nFailure\n");
 }
 
 int main(int argc, char** argv)
