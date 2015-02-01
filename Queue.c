@@ -21,14 +21,16 @@ void Queue_Destroy(Queue* queue)
 	free(queue);
 }
 
-ListNode* Queue_Append(Queue* queue, ListNode* node)
+void Queue_Add(Queue* queue, ListNode* node)
 {
-	
-
-	return NULL;
+	queue->Tail = ListNode_AppendTail(node, queue->Tail);
 }
 
-ListNode* Queue_Pop()
+ListNode* Queue_Pop(Queue* queue)
 {
-	return NULL;
+	ListNode* poppedNode = queue->Head;
+
+	queue->Head = ListNode_PopHead(queue->Head);
+
+	return poppedNode;
 }
