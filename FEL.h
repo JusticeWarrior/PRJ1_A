@@ -12,26 +12,38 @@ typedef struct FEL_st FEL;
 #include <stdlib.h>
 
 struct FEL_st{
+  //The number of people that still have to arrive in each priority queue
   int ArrivalsLeft0;
   int ArrivalsLeft1;
+
+  //The variables used in the exponential distribution functions
   int Lambda0;
   int Lambda1;
   int Mu;
+
+  //The list of events, ordered by time, of events that will occur in the future
   ListNode* EventList;
 };
 
+//Create an FEL structure with the given values
 FEL* FEL_Create(int TotalArrivals, int Lambda0, int Lambda1, int mu);
 
+//Destroy the FEL structure
 void FEL_Destroy(FEL* FutureEvents);
 
-void FEL_GenerateNewArrival(FEL* futureEvents, int  priority);
+//Randomly generate a new arrival event of the given prority using the 
+void FEL_GenerateNewArrival(FEL* futureEvents, int  priority, int currentTime);
 
-void FEL_GenerateNewDeparture(FEL* futureEvents);
+//Randomly generate a new departute event
+void FEL_GenerateNewDeparture(FEL* futureEvents, int currentTime);
 
+//Add an event that already exists to the FEL strucure
 void FEL_AddEvent(FEL* futureEvents, Event* event);
 
+//Returns a 1 if there are not more events on the queue
 int FEL_IsEmpty(FEL* futureEvents);
 
+//Return the first event from the FEL and remove it from the FEL list
 Event* FEL_popEvent(FEL* futureEvents);
 
 #endif /* FEL_INCLUDED */

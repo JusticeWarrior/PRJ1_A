@@ -15,8 +15,10 @@ struct Server_st{
   ListNode* Tasks; //A list of tasks currently in the server
 };
 
+//Create a Server structure with the given number of processors
 Server* Server_Create(int processors);
 
+//Destroy the givin Server structure
 void Server_Destroy(Server* server);
 
 #endif /* SERVER_INCLUDED */
