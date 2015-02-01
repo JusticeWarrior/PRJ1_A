@@ -17,6 +17,7 @@
 #define ERRORTOOFEWARGS 5
 #define ERRORINCORRECTNUMARGS 6
 #define ERRORCANTFINDFILE 7
+#define ERRORRATIO 8
 #define NUMARGSMODE1 5
 #define NUMARGSMODE2 2
 
@@ -104,6 +105,12 @@ static Args* parseArgs(char ** args, int numArgs)
 			return parsedArgs;
 		}
 		parsedArgs->NumTasks = numTasks;
+
+		if (parsedArgs->Lambda0 + parsedArgs->Lambda1 >= parsedArgs->Mu)
+		{
+			parsedArgs->Error = ERRORRATIO;
+			return parsedArgs;
+		}
 	}
 
 	return parsedArgs;
@@ -113,7 +120,7 @@ static void printUsageMessage()
 {
 	fprintf(stdout, "USAGE:\n\n");
 	fprintf(stdout, "Mode 1:\t\t<executable name> <lambda0> <lambda1 > <mu> <total tasks in a priority group>\n");
-	fprintf(stdout, "Example:\t\tproject1-A 0.5 0.7 1 10000\n\n");
+	fprintf(stdout, "Example:\t\tproject1-A 0.5 0.3 1 10000\n\n");
 
 	fprintf(stdout, "Mode 2:\t\t<executable name> <input file name>\n");
 	fprintf(stdout, "Example:\t\tproject1-A input.txt\n\n");
@@ -146,6 +153,9 @@ static void printParsingErrors(int error)
 			break;
 		case ERRORTOOMANYARGS:
 			fprintf(stderr, "Error: Too many arguments were provided for either mode.\n\n");
+			break;
+		case ERRORRATIO:
+			fprintf(stderr, "Error: Lambda0 + Lambda1 was greater than or equal to Mu. System is unstable.\n\n");
 			break;
 		case ERRORNONE:
 			return;
