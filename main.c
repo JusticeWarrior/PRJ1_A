@@ -1,12 +1,9 @@
-﻿#include "Event.h"
-#include "FEL.h"
-#include "Queue.h"
-#include "SimulationData.h"
-#include "ListNode.h"
-#include "Server.h"
+﻿#include "FEL.h"
+#include "Control.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define ERRORNONE -1
 #define ERRORLAMBDA0 0
@@ -70,6 +67,7 @@ static Args* parseArgs(char ** args, int numArgs)
 		}
 
 		parsedArgs->FileName = args[1];
+		fclose(file);
 	}
 
 	if (numArgs == NUMARGSMODE1)
@@ -126,7 +124,8 @@ static void printUsageMessage()
 	fprintf(stdout, "Example:\t\tproject1-A input.txt\n\n");
 }
 
-static void printParsingErrors(int error)
+// Prints error messages if any and returns whether there was an error.
+static int printParsingErrors(int error)
 {
 	switch (error)
 	{
@@ -158,16 +157,46 @@ static void printParsingErrors(int error)
 			fprintf(stderr, "Error: Lambda0 + Lambda1 was greater than or equal to Mu. System is unstable.\n\n");
 			break;
 		case ERRORNONE:
-			return;
+			return 0;
 	}
 
 	printUsageMessage();
+	return 1;
+}
+
+static void printFileReadingError(int lineNum, char* fileName)
+{
+	fprintf(stderr, "Error: Line %d of file %s is not in the correct format.\nCorrect format is:\t<arrival time> <priority> <duration>\n\n",
+		lineNum, fileName);
 }
 
 int main(int argc, char** argv)
 {
+	if (argc == 2 && (strcmp(argv[1], "-help") == 0 || strcmp(argv[1], "-h") == 0))
+	{
+		printUsageMessage();
+		return EXIT_SUCCESS;
+	}
+
 	Args* args = parseArgs(argv, argc);
-	printParsingErrors(args->Error);
+	if (printParsingErrors(args->Error))
+		return EXIT_FAILURE;
+
+	FEL* fel;
+	if (argc == NUMARGSMODE1)
+	{
+		//fel = Control_InitializeModeOne(args->Lambda0, args->Lambda1, args->Mu, args->NumTasks);
+	}
+	if (argc == NUMARGSMODE2)
+	{
+		int errorLine = -1;
+		//fel = Control_InitializeModeTwo(args->FileName, &errorLine);
+		if (errorLine != -1)
+		{
+			printFileReadingError(errorLine, args->FileName);
+			return EXIT_FAILURE;
+		}
+	}
 
 	return EXIT_SUCCESS;
 }
