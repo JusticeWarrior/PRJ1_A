@@ -23,6 +23,8 @@ void ListNode_DestroyList(ListNode* head)
 
 ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listHead, int (*compFunc)(ListNode*, ListNode*))
 {
+	assert(node != NULL); // Make sure you don't add a NULL node!
+
 	// If the list is emtpy
 	if (listHead == NULL)
 		return node;
@@ -58,10 +60,10 @@ ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listHead, int (*compFu
 
 ListNode* ListNode_AppendTail(ListNode* node, ListNode* listTail)
 {
+	assert(node != NULL); // Make sure you don't add a NULL node!
+
 	if (listTail == NULL)
 		return node;
-
-	assert(node != NULL); // Make sure you don't add a NULL node!
 
 	listTail->Next = node;
 
@@ -70,6 +72,8 @@ ListNode* ListNode_AppendTail(ListNode* node, ListNode* listTail)
 
 ListNode* ListNode_PopHead(ListNode* headNode)
 {
+	assert(headNode != NULL); // Make sure you don't pop a NULL node!
+
 	ListNode* newHead = headNode->Next;
 
 	headNode->Next = NULL;
@@ -79,6 +83,7 @@ ListNode* ListNode_PopHead(ListNode* headNode)
 
 int ListNode_CompEventTime(ListNode* node1, ListNode* node2)
 {
+	assert(node1 != NULL && node2 != NULL); // Don't compare against any NULL nodes!
 	return Event_CompTime(node1->Event, node2->Event);
 }
 

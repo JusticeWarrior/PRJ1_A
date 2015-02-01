@@ -70,7 +70,7 @@ void FEL_GenerateNewDeparture(FEL* futureEvents, int currentTime)
   float mu = futureEvents -> Mu;
   Event* event;
 
-  time += ceil(-(log(1 - (((float)rand()+1))/RAND_MAX)) / (mu));
+  time += (int)ceil(-(log(1 - (((float)rand()+1))/RAND_MAX)) / (mu));
   event = Event_Create(DEPARTURE, 12345, time);
 
   FEL_AddEvent(futureEvents, event); 
@@ -114,7 +114,7 @@ static int expDist(float constant)
 {
   //A uniformly distributed random float
   float uniform = (1 - ((float)rand())/RAND_MAX);
-  return(ceil(-log(uniform)/constant));
+  return((int)ceil(-log(uniform)/constant));
 }
 
 ListNode* FEL_PopNode(FEL* futureList)
