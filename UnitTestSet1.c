@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "ListNode.h"
 #include "Event.h"
+#include "Queue.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -145,12 +146,23 @@ void Test3()
 	ListNode_DestroyList(head);
 }
 
-// Tests queue create, destroy, add, and pop functions.
+// Tests queue create and destroy functions.
 void Test4()
 {
-	//int success, success2, success3;
+	fprintf(stdout, "\nTest 4: Creating and Destroying a Queue\n");
 
-	//Queue* testQueue1 = Queue
+	Queue* testQueue1 = Queue_Create();
+	if (testQueue1->Count == DEFAULTCOUNT)
+		fprintf(stdout, "\nQueue was created correctly.\n\nSuccess\n");
+	else
+		fprintf(stdout, "\nQueue was not created correctly.\n\nFailure\n");
+
+	Queue_Destroy(testQueue1);
+}
+
+void Test5()
+{
+	int success, success2, success3;
 }
 
 int main(int argc, char** argv)

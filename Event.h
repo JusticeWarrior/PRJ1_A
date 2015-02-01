@@ -7,6 +7,7 @@
 typedef struct Event_st Event;
 
 #include<stdlib.h>
+#include <assert.h>
 
 struct Event_st{
 	// Either an ARRIVAL or a DEPARTURE
