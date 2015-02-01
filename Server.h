@@ -22,13 +22,13 @@ Server* Server_Create(int processors);
 void Server_Destroy(Server* server);
 
 //Returns a 1 if busy, a 0 if not
-int Server_IsBusy(Server server);
+int Server_IsBusy(Server* server);
 
 //Attempts to make the server busy, returns 1 if successful, 0 if the server is alread busy
-int Server_AddTask(Server server);
+int Server_AddTask(Server* server, Event* event);
 
 //Removes task from server
-void Server_RemoveTask(Server server);
+void Server_RemoveTask(Server* server, Event* event);
 
 
 
