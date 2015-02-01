@@ -31,7 +31,7 @@ float SimulationData_AverageWait(SimulationData* simData, int priority, int arri
 
 float SimulationData_AverageQueueLength(SimulationData* simData)
 {
-  float length;
+  float length=0;
   int i;
 
   for(i=0;i<PRIORITY_LEVELS;i++)

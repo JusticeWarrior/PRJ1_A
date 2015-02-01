@@ -1,5 +1,8 @@
 #include "FEL.h"
+#include "SimulationData.h"
+#include "Server.h"
 #include "ListNode.h"
+#include "Control.h"
 #include <stdio.h>
 #include <stdlib.h>
 

@@ -19,8 +19,6 @@ struct Output_st{
   float AverageUtilization;  //Fraction of time the CPU is on
 };
 
-st
-
 //Create and populate arrivals for the FEL for a random simulation
 FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTasks);
 
