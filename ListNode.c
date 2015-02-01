@@ -84,7 +84,7 @@ void ListNode_PrintList(ListNode* head)
 
 	while (head != NULL)
 	{
-		fprintf(stdout, "Node %d: %ds %c %d", node, head->Event->Time, head->Event->Type, head->Event->Priority);
+		fprintf(stdout, "Node %d: %ds %c %d\n", node, head->Event->Time, head->Event->Type, head->Event->Priority);
 		
 		node++;
 		head = head->Next;

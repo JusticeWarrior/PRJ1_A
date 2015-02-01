@@ -1,7 +1,7 @@
 #ifndef EVENT_INCLUDED
 #define EVENT_INCLUDED
-#define ARRIVAL A
-#define DEPARTURE D
+#define ARRIVAL 'A'
+#define DEPARTURE 'D'
 
 // A structure to hold event data of a particular event.
 typedef struct Event_st Event;
