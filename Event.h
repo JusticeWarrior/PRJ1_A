@@ -14,10 +14,11 @@ struct Event_st{
 	char Type;
 	int Priority;
 	int Time;
+	int Duration;
 };
 
-// Creates and instance of Event given the type, priority, and time.
-Event* Event_Create(char type, int priority, int time);
+// Creates and instance of Event given the type, priority, time, and duration.
+Event* Event_Create(char type, int priority, int time, int duration);
 
 // Destroys the current instance of Event.
 void Event_Destroy(Event* event);

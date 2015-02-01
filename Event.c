@@ -1,12 +1,13 @@
 #include "Event.h"
 
-Event* Event_Create(char type, int priority, int time)
+Event* Event_Create(char type, int priority, int time, int duration)
 {
 	Event* event = malloc(sizeof(Event));
 
 	event->Type = type;
 	event->Priority = priority;
 	event->Time = time;
+	event->Duration = duration;
 
 	return event;
 }
