@@ -15,7 +15,7 @@ int main(int argc, char** argv)
 
   ListNode_PrintList(futureList->EventList, "Event List");
 
-  for(i=0;i<10;i++)
+  for(i=0;i<100000;i++)
   {
     printf("Removing first item from the list\n");
     event = FEL_PopEvent(futureList);
