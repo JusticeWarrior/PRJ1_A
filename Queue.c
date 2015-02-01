@@ -1,12 +1,13 @@
 #include "Queue.h"
 
-Queue* Queue_Create()
+Queue* Queue_Create(int priority)
 {
 	Queue* queue = malloc(sizeof(Queue));
 
 	queue->Count = DEFAULTCOUNT;
 	queue->Head = NULL;
 	queue->Tail = NULL;
+	queue->Priority = priority;
 
 	return queue;
 }
@@ -24,6 +25,7 @@ void Queue_Destroy(Queue* queue)
 void Queue_Add(Queue* queue, ListNode* node)
 {
 	assert(node != NULL); // Make sure you don't add a NULL node!
+	assert(node->Event->Priority == queue->Priority); // Make sure you don't add an event with a different priority than the queue!
 
 	if (queue->Tail == NULL)
 	{

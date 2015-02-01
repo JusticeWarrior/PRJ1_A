@@ -13,10 +13,12 @@ struct Queue_st{
 	int Count;
 	ListNode* Head;
 	ListNode* Tail;
+	int Priority;
 };
 
-// Creates an instance of a queue with a default count of 0 and null ListNode*.
-Queue* Queue_Create();
+// Creates an instance of a queue with a default count of 0, null ListNode*, and 
+// the provided priority level.
+Queue* Queue_Create(int priority);
 
 // Destroys the current instance of queue and all data that it still contains.
 void Queue_Destroy(Queue* queue);

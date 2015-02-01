@@ -203,7 +203,7 @@ void Test5()
 {
 	fprintf(stdout, "\nTest 5: Creating and Destroying a Queue\n");
 
-	Queue* testQueue1 = Queue_Create();
+	Queue* testQueue1 = Queue_Create(0);
 	if (testQueue1->Count == DEFAULTCOUNT)
 		fprintf(stdout, "\nQueue was created correctly.\n\nSuccess\n");
 	else
@@ -219,7 +219,7 @@ void Test6()
 
 	fprintf(stdout, "\nTest 6: Adding and Popping from a Queue\n");
 
-	Queue* testQueue1 = Queue_Create();
+	Queue* testQueue1 = Queue_Create(0);
 
 	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 0);
 	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3, 0);
