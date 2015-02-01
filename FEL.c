@@ -60,7 +60,7 @@ void FEL_GenerateNewArrival(FEL* futureEvents, int  priority, int currentTime)
   {
     futureEvents -> ArrivalsLeft[priority]--;
     time += expDist(lambda);
-    event = Event_Create(ARRIVAL, priority, time);
+    event = Event_Create(ARRIVAL, priority, time,0);
     FEL_AddEvent(futureEvents, event); 
   }
 }
@@ -74,7 +74,7 @@ void FEL_GenerateNewDeparture(FEL* futureEvents, int currentTime)
   Event* event;
 
   time += (int)ceil(-(log(1 - (((float)rand()+1))/RAND_MAX)) / (mu));
-  event = Event_Create(DEPARTURE, 12345, time);
+  event = Event_Create(DEPARTURE, 12345, time,0);
 
   FEL_AddEvent(futureEvents, event); 
 }
