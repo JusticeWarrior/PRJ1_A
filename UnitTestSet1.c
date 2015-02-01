@@ -146,9 +146,56 @@ void Test3()
 	ListNode_DestroyList(head);
 }
 
+// Tests the strip node functionality
 void Test4()
 {
+	int success, success2;
 
+	fprintf(stdout, "\nTest 4: Stripping a Node\n");
+
+	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2);
+	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3);
+	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5);
+	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6);
+	ListNode* testNode1 = ListNode_Create(testEvent1);
+	ListNode* testNode2 = ListNode_Create(testEvent2);
+	ListNode* testNode3 = ListNode_Create(testEvent3);
+	ListNode* testNode4 = ListNode_Create(testEvent4);
+	ListNode* head = ListNode_InsertSorted(testNode1, testNode2, ListNode_CompEventTime);
+	head = ListNode_InsertSorted(testNode3, head, ListNode_CompEventTime);
+	head = ListNode_InsertSorted(testNode4, head, ListNode_CompEventTime);
+	ListNode_PrintList(head, "4 Element List");
+
+	head = ListNode_PopHead(testNode1);
+	Event* testEventStrip1 = ListNode_StripEvent(testNode1);
+	if (testEventStrip1->Time == 2 && head->Event->Time == 3)
+		success = TRUE;
+	else
+		success = FALSE;
+	ListNode_PrintList(head, "One Element Popped");
+
+	head = ListNode_PopHead(testNode2);
+	Event* testEventStrip2 = ListNode_StripEvent(testNode2);
+	if (testEventStrip2->Time == 3 && head->Event->Time == 5)
+		success2 = TRUE;
+	else
+		success2 = FALSE;
+	ListNode_PrintList(head, "Two Elements Popped");
+
+	testEventStrip1->Priority = 1;
+	testEventStrip2->Type = DEPARTURE;
+	ListNode* testNode5 = ListNode_Create(testEventStrip1);
+	ListNode* testNode6 = ListNode_Create(testEventStrip2);
+	head = ListNode_InsertSorted(testNode5, head, ListNode_CompEventTime);
+	head = ListNode_InsertSorted(testNode6, head, ListNode_CompEventTime);
+	ListNode_PrintList(head, "Reconstructed with altered Events");
+	if (head->Event->Time == 2 && head->Event->Priority == 1 && head->Next->Event->Time == 3
+		&& head->Next->Event->Type == DEPARTURE && success == TRUE && success2 == TRUE)
+		fprintf(stdout, "\nSuccess\n");
+	else
+		fprintf(stdout, "\nFailure\n");
+
+	ListNode_DestroyList(head);
 }
 
 // Tests queue create and destroy functions.
@@ -165,9 +212,53 @@ void Test5()
 	Queue_Destroy(testQueue1);
 }
 
+// Tests adding and popping from a queue.
 void Test6()
 {
-	int success, success2, success3;
+	int success, success2;
+
+	fprintf(stdout, "\nTest 6: Adding and Popping from a Queue\n");
+
+	Queue* testQueue1 = Queue_Create();
+
+	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2);
+	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3);
+	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5);
+	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6);
+	ListNode* testNode1 = ListNode_Create(testEvent1);
+	ListNode* testNode2 = ListNode_Create(testEvent2);
+	ListNode* testNode3 = ListNode_Create(testEvent3);
+	ListNode* testNode4 = ListNode_Create(testEvent4);
+
+	Queue_Add(testQueue1, testNode1);
+	Queue_Add(testQueue1, testNode2);
+	Queue_Add(testQueue1, testNode3);
+	Queue_Add(testQueue1, testNode4);
+	ListNode_PrintList(testQueue1->Head, "4 Element Queue List");
+	if (testQueue1->Count == 4)
+		success = TRUE;
+	else
+		success = FALSE;
+
+	ListNode* testNode5 = Queue_Pop(testQueue1);
+	ListNode* testNode6 = Queue_Pop(testQueue1);
+	ListNode_PrintList(testQueue1->Head, "2 Element Queue List");
+	if (testQueue1->Count == 2 && testNode5->Event->Time == 2 && testNode6->Event->Time == 3)
+		success2 = TRUE;
+	else
+		success2 = FALSE;
+
+	Queue_Add(testQueue1, testNode5);
+	Queue_Add(testQueue1, testNode6);
+	ListNode_PrintList(testQueue1->Head, "Reconstructed 4 Element Queue List");
+	if (testQueue1->Count == 4 && testQueue1->Tail->Event->Time == 3 &&
+		testQueue1->Head->Next->Next->Event->Time == 2 && success == TRUE
+		&& success2 == TRUE)
+		fprintf(stdout, "\nSuccess\n");
+	else
+		fprintf(stdout, "\nFailure\n");
+
+	Queue_Destroy(testQueue1);
 }
 
 int main(int argc, char** argv)
@@ -177,6 +268,7 @@ int main(int argc, char** argv)
 	Test3();
 	Test4();
 	Test5();
+	Test6();
 
 	return EXIT_SUCCESS;
 }

@@ -121,7 +121,6 @@ Event* ListNode_StripEvent(ListNode* node)
 
 	Event* event = node->Event;
 	node->Event = NULL;
-	node->Next = NULL;
 
 	ListNode_DestroyList(node);
 

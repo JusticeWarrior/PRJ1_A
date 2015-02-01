@@ -25,6 +25,12 @@ void Queue_Add(Queue* queue, ListNode* node)
 {
 	assert(node != NULL); // Make sure you don't add a NULL node!
 
+	if (queue->Tail == NULL)
+	{
+		queue->Head = node;
+		queue->Tail = node;
+	}
+
 	queue->Count++;
 	queue->Tail = ListNode_AppendTail(node, queue->Tail);
 }
