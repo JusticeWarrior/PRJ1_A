@@ -39,6 +39,9 @@ FEL* FEL_Create(int totalArrivals, float mu, float lambda0, float lambda1)
 
 void FEL_Destroy(FEL* futureEvents)
 {
+	if (futureEvents == NULL)
+		return;
+
   ListNode_DestroyList(futureEvents -> EventList);
   free(futureEvents -> ArrivalsLeft);
   free(futureEvents -> Lambda); 
@@ -123,6 +126,8 @@ static int expDist(float constant)
 
 ListNode* FEL_PopNode(FEL* futureList)
 {
+	if (futureList->EventList == NULL)
+		return NULL;
   ListNode* poppedNode = futureList->EventList;
   futureList->EventList = ListNode_PopHead(futureList->EventList);
   return poppedNode;

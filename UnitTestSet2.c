@@ -7,7 +7,7 @@ int main(int argc, char** argv)
   int i;
   Event* event;
   printf("Adding 10 random arrivals\n");
-  FEL* futureList = FEL_Create(100,1,0.03,0.003 );
+  FEL* futureList = FEL_Create(100,1,0.03,0.003);
   for(i=0;i<10;i++)
   {
     FEL_GenerateNewArrival(futureList,i%2,0);
