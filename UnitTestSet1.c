@@ -72,10 +72,9 @@ void Test2()
 	else
 		success2 = FALSE;
 
-	//testNode2, testNode3, testNode4, testNode5, tail = NULL;
 	ListNode* testNode7 = ListNode_PopHead(testNode6);
 	ListNode* testNode8 = ListNode_PopHead(testNode7);
-	ListNode* testNode9 = ListNode_PopHead(testNode8);
+	ListNode_PopHead(testNode8);
 	tail = ListNode_AppendTail(testNode8, tail);
 	tail = ListNode_AppendTail(testNode7, tail);
 	tail = ListNode_AppendTail(testNode6, tail);

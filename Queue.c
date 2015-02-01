@@ -49,3 +49,19 @@ ListNode* Queue_Pop(Queue* queue)
 
 	return poppedNode;
 }
+
+void Queue_AddArrival(Queue* queue0, Queue* queue1, ListNode* node)
+{
+	assert(queue0->Priority != queue1->Priority); // Make sure the Queues don't have the same priority level!
+	assert(node != NULL); // Make sure you don't add a NULL node!
+	assert(queue0 != NULL && queue1 != NULL); // Make sure the queue's aren't NULL!
+
+	if (queue0->Priority == node->Event->Priority)
+		Queue_Add(queue0, node);
+	else if (queue1->Priority == node->Event->Priority)
+		Queue_Add(queue1, node);
+	else
+	{
+		assert(0); // The arrival could not be added to either queue!
+	}
+}

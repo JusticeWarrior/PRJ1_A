@@ -30,4 +30,8 @@ void Queue_Add(Queue* queue, ListNode* node);
 // the queue is empty.
 ListNode* Queue_Pop(Queue* queue);
 
+// Provided with two queues of different priority types, the function will add
+// the node to the correct queue.
+void Queue_AddArrival(Queue* queue0, Queue* queue1, ListNode* node);
+
 #endif /* QUEUE_INCLUDED */
