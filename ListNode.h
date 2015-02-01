@@ -44,4 +44,8 @@ void ListNode_PrintList(ListNode* head, const char* name);
 // Gets the length of the list and returns it as an integer.
 int ListNode_GetLength(ListNode* head);
 
+// Strips the Event structure from the current node and returns the Event.
+// Destroys only the current instance of the ListNode.
+Event* ListNode_StripEvent(ListNode* node);
+
 #endif /* LISTNODE_INCLUDED */
