@@ -17,6 +17,7 @@
 #define ERRORRATIO 8
 #define NUMARGSMODE1 5
 #define NUMARGSMODE2 2
+#define OUTPUTNAME "proj1-a_output"
 
 typedef struct Args_st{
 	float Lambda0;
@@ -170,6 +171,16 @@ static void printFileReadingError(int lineNum, char* fileName)
 		lineNum, fileName);
 }
 
+static void printOutput(Output* output)
+{
+	FILE* file = fopen(OUTPUTNAME, "wb");
+
+	fprintf(file, "%f\n", output->AverageWait0);
+	fprintf(file, "%f\n", output->AverageWait1);
+	fprintf(file, "%f\n", output->AverageQueueLength);
+	fprintf(file, "%f", output->AverageUtilization);
+}
+
 int main(int argc, char** argv)
 {
 	if (argc == 2 && (strcmp(argv[1], "-help") == 0 || strcmp(argv[1], "-h") == 0))
@@ -197,6 +208,8 @@ int main(int argc, char** argv)
 			return EXIT_FAILURE;
 		}
 	}
+
+
 
 	return EXIT_SUCCESS;
 }
