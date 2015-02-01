@@ -21,17 +21,25 @@
 #define NUMARGSMODE2 2
 
 typedef struct Args_st{
-	float* Lambda0;
-	float* Lambda1;
+	float Lambda0;
+	float Lambda1;
 	float Mu;
 	int NumTasks;
 	char* FileName;
 	int Error;
 } Args;
 
+// Parses the arguments given and assigns errors as necessary. Does not duplicate strings,
+// so make sure that the strings are not popped from the call stack.
 static Args* parseArgs(char ** args, int numArgs)
 {
 	Args* parsedArgs = malloc(sizeof(Args));
+	parsedArgs->Error = ERRORNONE;
+	parsedArgs->FileName = NULL;
+	parsedArgs->Lambda0 = 0;
+	parsedArgs->Lambda1 = 0;
+	parsedArgs->Mu = 0;
+	parsedArgs->NumTasks = 0;
 	
 	if (numArgs > NUMARGSMODE1)
 	{
@@ -59,6 +67,43 @@ static Args* parseArgs(char ** args, int numArgs)
 			parsedArgs->Error = ERRORCANTFINDFILE;
 			return parsedArgs;
 		}
+
+		parsedArgs->FileName = args[1];
+	}
+
+	if (numArgs == NUMARGSMODE1)
+	{
+		float lambda0 = (float)atof(args[1]);
+		if (lambda0 == 0.0)
+		{
+			parsedArgs->Error = ERRORLAMBDA0;
+			return parsedArgs;
+		}
+		parsedArgs->Lambda0 = lambda0;
+
+		float lambda1 = (float)atof(args[2]);
+		if (lambda1 == 0.0)
+		{
+			parsedArgs->Error = ERRORLAMBDA1;
+			return parsedArgs;
+		}
+		parsedArgs->Lambda1 = lambda1;
+
+		float mu = (float)atof(args[3]);
+		if (mu == 0.0)
+		{
+			parsedArgs->Error = ERRORMU;
+			return parsedArgs;
+		}
+		parsedArgs->Mu = mu;
+
+		int numTasks = atoi(args[4]);
+		if (numTasks == 0)
+		{
+			parsedArgs->Error = ERRORNUMTASKS;
+			return parsedArgs;
+		}
+		parsedArgs->NumTasks = numTasks;
 	}
 
 	return parsedArgs;
