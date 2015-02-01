@@ -105,7 +105,11 @@ Event* FEL_PopEvent(FEL* futureEvents)
 	if (futureEvents->EventList == NULL)
 		return NULL;
 
-	return ListNode_StripEvent(futureEvents->EventList);
+	ListNode* newHead = futureEvents->EventList->Next;
+	Event* event = ListNode_StripEvent(futureEvents->EventList);
+	futureEvents->EventList = newHead;
+
+	return event;
 }
 
 
