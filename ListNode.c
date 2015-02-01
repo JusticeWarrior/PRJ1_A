@@ -76,3 +76,17 @@ int ListNode_CompEventTime(ListNode* node1, ListNode* node2)
 {
 	return Event_CompTime(node1->Event, node2->Event);
 }
+
+void ListNode_PrintList(ListNode* head)
+{
+	fprintf(stdout, "Printing List...\n");
+	int node = 1;
+
+	while (head != NULL)
+	{
+		fprintf(stdout, "Node %d: %ds %c %d", node, head->Event->Time, head->Event->Type, head->Event->Priority);
+		
+		node++;
+		head = head->Next;
+	}
+}
