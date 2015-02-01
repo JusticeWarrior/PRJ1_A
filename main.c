@@ -1,4 +1,4 @@
-#include "Event.h"
+﻿#include "Event.h"
 #include "FEL.h"
 #include "Queue.h"
 #include "SimulationData.h"
@@ -109,10 +109,28 @@ static Args* parseArgs(char ** args, int numArgs)
 	return parsedArgs;
 }
 
+static void printUsageMessage()
+{
+	fprintf(stdout, "USAGE:\n\n");
+	fprintf(stdout, "Mode 1:\t\t<executable name> <lambda0> <lambda1 > <mu> <total tasks in a priority group>\n");
+	fprintf(stdout, "Example:\t\tproject1-A 0.5 0.7 1 10000\n\n");
+
+	fprintf(stdout, "Mode 2:\t\t<executable name> <input file name>\n");
+	fprintf(stdout, "Example:\t\tproject1-A input.txt\n\n");
+}
+
+static void printParsingErrors(int error)
+{
+	switch (error)
+	{
+	default:
+		break;
+	}
+}
+
 int main(int argc, char** argv)
 {
+	printUsageMessage();
 
-
-	printf("\nWoo!\n");
 	return EXIT_SUCCESS;
 }
