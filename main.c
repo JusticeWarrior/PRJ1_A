@@ -168,9 +168,15 @@ static int printParsingErrors(int error)
 	return 1;
 }
 
+static void printFileReadingError(int lineNum, char* fileName)
+{
+	fprintf(stderr, "Error: Line %d of file %s is not in the correct format.\nCorrect format is:\t<arrival time> <priority> <duration>\n\n",
+		lineNum, fileName);
+}
+
 int main(int argc, char** argv)
 {
-	if (argc == 2 && strcmp(argv[1], "-help") == 0)
+	if (argc == 2 && (strcmp(argv[1], "-help") == 0 || strcmp(argv[1], "-h") == 0))
 	{
 		printUsageMessage();
 		return EXIT_SUCCESS;
@@ -179,6 +185,8 @@ int main(int argc, char** argv)
 	Args* args = parseArgs(argv, argc);
 	if (printParsingErrors(args->Error))
 		return EXIT_FAILURE;
+
+	printFileReadingError(5, args->FileName);
 
 	return EXIT_SUCCESS;
 }
