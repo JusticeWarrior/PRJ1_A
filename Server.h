@@ -10,13 +10,15 @@ typedef struct Server_st Server;
 #include "ListNode.h"
 
 struct Server_st{
-  int processors;  //The total number of processors this server has
-  int available;   //The number of available processors
+  int Processors;  //The total number of processors this server has
+  int Available;   //The number of available processors
   ListNode* Tasks; //A list of tasks currently in the server
 };
 
+//Create a Server structure with the given number of processors
 Server* Server_Create(int processors);
 
+//Destroy the givin Server structure
 void Server_Destroy(Server* server);
 
 #endif /* SERVER_INCLUDED */
