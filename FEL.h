@@ -29,10 +29,12 @@ FEL* FEL_Create(int totalArrivals, float mu, float lambda0, float lambda1);
 //Destroy the FEL structure
 void FEL_Destroy(FEL* FutureEvents);
 
-//Randomly generate a new arrival event of the given prority using the 
+//Randomly generate a new arrival event of the given prority using the time of
+//The privous arrival.  If the previousTime is <0, then the event will be
+//Scheduled to occur at t=0
 Event* FEL_GenerateRandomArrival(FEL* futureEvents, int  priority, int previousTime);
 
-//Randomly generate a new departute event
+//Generate a new departute event based off of a given arrival event
 Event* FEL_GenerateDeparture(Event* arrival, int currentTime);
 
 //Add an event that already exists to the FEL strucure

@@ -5,16 +5,40 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
 {
   FEL* fel = FEL_Create(numTasks, mu, lambda0, lambda1);
   Event* event;
+  int prevTime0 = -1;
+  int prevTime1 = -1;
+  int i;
 
-  //First, add two arrivals a t=0;
+  //Initialize the FEL EventList
+  for(i=0;i<numTasks;i++)
+  {
+    //Add a zero priority event
+    event = FEL_GenerateRandomArrival(fel,0,prevTime0);
+    FEL_AddEvent(fel,event);
+    prevTime0 = event->Time;
 
+    //Add a one priority event
+    event = FEL_GenerateRandomArrival(fel,1,prevTime1);
+    FEL_AddEvent(fel,event);
+    prevTime1 = event->Time;
+  }
+
+  return fel;
 }
 
 
 
 FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
 {
+  FILE* file = fopen(filename, "rb");
+  FEL* fel;
+  Event* event;
+  int error = 0; //Whether or not an error has occured
+  char* line;
+  char* token;
 
+  
+  
   return NULL;
 }
 

@@ -12,8 +12,8 @@
 int main(int argc, char** argv)
 {
   int i;
-  int prevTime0 = 0;
-  int prevTime1 = 0;
+  int prevTime0 = -1;
+  int prevTime1 = -1;
   Event* event;
   printf("Adding 10 random arrivals\n");
   FEL* futureList = FEL_Create(100,1,LAMBDA_ZERO,LAMBDA_ONE);

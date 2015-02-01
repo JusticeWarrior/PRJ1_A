@@ -56,8 +56,14 @@ Event* FEL_GenerateRandomArrival(FEL* futureEvents, int  priority, int previousT
   int duration;            //How long this task will spend in the server
   float lambda = futureEvents -> Lambda[priority];
   Event* event;
-  
-  time = previousTime + expDist(lambda);
+  if(previousTime < 0)
+  {
+    time = 0;
+  } 
+  else
+  {
+    time = previousTime + expDist(lambda);
+  }
   duration = expDist(futureEvents->Mu);
   event = Event_Create(ARRIVAL, priority, time, duration);
   
