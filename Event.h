@@ -1,5 +1,7 @@
 #ifndef EVENT_INCLUDED
 #define EVENT_INCLUDED
+#define ARRIVAL A
+#define DEPARTURE D
 
 // A structure to hold event data of a particular event.
 typedef struct Event_st Event;
@@ -7,6 +9,7 @@ typedef struct Event_st Event;
 #include<stdlib.h>
 
 struct Event_st{
+	// Either an ARRIVAL or a DEPARTURE
 	char Type;
 	int Priority;
 	int Time;
