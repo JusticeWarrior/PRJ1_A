@@ -11,14 +11,16 @@ struct FEL_st{
 };
 */
 
-FEL* FEL_Create(int totalArrivals, int lambda0, int lambda1, int mu)
+FEL* FEL_Create(int totalArrivals, int mu, int lambda0, int lambda1)
 {
   FEL* futureEvents = malloc(sizeof(FEL));
+  futureEvents -> Lambda = malloc(sizeof(int)*PRIORITY_LEVELS);
+  futureEvents -> ArrivalsLeft = malloc(sizeof(int)*PRIORITY_LEVELS);
 
-  futureEvents -> ArrivalsLeft0 = totalArrivals;
-  futureEvents -> ArrivalsLeft1 = totalArrivals;
-  futureEvents -> Lambda0 = lambda0;
-  futureEvents -> Lambda1 = lambda1;
+  futureEvents -> ArrivalsLeft[0] = totalArrivals;
+  futureEvents -> ArrivalsLeft[1] = totalArrivals;
+  futureEvents -> Lambda[0] = lambda0;
+  futureEvents -> Lambda[1] = lambda1;
   futureEvents -> Mu = mu;
   futureEvents -> EventList = NULL;
 
@@ -33,6 +35,12 @@ void FEL_Destroy(FEL* futureEvents)
 
 void FEL_GenerateNewArrival(FEL* futureEvents, int  priority, int currentTime)
 {
+  int time = currentTime; //The time that the new event will occur
+  Event* event;
+
+  
+  event = Event_Create(ARRIVAL, priority, time);
+  
 
 }
 
