@@ -118,7 +118,11 @@ Event* ListNode_StripEvent(ListNode* node)
 {
 	assert(node != NULL); // Make sure you don't strip a NULL node!
 
+	Event* event = node->Event;
+	node->Event = NULL;
+	node->Next = NULL;
 
+	ListNode_DestroyList(node);
 
-	return NULL;
+	return event;
 }
