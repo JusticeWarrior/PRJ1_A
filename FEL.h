@@ -33,7 +33,7 @@ void FEL_Destroy(FEL* FutureEvents);
 Event* FEL_GenerateRandomArrival(FEL* futureEvents, int  priority, int previousTime);
 
 //Randomly generate a new departute event
-Event* FEL_GenerateDeparture(FEL* futureEvents, int departureTime);
+Event* FEL_GenerateDeparture(Event* arrival, int currentTime);
 
 //Add an event that already exists to the FEL strucure
 void FEL_AddEvent(FEL* futureEvents, Event* event);

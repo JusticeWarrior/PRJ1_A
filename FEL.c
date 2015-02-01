@@ -45,31 +45,33 @@ void FEL_Destroy(FEL* futureEvents)
   ListNode_DestroyList(futureEvents -> EventList);
   free(futureEvents -> ArrivalsLeft);
   free(futureEvents -> Lambda); 
+  free(futureEvents);
 }
 
 
 
 Event* FEL_GenerateRandomArrival(FEL* futureEvents, int  priority, int previousTime)
 {
-  int time = previousTime; //The time that the new event will occur
+  int time;                //The time that the new event will occur
   int duration;            //How long this task will spend in the server
   float lambda = futureEvents -> Lambda[priority];
   Event* event;
   
-  time += expDist(lambda);
-  duration = time + expDist(futureEvents->Mu);
+  time = previousTime + expDist(lambda);
+  duration = expDist(futureEvents->Mu);
   event = Event_Create(ARRIVAL, priority, time, duration);
+  
+  return event;
 }
 
 
 
-Event* FEL_GenerateDeparture(FEL* futureEvents, int departureTime)
-{ 
+Event* FEL_GenerateDeparture(Event* arrival, int currentTime)
+{
+  if(arrival==NULL) {return NULL;} //Protect against NULL events
   Event* event;
-  event = Event_Create(DEPARTURE, 12345, departureTime,54321);
-  //Non used fields marked with peculiar numbers
+  event = Event_Create(DEPARTURE, arrival->Priority, arrival->Duration + currentTime, arrival->Duration);
   return event;
-
 }
 
 
