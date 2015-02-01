@@ -1,9 +1,5 @@
-﻿#include "Event.h"
-#include "FEL.h"
-#include "Queue.h"
-#include "SimulationData.h"
-#include "ListNode.h"
-#include "Server.h"
+﻿#include "FEL.h"
+#include "Control.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -186,7 +182,21 @@ int main(int argc, char** argv)
 	if (printParsingErrors(args->Error))
 		return EXIT_FAILURE;
 
-	printFileReadingError(5, args->FileName);
+	FEL* fel;
+	if (argc == NUMARGSMODE1)
+	{
+		//fel = Control_InitializeModeOne(args->Lambda0, args->Lambda1, args->Mu, args->NumTasks);
+	}
+	if (argc == NUMARGSMODE2)
+	{
+		int errorLine = -1;
+		//fel = Control_InitializeModeTwo(args->FileName, &errorLine);
+		if (errorLine != -1)
+		{
+			printFileReadingError(errorLine, args->FileName);
+			return EXIT_FAILURE;
+		}
+	}
 
 	return EXIT_SUCCESS;
 }
