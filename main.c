@@ -15,10 +15,14 @@
 #define ERRORINCORRECTNUMARGS 6
 #define ERRORCANTFINDFILE 7
 #define ERRORRATIO 8
+
 #define NUMARGSMODE1 5
 #define NUMARGSMODE2 2
+
+#define DEFAULTLINENUM -1
 #define OUTPUTNAME "proj1-a_output"
 
+// A structure to hold information about command line arguments.
 typedef struct Args_st{
 	float Lambda0;
 	float Lambda1;
@@ -115,6 +119,7 @@ static Args* parseArgs(char ** args, int numArgs)
 	return parsedArgs;
 }
 
+// Prints the usage message to stdout.
 static void printUsageMessage()
 {
 	fprintf(stdout, "USAGE:\n\n");
@@ -165,12 +170,14 @@ static int printParsingErrors(int error)
 	return 1;
 }
 
+// Prints an error message with the given line number and filename.
 static void printFileReadingError(int lineNum, char* fileName)
 {
 	fprintf(stderr, "Error: Line %d of file %s is not in the correct format.\nCorrect format is:\t<arrival time> <priority> <duration>\n\n",
 		lineNum, fileName);
 }
 
+// Prints the output to the output file and prints a message informing the user to stdout.
 static void printOutput(Output* output)
 {
 	FILE* file = fopen(OUTPUTNAME, "wb");
@@ -179,37 +186,51 @@ static void printOutput(Output* output)
 	fprintf(file, "%f\n", output->AverageWait1);
 	fprintf(file, "%f\n", output->AverageQueueLength);
 	fprintf(file, "%f", output->AverageUtilization);
+
+	fprintf(stdout, "Simulation Ran Successfully. Output located in file named: %s", OUTPUTNAME);
 }
 
 int main(int argc, char** argv)
 {
+	// Check for -help flag
 	if (argc == 2 && (strcmp(argv[1], "-help") == 0 || strcmp(argv[1], "-h") == 0))
 	{
 		printUsageMessage();
 		return EXIT_SUCCESS;
 	}
 
+	// Parse the arguments
 	Args* args = parseArgs(argv, argc);
+	// Check for errors in the provided arguments
 	if (printParsingErrors(args->Error))
 		return EXIT_FAILURE;
 
-	FEL* fel;
+	// Fill up a new FEL with the provided mode
+	FEL* fel = NULL;
+	// Mode 1:
 	if (argc == NUMARGSMODE1)
 	{
-		//fel = Control_InitializeModeOne(args->Lambda0, args->Lambda1, args->Mu, args->NumTasks);
+		fel = Control_InitializeModeOne(args->Lambda0, args->Lambda1, args->Mu, args->NumTasks);
 	}
+	// Mode 2:
 	if (argc == NUMARGSMODE2)
 	{
-		int errorLine = -1;
-		//fel = Control_InitializeModeTwo(args->FileName, &errorLine);
-		if (errorLine != -1)
+		int errorLine = DEFAULTLINENUM;
+		fel = Control_InitializeModeTwo(args->FileName, &errorLine);
+		if (errorLine != DEFAULTLINENUM)
 		{
 			printFileReadingError(errorLine, args->FileName);
 			return EXIT_FAILURE;
 		}
 	}
 
+	// Run simulation with generated FEL
+	Output* output = Control_Run(fel);
 
+	// Print the output in the correct format
+	printOutput(output);
+
+	Output_Destroy(output);
 
 	return EXIT_SUCCESS;
 }
