@@ -205,7 +205,7 @@ int main(int argc, char** argv)
 	if (printParsingErrors(args->Error))
 		return EXIT_FAILURE;
 
-	fprintf(stdout, "Starting Simulation...\n")
+	fprintf(stdout, "Starting Simulation...\n");
 
 	// Fill up a new FEL with the provided mode
 	FEL* fel = NULL;
