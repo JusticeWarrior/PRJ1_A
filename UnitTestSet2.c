@@ -9,13 +9,14 @@
 #define ARRIVALS 100
 #define LAMBDA_ZERO .03
 #define LAMBDA_ONE .003
-#define MU .3
+#define MU .05
 int main(int argc, char** argv)
 {
   int i;
   Event* event;
   FEL* fel = Control_InitializeModeOne(LAMBDA_ZERO,LAMBDA_ONE,MU,ARRIVALS);
 
+  float avgDuration = FEL_AverageEventDuration(fel);
 
   ListNode_PrintList(fel->EventList, "Event List");
 
@@ -27,6 +28,9 @@ int main(int argc, char** argv)
     //ListNode_PrintList(futureList->EventList, "Event List");
     
   }
+
+  fprintf(stdout, "Average Event Duration is: %f\n", avgDuration);
+
   printf("Ending Test\n\n");
   FEL_Destroy(fel);
   return EXIT_SUCCESS;

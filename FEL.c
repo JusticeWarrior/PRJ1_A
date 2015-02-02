@@ -120,7 +120,7 @@ Event* FEL_PopEvent(FEL* futureEvents)
 static int expDist(float constant)
 {
   //A uniformly distributed random float
-  float uniform = (1 - ((float)rand())/RAND_MAX);
+  float uniform = (1 - ((float)rand())/(RAND_MAX + 1));
   return((int)ceil(-log(uniform)/constant));
 }
 
@@ -131,4 +131,27 @@ ListNode* FEL_PopNode(FEL* futureList)
   ListNode* poppedNode = futureList->EventList;
   futureList->EventList = ListNode_PopHead(futureList->EventList);
   return poppedNode;
+}
+
+float FEL_AverageEventDuration(FEL* futureEvents)
+{
+	ListNode* head = futureEvents->EventList;
+	int count = ListNode_GetLength(head);
+
+	if (count == 0)
+		return 0.0;
+
+	int totalTime = 0;
+	while (head != NULL)
+	{
+		totalTime += head->Event->Duration;
+		head = head->Next;
+	}
+
+	return (float)totalTime / (float)count;
+}
+
+void FEL_SetRandSeed()
+{
+	srand((unsigned int)time(NULL));
 }
