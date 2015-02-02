@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define ARRIVALS 100
+#define ARRIVALS 10000
 #define LAMBDA_ZERO .03
 #define LAMBDA_ONE .003
 #define MU .05
