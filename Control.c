@@ -83,7 +83,56 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
 
 Output* Control_Run(FEL* fel)
 {
+  //Initialize main structures
+  SimulationData* simData = SimulationData_Create();
+  Server* server = Server_Create(1);
+  Queue* queue0 = Queue_Create(0);
+  Queue* queue1 = Queue_Create(1);
+  
+  //Initialize other variables
+  Event* event;
+  int deltaTime;
+  int cumulativeTime;
 
+
+
+  //Main loop
+  while(!FEL_IsEmpty(fel))
+  {
+    //Grab new event
+    event = FEL_PopEvent(fel);
+
+    //Collect statistics
+    deltaTime = event->Time - simData->CurrentTime;
+    simData -> WaitingTime[0] += deltaTime * queue0->Count; 
+    simData -> WaitingTime[1] += deltaTime * queue1->Count; 
+    simData -> CPUTime += deltaTime*Server_IsBusy(server);
+    
+    //Now that statistics have been collected, it is safe to advance the time
+    simData -> CurrentTime += deltaTime;
+
+    //Handle Event
+    if(event->Type == ARRIVAL)
+    {
+      Queue_AddArrival(queue0, queue1, ListNode_Create(event));
+    }
+    if(event->Type == DEPARTURE)
+    {
+      Server_RemoveTask(server, event);
+    }
+    //Update Queue
+    if((!Server_IsBusy(server)) && 1){}
+    
+  }
+
+  //Destroy given structures
+  SimulationData_Destroy(simData);
+  Server_Destroy(server);
+  Queue_Destroy(queue0);
+  Queue_Destroy(queue1);
+  FEL_Destroy(fel);
+
+  
   return NULL;
 }
 
