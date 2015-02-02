@@ -52,20 +52,20 @@ void FEL_Destroy(FEL* futureEvents)
 
 Event* FEL_GenerateRandomArrival(FEL* futureEvents, int  priority, int previousTime)
 {
-  int time;                //The time that the new event will occur
+  int eventTime;                //The time that the new event will occur
   int duration;            //How long this task will spend in the server
   float lambda = futureEvents -> Lambda[priority];
   Event* event;
   if(previousTime < 0)
   {
-    time = 0;
+    eventTime = 0;
   } 
   else
   {
-    time = previousTime + expDist(lambda);
+    eventTime = previousTime + expDist(lambda);
   }
   duration = expDist(futureEvents->Mu);
-  event = Event_Create(ARRIVAL, priority, time, duration);
+  event = Event_Create(ARRIVAL, priority, eventTime, duration);
   
   return event;
 }
@@ -120,7 +120,7 @@ Event* FEL_PopEvent(FEL* futureEvents)
 static int expDist(float constant)
 {
   //A uniformly distributed random float
-  float uniform = (1 - ((float)rand())/(RAND_MAX + 1));
+  float uniform = (1 - ((float)rand())/((float)RAND_MAX + 1));
   return((int)ceil(-log(uniform)/constant));
 }
 

@@ -28,6 +28,7 @@ int Server_IsBusy(Server* server)
 int Server_AddTask(Server* server, Event* event)
 {
   if(server -> Available == 0){return 0;} //Failure, server not available
+  if(event == NULL ){return 0;}           //No event was given
 
   ListNode* node = ListNode_Create(event);
   server->Tasks = ListNode_AppendTail(node, server->Tasks);

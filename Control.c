@@ -91,8 +91,9 @@ Output* Control_Run(FEL* fel)
   
   //Initialize other variables
   Event* event;
+  ListNode* node;
   int deltaTime;
-  int cumulativeTime;
+  //int cumulativeTime;
 
 
 
@@ -121,7 +122,22 @@ Output* Control_Run(FEL* fel)
       Server_RemoveTask(server, event);
     }
     //Update Queue
-    if((!Server_IsBusy(server)) && 1){}
+    if((!Server_IsBusy(server)))
+    {
+      if(queue0->Count != 0)
+      {
+        node = Queue_Pop(queue0);
+      }
+      else if(queue1->Count != 0)
+      {
+        node = Queue_Pop(queue1);
+      }
+      else
+      {
+        node = NULL;
+      }
+      event = ListNode_StripEvent(node); //Can this handle NULL?
+    }
     
   }
 
