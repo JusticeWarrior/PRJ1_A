@@ -46,5 +46,7 @@ void Server_RemoveTask(Server* server, Event* event)
   server->Tasks = shortenedList;
 
   server -> Available = 1;
+  
+  Event_Destroy(event);
 }
 
