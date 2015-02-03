@@ -138,11 +138,14 @@ Output* Control_Run(FEL* fel)
       {
         node = NULL;
       }
-      event = ListNode_StripEvent(node); //Can this handle NULL?
-      //Add task
-      Server_AddTask(server, event); //Can this handle NULL?
-      departure = FEL_GenerateDeparture(event, simData -> CurrentTime);
-      FEL_AddEvent(fel, departure);
+      if(node != NULL)
+      {
+        event = ListNode_StripEvent(node); //Can this handle NULL?
+        //Add task
+        Server_AddTask(server, event); //Can this handle NULL?
+        departure = FEL_GenerateDeparture(event, simData -> CurrentTime);
+        FEL_AddEvent(fel, departure);
+      }
     }
 
   }
