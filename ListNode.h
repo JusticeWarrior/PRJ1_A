@@ -35,7 +35,7 @@ ListNode* ListNode_PopHead(ListNode* headNode);
 // Compares two ListNodes according to the event time. Returns a positive integer if
 // node1 has a lower event time than node2, negative integer if node2 has a lower event time
 // than node1, and 0 if they have the same event time.
-int ListNode_CompEventTime(ListNode* node1, ListNode* node2);
+int ListNode_CompEventTimePriority(ListNode* node1, ListNode* node2);
 
 // Prints the entire list starting with the head and prints the provided name.
 // Used for testing purposes.

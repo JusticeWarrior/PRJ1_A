@@ -81,10 +81,10 @@ ListNode* ListNode_PopHead(ListNode* headNode)
 	return newHead;
 }
 
-int ListNode_CompEventTime(ListNode* node1, ListNode* node2)
+int ListNode_CompEventTimePriority(ListNode* node1, ListNode* node2)
 {
 	assert(node1 != NULL && node2 != NULL); // Don't compare against any NULL nodes!
-	return Event_CompTime(node1->Event, node2->Event);
+	return Event_CompTimePriority(node1->Event, node2->Event);
 }
 
 void ListNode_PrintList(ListNode* head, const char* name)

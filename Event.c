@@ -17,9 +17,14 @@ void Event_Destroy(Event* event)
 	free(event);
 }
 
-int Event_CompTime(Event* event1, Event* event2)
+int Event_CompTimePriority(Event* event1, Event* event2)
 {
 	assert(event1 != NULL && event2 != NULL);
 
-	return event2->Time - event1->Time;
+	int comp = event2->Time - event1->Time;
+
+	if (comp == 0)
+		return event2->Priority - event1->Priority;
+
+	return comp;
 }
