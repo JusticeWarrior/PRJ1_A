@@ -27,7 +27,7 @@ void Queue_Add(Queue* queue, ListNode* node)
 	assert(node != NULL); // Make sure you don't add a NULL node!
 	assert(node->Event->Priority == queue->Priority); // Make sure you don't add an event with a different priority than the queue!
 
-	if (queue->Tail == NULL)
+	if (queue->Count == 0)
 	{
 		queue->Head = node;
 		queue->Tail = node;
@@ -41,6 +41,9 @@ ListNode* Queue_Pop(Queue* queue)
 {
 	if (queue->Count == 0)
 		return NULL;
+
+	if (queue->Count == 1)
+		queue->Tail = NULL;
 
 	queue->Count--;
 	ListNode* poppedNode = queue->Head;
