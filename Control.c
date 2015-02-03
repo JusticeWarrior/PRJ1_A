@@ -161,7 +161,7 @@ Output* Control_Run(FEL* fel)
   queueLength = SimulationData_AverageQueueLength(simData);
   utilization = SimulationData_Utilization(simData);
 
-  output = Output_Create(wait0, wait1, queueLength, utilization);
+  output = Output_Create(wait0, wait1, queueLength, utilization, simData->CurrentTime);
 
   //Destroy given structures
   SimulationData_Destroy(simData);
@@ -176,7 +176,7 @@ Output* Control_Run(FEL* fel)
 
 
 
-Output* Output_Create(float AvgWait0, float AvgWait1, float AvgQueue, float AvgCPU)
+Output* Output_Create(float AvgWait0, float AvgWait1, float AvgQueue, float AvgCPU, int EndTime)
 {
   Output* output = malloc(sizeof(Output));
 
@@ -184,6 +184,7 @@ Output* Output_Create(float AvgWait0, float AvgWait1, float AvgQueue, float AvgC
   output -> AverageWait1 = AvgWait1;
   output -> AverageQueueLength = AvgQueue;
   output -> AverageUtilization = AvgCPU;
+  output -> EndTime = EndTime;
 
   return output;
 }

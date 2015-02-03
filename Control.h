@@ -19,6 +19,7 @@ struct Output_st{
   float AverageWait1;        //The average wait time of the one priority queue
   float AverageQueueLength;  //The average queue length
   float AverageUtilization;  //Fraction of time the CPU is on
+  int EndTime; //The time that the simulation ends
 };
 
 //Create and populate arrivals for the FEL for a random simulation
@@ -33,7 +34,7 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber);
 Output* Control_Run(FEL* fel);
 
 //Create an Output struture
-Output* Output_Create(float AvgWait0, float AvgWait1, float AvgQueue, float AvgCPU);
+Output* Output_Create(float AvgWait0, float AvgWait1, float AvgQueue, float AvgCPU, int EndTime);
 
 //Destroy an Output structure
 void Output_Destroy(Output* output);
