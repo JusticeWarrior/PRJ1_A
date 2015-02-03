@@ -85,7 +85,7 @@ Event* FEL_GenerateDeparture(Event* arrival, int currentTime)
 void FEL_AddEvent(FEL* futureEvents, Event* event)
 {  
   ListNode* node = ListNode_Create(event);
-  futureEvents -> EventList = ListNode_InsertSorted(node, futureEvents -> EventList, ListNode_CompEventTime);
+  futureEvents->EventList = ListNode_InsertSorted(node, futureEvents->EventList, ListNode_CompEventTimePriority);
 }
 
 

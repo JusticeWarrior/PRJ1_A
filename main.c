@@ -264,7 +264,7 @@ int main(int argc, char** argv)
 		}
 	}
 
-	ListNode_PrintToTestFile(fel->EventList, "testData2.txt");
+	ListNode_PrintToTestFile(fel->EventList, "testData5.txt");
 
 	// Run simulation with generated FEL
 	Output* output = Control_Run(fel);
