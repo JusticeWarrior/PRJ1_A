@@ -31,6 +31,7 @@ void Queue_Add(Queue* queue, ListNode* node)
 	{
 		queue->Head = node;
 		queue->Tail = node;
+		return;
 	}
 
 	queue->Count++;
