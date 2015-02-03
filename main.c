@@ -222,7 +222,7 @@ static void printOutput(Output* output)
 	fprintf(file, "%f\n", output->AverageQueueLength);
 	fprintf(file, "%f", output->AverageUtilization);
 
-	fprintf(stdout, "The simulation has finished at time %ds.\n\nOutput is located in file named: %s", output->EndTime,OUTPUTNAME);
+	fprintf(stdout, "The simulation has finished at time %ds.\n\nOutput is located in file named: %s\n", output->EndTime,OUTPUTNAME);
 
 	fclose(file);
 }
