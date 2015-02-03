@@ -88,9 +88,11 @@ Output* Control_Run(FEL* fel)
   Server* server = Server_Create(1);
   Queue* queue0 = Queue_Create(0);
   Queue* queue1 = Queue_Create(1);
+  Output* output;
   
   //Initialize other variables
   Event* event;
+  Event* departure;
   ListNode* node;
   int deltaTime;
   //int cumulativeTime;
@@ -137,9 +139,26 @@ Output* Control_Run(FEL* fel)
         node = NULL;
       }
       event = ListNode_StripEvent(node); //Can this handle NULL?
+      //Add task
+      Server_AddTask(server, event); //Can this handle NULL?
+      departure = FEL_GenerateDeparture(event, simData -> CurrentTime);
+      FEL_AddEvent(fel, departure);
     }
-    
+
   }
+
+  //Calculate final simulation data values
+  float wait0;
+  float wait1;
+  float queueLength;
+  float utilization;
+
+  wait0=SimulationData_AverageWait(simData,0,fel->NumberArrivals[0]);
+  wait1=SimulationData_AverageWait(simData,1,fel->NumberArrivals[1]);
+  queueLength = SimulationData_AverageQueueLength(simData);
+  utilization = SimulationData_Utilization(simData);
+
+  output = Output_Create(wait0, wait1, queueLength, utilization);
 
   //Destroy given structures
   SimulationData_Destroy(simData);
@@ -148,8 +167,8 @@ Output* Control_Run(FEL* fel)
   Queue_Destroy(queue1);
   FEL_Destroy(fel);
 
-  
-  return NULL;
+  //Return simulation informatoin
+  return output;
 }
 
 
