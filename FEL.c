@@ -14,6 +14,7 @@ struct FEL_st{
 //This function will return a random exponentially distributed variable
 static int expDist(float constant);
 static ListNode* FEL_PopNode(FEL* futureList);
+static void FEL_setRandSeed();
 
 FEL* FEL_Create(int arrivals0, int arrivals1, float mu, float lambda0, float lambda1)
 {
@@ -31,6 +32,8 @@ FEL* FEL_Create(int arrivals0, int arrivals1, float mu, float lambda0, float lam
 
   futureEvents -> Mu = mu;
   futureEvents -> EventList = NULL;
+
+  FEL_setRandSeed();
 
   return futureEvents;
 }
@@ -151,7 +154,8 @@ float FEL_AverageEventDuration(FEL* futureEvents)
 	return (float)totalTime / (float)count;
 }
 
-void FEL_SetRandSeed()
+// Sets the rand() seed value to the current time.
+static void FEL_setRandSeed()
 {
 	srand((unsigned int)time(NULL));
 }

@@ -50,7 +50,4 @@ Event* FEL_PopEvent(FEL* futureEvents);
 // A function to test the average event time within a given FEL list.
 float FEL_AverageEventDuration(FEL* futureEvents);
 
-// Sets the rand() seed value to the current time.
-void FEL_SetRandSeed();
-
 #endif /* FEL_INCLUDED */
