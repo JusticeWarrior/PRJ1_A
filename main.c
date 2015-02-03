@@ -121,6 +121,12 @@ static Args* parseArgs(char ** args, int numArgs)
 	return parsedArgs;
 }
 
+// Destroys the argument structure
+void Args_Destroy(Args* args)
+{
+	free(args);
+}
+
 // Prints the usage message to stdout.
 static void printUsageMessage()
 {
@@ -263,6 +269,9 @@ int main(int argc, char** argv)
 			return EXIT_FAILURE;
 		}
 	}
+
+	// Destroy the Argument structure
+	Args_Destroy(args);
 
 	// Run simulation with generated FEL
 	Output* output = Control_Run(fel);
