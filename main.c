@@ -188,6 +188,8 @@ static void printOutput(Output* output)
 	fprintf(file, "%f", output->AverageUtilization);
 
 	fprintf(stdout, "Simulation Ran Successfully. Output located in file named: %s", OUTPUTNAME);
+
+	fclose(file);
 }
 
 int main(int argc, char** argv)

@@ -5,7 +5,9 @@ SimulationData* SimulationData_Create()
 {
   SimulationData* simData = malloc(sizeof(SimulationData));
   simData -> WaitingTime = malloc(sizeof(int)*PRIORITY_LEVELS);
-
+  
+  simData -> WaitingTime[0] = 0;
+  simData -> WaitingTime[1] = 0;
   simData -> CPUTime = 0;
   simData -> CurrentTime = 0; 
  
@@ -45,7 +47,7 @@ float SimulationData_AverageQueueLength(SimulationData* simData)
 
 float SimulationData_Utilization(SimulationData* simData)
 {
-  float cpu = simData -> CPUTime;
+  float cpu = (float)simData -> CPUTime;
   float average = cpu / ((float)(simData->CurrentTime));
   return average;  
 }
