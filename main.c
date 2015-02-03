@@ -216,7 +216,7 @@ static void printOutput(Output* output)
 	fprintf(file, "%f\n", output->AverageQueueLength);
 	fprintf(file, "%f", output->AverageUtilization);
 
-	fprintf(stdout, "The simulation has finished. Output located in file named: %s", OUTPUTNAME);
+	fprintf(stdout, "The simulation has finished at time %ds.\n\nOutput is located in file named: %s", output->EndTime,OUTPUTNAME);
 
 	fclose(file);
 }
@@ -263,6 +263,8 @@ int main(int argc, char** argv)
 			return EXIT_FAILURE;
 		}
 	}
+
+	ListNode_PrintToTestFile(fel->EventList, "testData2.txt");
 
 	// Run simulation with generated FEL
 	Output* output = Control_Run(fel);
