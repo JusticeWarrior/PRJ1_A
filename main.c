@@ -22,6 +22,8 @@
 #define DEFAULTLINENUM -1
 #define OUTPUTNAME "proj1-a_output"
 
+#define VERSION "1.0"
+
 // A structure to hold information about command line arguments.
 typedef struct Args_st{
 	float Lambda0;
@@ -130,6 +132,33 @@ static void printUsageMessage()
 	fprintf(stdout, "Example:\t\tproject1-A input.txt\n\n");
 }
 
+// Prints the usage message to stdout.
+static void printVersionMessage()
+{
+	fprintf(stdout, "VERSION %s\n\n", VERSION);
+	fprintf(stdout, "The MIT License (MIT)\n\n");
+
+	fprintf(stdout, "Copyright (c) 2015 Jordan Huffaker and Eric Colter\n\n");
+
+	fprintf(stdout, "Permission is hereby granted, free of charge, to any person obtaining a copy\n");
+	fprintf(stdout, "of this software and associated documentation files (the \"Software\"), to deal\n");
+	fprintf(stdout, "in the Software without restriction, including without limitation the rights\n");
+	fprintf(stdout, "to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n");
+	fprintf(stdout, "copies of the Software, and to permit persons to whom the Software is\n");
+	fprintf(stdout, "furnished to do so, subject to the following conditions:\n\n");
+
+	fprintf(stdout, "The above copyright notice and this permission notice shall be included in\n");
+	fprintf(stdout, "all copies or substantial portions of the Software.\n\n");
+
+	fprintf(stdout, "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n");
+	fprintf(stdout, "IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n");
+	fprintf(stdout, "FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n");
+	fprintf(stdout, "AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n");
+	fprintf(stdout, "LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n");
+	fprintf(stdout, "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n");
+	fprintf(stdout, "THE SOFTWARE.\n");
+}
+
 // Prints error messages if any and returns whether there was an error.
 static int printParsingErrors(int error)
 {
@@ -187,17 +216,24 @@ static void printOutput(Output* output)
 	fprintf(file, "%f\n", output->AverageQueueLength);
 	fprintf(file, "%f", output->AverageUtilization);
 
-	fprintf(stdout, "Simulation Ran Successfully. Output located in file named: %s", OUTPUTNAME);
+	fprintf(stdout, "The simulation has finished. Output located in file named: %s", OUTPUTNAME);
 
 	fclose(file);
 }
 
 int main(int argc, char** argv)
 {
-	// Check for -help flag
-	if (argc == 2 && (strcmp(argv[1], "-help") == 0 || strcmp(argv[1], "-h") == 0))
+	// Check for -help or -h flag
+	if (argc == 2 && (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0))
 	{
 		printUsageMessage();
+		return EXIT_SUCCESS;
+	}
+
+	// Check for the -v flag
+	if (argc == 2 && (strcmp(argv[1], "-v") == 0 || strcmp(argv[1], "--version") == 0))
+	{
+		printVersionMessage();
 		return EXIT_SUCCESS;
 	}
 

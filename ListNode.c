@@ -102,6 +102,20 @@ void ListNode_PrintList(ListNode* head, const char* name)
 	}
 }
 
+void ListNode_PrintToTestFile(ListNode* head, const char* testFileName)
+{
+	FILE* testFile = fopen(testFileName, "wb");
+
+	while (head != NULL && head->Event != NULL)
+	{
+		fprintf(testFile, "%d %d %d\n", head->Event->Time, head->Event->Priority, head->Event->Duration);
+
+		head = head->Next;
+	}
+
+	fclose(testFile);
+}
+
 int ListNode_GetLength(ListNode* head)
 {
 	int length = 0;
