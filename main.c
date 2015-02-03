@@ -1,4 +1,12 @@
-﻿#include "FEL.h"
+﻿/* ECE368 Project 1, part A
+ *
+ *
+ * Created by Jordan Huffaker: jhuffak@purdue.edu
+ * and Eric Colter: coltere@purdue.edu
+ */
+
+
+#include "FEL.h"
 #include "Control.h"
 
 #include <stdio.h>
