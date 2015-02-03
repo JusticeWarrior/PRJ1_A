@@ -243,7 +243,7 @@ int main(int argc, char** argv)
 	if (printParsingErrors(args->Error))
 		return EXIT_FAILURE;
 
-	fprintf(stdout, "Starting Simulation...\n");
+	fprintf(stdout, "Starting Simulation...\n\n");
 
 	// Fill up a new FEL with the provided mode
 	FEL* fel = NULL;
@@ -263,8 +263,6 @@ int main(int argc, char** argv)
 			return EXIT_FAILURE;
 		}
 	}
-
-	ListNode_PrintToTestFile(fel->EventList, "testData5.txt");
 
 	// Run simulation with generated FEL
 	Output* output = Control_Run(fel);
