@@ -19,6 +19,9 @@ struct SimulationData_st{
   //The amount of time units so far, the CPU has spent handling a task
   int CPUTime;
 
+  //The cumulative load balancing factor of all of the tasks
+  int LoadBalancingFactor;
+
 };
 
 //Create a SimulationData structure
@@ -35,5 +38,5 @@ float SimulationData_AverageWait(SimulationData* simData, int priority, int arri
 float SimulationData_AverageQueueLength(SimulationData* simData);
 
 //Calculate the average time the CPU has spent busy
-float SimulationData_Utilization(SimulationData* simData);
+float SimulationData_Utilization(SimulationData* simData, int numProcessors);
 #endif /* SIMULATIONDATA_INCLUDED */

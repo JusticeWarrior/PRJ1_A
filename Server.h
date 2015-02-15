@@ -21,7 +21,7 @@ Server* Server_Create(int processors);
 //Destroy the given Server structure
 void Server_Destroy(Server* server);
 
-//Returns a 1 if busy, a 0 if not
+//Returns a 1 if there is anything in the server
 int Server_IsBusy(Server* server);
 
 //Attempts to make the server busy, returns 1 if successful, 0 if the server is alread busy

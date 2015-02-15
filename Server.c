@@ -19,7 +19,7 @@ void Server_Destroy(Server* server)
 //Returns a 1 if busy, a 0 if not
 int Server_IsBusy(Server* server)
 {
-  return (1-server->Available);
+  return (server->Available == server->Processors ? 0 : 1);
 }
 
 

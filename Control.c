@@ -181,7 +181,7 @@ Output* Control_Run(FEL* fel)
   wait0=SimulationData_AverageWait(simData,0,fel->NumberArrivals[0]);
   wait1=SimulationData_AverageWait(simData,1,fel->NumberArrivals[1]);
   queueLength = SimulationData_AverageQueueLength(simData);
-  utilization = SimulationData_Utilization(simData);
+  utilization = SimulationData_Utilization(simData, server->Processors);
 
   output = Output_Create(wait0, wait1, queueLength, utilization, simData->CurrentTime);
 
