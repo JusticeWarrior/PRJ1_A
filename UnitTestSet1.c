@@ -262,9 +262,9 @@ void Test6()
 
 void Test7()
 {
-	int success, success2;
+	int success = TRUE;
 
-	fprintf(stdout, "\nTest 6: Adding and Popping from a Queue\n");
+	fprintf(stdout, "\nTest 7: Sorting Two Pre-Sorted Lists\n");
 
 	// Test List 1
 	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 0);
@@ -280,11 +280,13 @@ void Test7()
 	testNode2->Next = testNode3;
 	testNode3->Next = testNode4;
 
+	ListNode_PrintList(testNode1, "Sorted List 1");
 
-	Event* testEvent5 = Event_Create(ARRIVAL, 0, 2, 0);
-	Event* testEvent6 = Event_Create(ARRIVAL, 0, 3, 0);
-	Event* testEvent7 = Event_Create(ARRIVAL, 0, 5, 0);
-	Event* testEvent8 = Event_Create(ARRIVAL, 0, 6, 0);
+	// Test List 2
+	Event* testEvent5 = Event_Create(ARRIVAL, 1, 1, 0);
+	Event* testEvent6 = Event_Create(ARRIVAL, 1, 2, 0);
+	Event* testEvent7 = Event_Create(ARRIVAL, 1, 3, 0);
+	Event* testEvent8 = Event_Create(ARRIVAL, 1, 9, 0);
 	ListNode* testNode5 = ListNode_Create(testEvent5);
 	ListNode* testNode6 = ListNode_Create(testEvent6);
 	ListNode* testNode7 = ListNode_Create(testEvent7);
@@ -293,6 +295,29 @@ void Test7()
 	testNode5->Next = testNode6;
 	testNode6->Next = testNode7;
 	testNode7->Next = testNode8;
+
+	ListNode_PrintList(testNode5, "Sorted List 2");
+
+	ListNode* merged = ListNode_MergeSortedLists(testNode1, testNode2, ListNode_CompEventTimePriority);
+
+	ListNode_PrintList(merged, "Merged List");
+
+	if (ListNode_CompEventTimePriority(testNode5, merged) != 0 || ListNode_CompEventTimePriority(testNode1, merged->Next) != 0
+		|| ListNode_CompEventTimePriority(testNode6, merged->Next->Next) != 0
+		|| ListNode_CompEventTimePriority(testNode2, merged->Next->Next->Next) != 0
+		|| ListNode_CompEventTimePriority(testNode7, merged->Next->Next->Next->Next) != 0
+		|| ListNode_CompEventTimePriority(testNode3, merged->Next->Next->Next->Next->Next) != 0
+		|| ListNode_CompEventTimePriority(testNode4, merged->Next->Next->Next->Next->Next->Next) != 0
+		|| ListNode_CompEventTimePriority(testNode8, merged->Next->Next->Next->Next->Next->Next->Next) != 0)
+	{
+		fprintf(stdout, "\nSuccess\n");
+	}
+	else
+	{
+		fprintf(stdout, "\nFailure\n");
+	}
+
+	ListNode_DestroyList(merged);
 }
 
 int main(int argc, char** argv)
