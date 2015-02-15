@@ -169,30 +169,38 @@ static ListNode* ListNode_CompareAndAddNode(ListNode** list1, ListNode** list2, 
 
 ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compFunc)(ListNode*, ListNode*))
 {
+	// Check for NULL inputs and handle correctly
+	if (list1 == NULL && list2 == NULL)
+		return NULL;
 	if (list1 == NULL)
 		return list2;
-
 	if (list2 == NULL)
 		return list1;
 
 	ListNode* newHead = NULL;
 	ListNode* newTail = NULL;
-
+	
+	// Add the first node
 	ListNode_AppendTail(ListNode_CompareAndAddNode(&list1, &list2, compFunc), newTail);
 
+	// Assign the head of the list correctly
 	newHead = newTail;
 
+	// Add the rest of the nodes until one list is NULL
 	while (list1 != NULL || list2 != NULL)
 	{
-		if (compFunc(list1, list2) >= 1)
-		{
-			ListNode_AppendTail(list1, newTail);
-		}
-		else
-		{
-			ListNode_AppendTail(list2, newTail);
-		}
+		ListNode_AppendTail(ListNode_CompareAndAddNode(&list1, &list2, compFunc), newTail);
 	}
 
-	return NULL;
+	// Add the entire rest of the non-NULL list to the end of the final list
+	if (list1 == NULL)
+	{
+		ListNode_AppendTail(list2, newTail);
+	}
+	else
+	{
+		ListNode_AppendTail(list1, newTail);
+	}
+
+	return newHead;
 }

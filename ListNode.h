@@ -53,7 +53,7 @@ int ListNode_GetLength(ListNode* head);
 Event* ListNode_StripEvent(ListNode* node);
 
 // Takes two sorted lists and merges them together in a sorted manner. Returns
-// a single sorted list. Sorts the lists based on the comparision function.
+// a single sorted list. Sorts the lists based on the comparision function provided.
 ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compFunc)(ListNode*, ListNode*));
 
 #endif /* LISTNODE_INCLUDED */
