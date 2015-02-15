@@ -41,6 +41,10 @@ Event* FEL_GenerateDeparture(Event* arrival, int currentTime);
 //Add an event that already exists to the FEL strucure
 void FEL_AddEvent(FEL* futureEvents, Event* event);
 
+//Appends a list node to the end of FEL.  Best used if FEL is already
+//empty as it doesn't FEL will be sorted by time
+void FEL_AddNode(FEL* futureEvents, ListNode* node);
+
 //Returns a 1 if there are not more events on the queue
 int FEL_IsEmpty(FEL* futureEvents);
 
