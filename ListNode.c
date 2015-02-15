@@ -149,14 +149,22 @@ Event* ListNode_StripEvent(ListNode* node)
 // Also moves along the pointer of the list grabbed from.
 static ListNode* ListNode_CompareAndAddNode(ListNode** list1, ListNode** list2, int(*compFunc)(ListNode*, ListNode*))
 {
-	if (compFunc(&list1, &list2) >= 1)
+	assert(*list1 != NULL || *list2 != NULL); // DONT TRY TO ADD ANY NULL LISTS!
+
+	ListNode* addNode = NULL;
+
+	if (compFunc(*list1, *list2) >= 1)
 	{
-		return list1;
+		addNode = *list1;
+		(*list1) = (*list1)->Next;
 	}
 	else
 	{
-		return list2;
+		addNode = *list2;
+		(*list2) = (*list2)->Next;
 	}
+
+	return addNode;
 }
 
 ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compFunc)(ListNode*, ListNode*))
@@ -170,14 +178,7 @@ ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compF
 	ListNode* newHead = NULL;
 	ListNode* newTail = NULL;
 
-	if (compFunc(list1, list2) >= 1)
-	{
-		ListNode_AppendTail(list1, newTail);
-	}
-	else
-	{
-		ListNode_AppendTail(list2, newTail);	
-	}
+	ListNode_AppendTail(ListNode_CompareAndAddNode(&list1, &list2, compFunc), newTail);
 
 	newHead = newTail;
 
