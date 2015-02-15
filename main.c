@@ -30,7 +30,7 @@
 #define DEFAULTLINENUM -1
 #define OUTPUTNAME "proj1-a_output"
 
-#define VERSION "1.0"
+#define VERSION "2.0"
 
 // A structure to hold information about command line arguments.
 typedef struct Args_st{
@@ -216,7 +216,7 @@ static int printParsingErrors(int error)
 // Prints an error message with the given line number and filename.
 static void printFileReadingError(int lineNum, char* fileName)
 {
-	fprintf(stderr, "Error: Line %d of file %s is not in the correct format.\nCorrect format is:\t<arrival time> <priority> <duration>\n\n",
+	fprintf(stderr, "Error: Line %d of file %s is not in the correct format.\nCorrect format is:\t<arrival time> <priority> <number> <duration list>\n\n",
 		lineNum, fileName);
 }
 
