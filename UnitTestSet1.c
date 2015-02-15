@@ -298,7 +298,7 @@ void Test7()
 
 	ListNode_PrintList(testNode5, "Sorted List 2");
 
-	ListNode* merged = ListNode_MergeSortedLists(testNode1, testNode2, ListNode_CompEventTimePriority);
+	ListNode* merged = ListNode_MergeSortedLists(testNode1, testNode5, ListNode_CompEventTimePriority);
 
 	ListNode_PrintList(merged, "Merged List");
 
@@ -310,11 +310,11 @@ void Test7()
 		|| ListNode_CompEventTimePriority(testNode4, merged->Next->Next->Next->Next->Next->Next) != 0
 		|| ListNode_CompEventTimePriority(testNode8, merged->Next->Next->Next->Next->Next->Next->Next) != 0)
 	{
-		fprintf(stdout, "\nSuccess\n");
+		fprintf(stdout, "\nFailure\n");
 	}
 	else
 	{
-		fprintf(stdout, "\nFailure\n");
+		fprintf(stdout, "\nSuccess\n");
 	}
 
 	ListNode_DestroyList(merged);
@@ -328,6 +328,7 @@ int main(int argc, char** argv)
 	Test4();
 	Test5();
 	Test6();
+	Test7();
 
 	return EXIT_SUCCESS;
 }
