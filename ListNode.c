@@ -145,12 +145,33 @@ Event* ListNode_StripEvent(ListNode* node)
 
 ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compFunc)(ListNode*, ListNode*))
 {
-	//ListNode* newList = NULL;
+	if (list1 == NULL)
+		return list2;
 
-	//while (list1 != NULL || list2 != NULL)
-	//{
-	//	//if ()
-	//}
+	if (list2 == NULL)
+		return list1;
+
+	ListNode* newHead = NULL;
+	ListNode* newTail = NULL;
+
+	if (compFunc(list1, list2) >= 1)
+	{
+		ListNode_AppendTail(list1, newTail);
+	}
+	else
+	{
+		ListNode_AppendTail(list2, newTail);	
+	}
+
+	newHead = newTail;
+
+	while (list1 != NULL || list2 != NULL)
+	{
+		if (compFunc(list1, list2) >= 1)
+		{
+			ListNode_AppendTail(list1, newTail)
+		}
+	}
 
 	return NULL;
 }
