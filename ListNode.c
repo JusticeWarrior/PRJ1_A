@@ -143,7 +143,14 @@ Event* ListNode_StripEvent(ListNode* node)
 	return event;
 }
 
-ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2)
+ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compFunc)(ListNode*, ListNode*))
 {
+	//ListNode* newList = NULL;
+
+	//while (list1 != NULL || list2 != NULL)
+	//{
+	//	//if ()
+	//}
+
 	return NULL;
 }
