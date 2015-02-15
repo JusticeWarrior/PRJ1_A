@@ -52,4 +52,8 @@ int ListNode_GetLength(ListNode* head);
 // POPPED FROM THE LIST ALREADY!!
 Event* ListNode_StripEvent(ListNode* node);
 
+// Takes two sorted lists and merges them together in a sorted manner. Returns
+// a single sorted list.
+ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2);
+
 #endif /* LISTNODE_INCLUDED */

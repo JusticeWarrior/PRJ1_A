@@ -142,3 +142,8 @@ Event* ListNode_StripEvent(ListNode* node)
 
 	return event;
 }
+
+ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2)
+{
+	return NULL;
+}
