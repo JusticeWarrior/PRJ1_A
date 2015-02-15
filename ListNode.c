@@ -1,6 +1,5 @@
 #include "ListNode.h"
 
-// Compares the head's of two lists and returns the lesser of the two.
 static ListNode* ListNode_CompareAndAddNode(ListNode** list1, ListNode** list2, int(*compFunc)(ListNode*, ListNode*));
 
 ListNode* ListNode_Create(Event* event)
@@ -146,7 +145,19 @@ Event* ListNode_StripEvent(ListNode* node)
 	return event;
 }
 
-
+// Compares the head's of two lists and returns the lesser of the two.
+// Also moves along the pointer of the list grabbed from.
+static ListNode* ListNode_CompareAndAddNode(ListNode** list1, ListNode** list2, int(*compFunc)(ListNode*, ListNode*))
+{
+	if (compFunc(&list1, &list2) >= 1)
+	{
+		return list1;
+	}
+	else
+	{
+		return list2;
+	}
+}
 
 ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compFunc)(ListNode*, ListNode*))
 {
