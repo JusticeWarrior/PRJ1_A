@@ -108,15 +108,15 @@ void Test3()
 	ListNode* testNode2 = ListNode_Create(testEvent2);
 	ListNode* testNode3 = ListNode_Create(testEvent3);
 	ListNode* testNode4 = ListNode_Create(testEvent4);
-	ListNode* head = ListNode_InsertSorted(testNode1, testNode2, ListNode_CompEventTime);
-	head = ListNode_InsertSorted(testNode3, head, ListNode_CompEventTime);
-	head = ListNode_InsertSorted(testNode4, head, ListNode_CompEventTime);
+	ListNode* head = ListNode_InsertSorted(testNode1, testNode2, ListNode_CompEventTimePriority);
+	head = ListNode_InsertSorted(testNode3, head, ListNode_CompEventTimePriority);
+	head = ListNode_InsertSorted(testNode4, head, ListNode_CompEventTimePriority);
 
 	ListNode_PrintList(head, "4 Element List");
 
 	Event* testEvent5 = Event_Create(ARRIVAL, 0, 3, 0);
 	ListNode* testNode5 = ListNode_Create(testEvent5);
-	head = ListNode_InsertSorted(testNode5, head, ListNode_CompEventTime);
+	head = ListNode_InsertSorted(testNode5, head, ListNode_CompEventTimePriority);
 	ListNode_PrintList(head, "Same List With Inserted 3 Second Event");
 	if (head->Next->Event->Time == 3 && head->Next->Next->Event->Time == 3)
 		success = TRUE;
@@ -126,7 +126,7 @@ void Test3()
 
 	Event* testEvent6 = Event_Create(ARRIVAL, 0, 1, 0);
 	ListNode* testNode6 = ListNode_Create(testEvent6);
-	head = ListNode_InsertSorted(testNode6, head, ListNode_CompEventTime);
+	head = ListNode_InsertSorted(testNode6, head, ListNode_CompEventTimePriority);
 	ListNode_PrintList(head, "Same List With Inserted 1 Second Event");
 	if (head->Event->Time == 1)
 		success2 = TRUE;
@@ -135,7 +135,7 @@ void Test3()
 
 	Event* testEvent7 = Event_Create(ARRIVAL, 0, 20, 0);
 	ListNode* testNode7 = ListNode_Create(testEvent7);
-	head = ListNode_InsertSorted(testNode7, head, ListNode_CompEventTime);
+	head = ListNode_InsertSorted(testNode7, head, ListNode_CompEventTimePriority);
 	ListNode_PrintList(head, "Same List With Inserted 20 Second Event");
 	if (head->Next->Next->Next->Next->Next->Next->Event->Time == 20 && success == TRUE && success2 == TRUE)
 		fprintf(stdout, "\nSuccess\n");
@@ -160,9 +160,9 @@ void Test4()
 	ListNode* testNode2 = ListNode_Create(testEvent2);
 	ListNode* testNode3 = ListNode_Create(testEvent3);
 	ListNode* testNode4 = ListNode_Create(testEvent4);
-	ListNode* head = ListNode_InsertSorted(testNode1, testNode2, ListNode_CompEventTime);
-	head = ListNode_InsertSorted(testNode3, head, ListNode_CompEventTime);
-	head = ListNode_InsertSorted(testNode4, head, ListNode_CompEventTime);
+	ListNode* head = ListNode_InsertSorted(testNode1, testNode2, ListNode_CompEventTimePriority);
+	head = ListNode_InsertSorted(testNode3, head, ListNode_CompEventTimePriority);
+	head = ListNode_InsertSorted(testNode4, head, ListNode_CompEventTimePriority);
 	ListNode_PrintList(head, "4 Element List");
 
 	head = ListNode_PopHead(testNode1);
@@ -185,8 +185,8 @@ void Test4()
 	testEventStrip2->Type = DEPARTURE;
 	ListNode* testNode5 = ListNode_Create(testEventStrip1);
 	ListNode* testNode6 = ListNode_Create(testEventStrip2);
-	head = ListNode_InsertSorted(testNode5, head, ListNode_CompEventTime);
-	head = ListNode_InsertSorted(testNode6, head, ListNode_CompEventTime);
+	head = ListNode_InsertSorted(testNode5, head, ListNode_CompEventTimePriority);
+	head = ListNode_InsertSorted(testNode6, head, ListNode_CompEventTimePriority);
 	ListNode_PrintList(head, "Reconstructed with altered Events");
 	if (head->Event->Time == 2 && head->Event->Priority == 1 && head->Next->Event->Time == 3
 		&& head->Next->Event->Type == DEPARTURE && success == TRUE && success2 == TRUE)
@@ -258,6 +258,41 @@ void Test6()
 		fprintf(stdout, "\nFailure\n");
 
 	Queue_Destroy(testQueue1);
+}
+
+void Test7()
+{
+	int success, success2;
+
+	fprintf(stdout, "\nTest 6: Adding and Popping from a Queue\n");
+
+	// Test List 1
+	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 0);
+	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3, 0);
+	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5, 0);
+	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6, 0);
+	ListNode* testNode1 = ListNode_Create(testEvent1);
+	ListNode* testNode2 = ListNode_Create(testEvent2);
+	ListNode* testNode3 = ListNode_Create(testEvent3);
+	ListNode* testNode4 = ListNode_Create(testEvent4);
+
+	testNode1->Next = testNode2;
+	testNode2->Next = testNode3;
+	testNode3->Next = testNode4;
+
+
+	Event* testEvent5 = Event_Create(ARRIVAL, 0, 2, 0);
+	Event* testEvent6 = Event_Create(ARRIVAL, 0, 3, 0);
+	Event* testEvent7 = Event_Create(ARRIVAL, 0, 5, 0);
+	Event* testEvent8 = Event_Create(ARRIVAL, 0, 6, 0);
+	ListNode* testNode5 = ListNode_Create(testEvent5);
+	ListNode* testNode6 = ListNode_Create(testEvent6);
+	ListNode* testNode7 = ListNode_Create(testEvent7);
+	ListNode* testNode8 = ListNode_Create(testEvent8);
+
+	testNode5->Next = testNode6;
+	testNode6->Next = testNode7;
+	testNode7->Next = testNode8;
 }
 
 int main(int argc, char** argv)
