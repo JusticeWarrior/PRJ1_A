@@ -5,23 +5,45 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
 {
   FEL* fel = FEL_Create(numTasks, numTasks, mu, lambda0, lambda1);
   Event* event;
+  ListNode* newNode;
+
+  ListNode* zeroList; //A list of all of the zero arrivals
+  ListNode* oneList;  //A list of all of the one arrivals
+  ListNode* zeroListTail;  //Keep track of the tail of the lists
+  ListNode* oneListTail;
+
   int prevTime0 = -1;
   int prevTime1 = -1;
   int i;
 
   //Initialize the FEL EventList
+  event = FEL_GenerateRandomArrival(fel, 0, prevTime0);
+  zeroList = ListNode_Create(event);
+  zeroListTail = zeroList;
+
+  event = FEL_GenerateRandomArrival(fel, 1, prevTime1);
+  oneList = ListNode_Create(event);
+  oneListTail = oneList;
+  
   for(i=0;i<numTasks;i++)
   {
     //Add a zero priority event
     event = FEL_GenerateRandomArrival(fel,0,prevTime0);
-    FEL_AddEvent(fel,event);
+    newNode = ListNode_Create(event);
+    zeroListTail = ListNode_AppendTail(newNode, zeroListTail);
+            
     prevTime0 = event->Time;
 
     //Add a one priority event
     event = FEL_GenerateRandomArrival(fel,1,prevTime1);
-    FEL_AddEvent(fel,event);
+    newNode = ListNode_Create(event);
+    oneListTail = ListNode_AppendTail(newNode, zeroListTail);
     prevTime1 = event->Time;
   }
+
+  
+  zeroList = ListNode_MergeSortedLists(zeroList, oneList, ListNode_CompEventTimePriority);
+  FEL_AddNode(fel, zeroList);
 
   return fel;
 }
@@ -159,7 +181,7 @@ Output* Control_Run(FEL* fel)
   wait0=SimulationData_AverageWait(simData,0,fel->NumberArrivals[0]);
   wait1=SimulationData_AverageWait(simData,1,fel->NumberArrivals[1]);
   queueLength = SimulationData_AverageQueueLength(simData);
-  utilization = SimulationData_Utilization(simData);
+  utilization = SimulationData_Utilization(simData, server->Processors);
 
   output = Output_Create(wait0, wait1, queueLength, utilization, simData->CurrentTime);
 

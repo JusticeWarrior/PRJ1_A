@@ -91,7 +91,23 @@ void FEL_AddEvent(FEL* futureEvents, Event* event)
   futureEvents->EventList = ListNode_InsertSorted(node, futureEvents->EventList, ListNode_CompEventTimePriority);
 }
 
-
+void FEL_AddNode(FEL* fel, ListNode* node)
+{
+  ListNode* end; //Find the end of the list
+  end = fel->EventList;
+  if (end == NULL) //If the EventList is empty
+  {
+    fel->EventList = node;
+  }
+  else
+  {
+    while(end->Next != NULL)
+    {
+      end = end->Next;
+    }
+    end->Next = NULL;
+  }
+}
 
 int FEL_IsEmpty(FEL* futureEvents)
 {

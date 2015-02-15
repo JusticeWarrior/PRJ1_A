@@ -10,7 +10,7 @@ SimulationData* SimulationData_Create()
   simData -> WaitingTime[1] = 0;
   simData -> CPUTime = 0;
   simData -> CurrentTime = 0; 
- 
+  simData -> LoadBalancingFactor=0; 
   return simData;
 }
 
@@ -45,9 +45,17 @@ float SimulationData_AverageQueueLength(SimulationData* simData)
  
 
 
-float SimulationData_Utilization(SimulationData* simData)
+float SimulationData_Utilization(SimulationData* simData, int processors)
 {
   float cpu = (float)simData -> CPUTime;
-  float average = cpu / ((float)(simData->CurrentTime));
+  float average = cpu / ((float)(simData->CurrentTime)) / ((float)processors);
   return average;  
+}
+
+
+float SimulationData_AverageLoadBalancing(SimulationData* simData, int arrivals)
+{
+  float balancing = (float)simData -> LoadBalancingFactor;
+  float average = balancing / ((float)arrivals);
+  return average;
 }
