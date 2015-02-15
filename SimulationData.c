@@ -51,3 +51,11 @@ float SimulationData_Utilization(SimulationData* simData, int processors)
   float average = cpu / ((float)(simData->CurrentTime)) / ((float)processors);
   return average;  
 }
+
+
+float SimulationData_AverageLoadBalancing(SimulationData* simData, int arrivals)
+{
+  float balancing = (float)simData -> LoadBalancingFactor;
+  float average = balancing / ((float)arrivals);
+  return average;
+}
