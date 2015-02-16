@@ -35,10 +35,18 @@ int Event_CompTimePriority(Event* event1, Event* event2)
 
 Task* Task_Create(int subTasks, int minDuration, int maxDuration)
 {
-	return NULL;
+	Task* task = malloc(sizeof(Task));
+	task->SubTasks = subTasks;
+	task->MinDuration = minDuration;
+	task->MaxDuration = maxDuration;
+
+	return task;
 }
 
-void Task_Destroy(Task* task) { }
+void Task_Destroy(Task* task)
+{
+	free(task);
+}
 
 int Event_CompDurTask(Event* event1, Event* event2)
 {

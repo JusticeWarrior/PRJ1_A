@@ -6,7 +6,6 @@
 // A structure to hold a node of singley linked-list event data.
 typedef struct ListNode_st ListNode;
 
-#include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
 #include "Event.h"

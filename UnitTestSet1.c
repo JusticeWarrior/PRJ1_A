@@ -13,7 +13,7 @@ void Test1()
 	int success;
 
 	fprintf(stdout, "Test 1: Creating and Destroying a node\n");
-	Event* testEvent1 = Event_Create(ARRIVAL, 0, 5, 0);
+	Event* testEvent1 = Event_Create(ARRIVAL, 0, 5, 0, NULL);
 	ListNode* testNode1 = ListNode_Create(testEvent1);
 
 	if (testNode1 != NULL)
@@ -43,10 +43,10 @@ void Test2()
 	int success, success2, success3;
 
 	fprintf(stdout, "\nTest 2: Inserting and Popping nodes from a list.\n");
-	Event* testEvent2 = Event_Create(DEPARTURE, 0, 2, 0);
-	Event* testEvent3 = Event_Create(DEPARTURE, 0, 3, 0);
-	Event* testEvent4 = Event_Create(DEPARTURE, 0, 4, 0);
-	Event* testEvent5 = Event_Create(DEPARTURE, 0, 5, 0);
+	Event* testEvent2 = Event_Create(DEPARTURE, 0, 2, 0, NULL);
+	Event* testEvent3 = Event_Create(DEPARTURE, 0, 3, 0, NULL);
+	Event* testEvent4 = Event_Create(DEPARTURE, 0, 4, 0, NULL);
+	Event* testEvent5 = Event_Create(DEPARTURE, 0, 5, 0, NULL);
 	ListNode* testNode2 = ListNode_Create(testEvent2);
 	ListNode* testNode3 = ListNode_Create(testEvent3);
 	ListNode* testNode4 = ListNode_Create(testEvent4);
@@ -100,10 +100,10 @@ void Test3()
 
 	fprintf(stdout, "\nTest 3: Inserting in a Sorted Manner\n");
 
-	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 0);
-	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3, 0);
-	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5, 0);
-	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6, 0);
+	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 0, NULL);
+	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3, 0, NULL);
+	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5, 0, NULL);
+	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6, 0, NULL);
 	ListNode* testNode1 = ListNode_Create(testEvent1);
 	ListNode* testNode2 = ListNode_Create(testEvent2);
 	ListNode* testNode3 = ListNode_Create(testEvent3);
@@ -114,7 +114,7 @@ void Test3()
 
 	ListNode_PrintList(head, "4 Element List");
 
-	Event* testEvent5 = Event_Create(ARRIVAL, 0, 3, 0);
+	Event* testEvent5 = Event_Create(ARRIVAL, 0, 3, 0, NULL);
 	ListNode* testNode5 = ListNode_Create(testEvent5);
 	head = ListNode_InsertSorted(testNode5, head, ListNode_CompEventTimePriority);
 	ListNode_PrintList(head, "Same List With Inserted 3 Second Event");
@@ -124,7 +124,7 @@ void Test3()
 		success = FALSE;
 
 
-	Event* testEvent6 = Event_Create(ARRIVAL, 0, 1, 0);
+	Event* testEvent6 = Event_Create(ARRIVAL, 0, 1, 0, NULL);
 	ListNode* testNode6 = ListNode_Create(testEvent6);
 	head = ListNode_InsertSorted(testNode6, head, ListNode_CompEventTimePriority);
 	ListNode_PrintList(head, "Same List With Inserted 1 Second Event");
@@ -133,7 +133,7 @@ void Test3()
 	else
 		success2 = FALSE;
 
-	Event* testEvent7 = Event_Create(ARRIVAL, 0, 20, 0);
+	Event* testEvent7 = Event_Create(ARRIVAL, 0, 20, 0, NULL);
 	ListNode* testNode7 = ListNode_Create(testEvent7);
 	head = ListNode_InsertSorted(testNode7, head, ListNode_CompEventTimePriority);
 	ListNode_PrintList(head, "Same List With Inserted 20 Second Event");
@@ -152,10 +152,10 @@ void Test4()
 
 	fprintf(stdout, "\nTest 4: Stripping a Node\n");
 
-	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 0);
-	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3, 0);
-	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5, 0);
-	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6, 0);
+	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 0, NULL);
+	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3, 0, NULL);
+	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5, 0, NULL);
+	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6, 0, NULL);
 	ListNode* testNode1 = ListNode_Create(testEvent1);
 	ListNode* testNode2 = ListNode_Create(testEvent2);
 	ListNode* testNode3 = ListNode_Create(testEvent3);
@@ -220,10 +220,10 @@ void Test6()
 
 	Queue* testQueue1 = Queue_Create(0);
 
-	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 0);
-	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3, 0);
-	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5, 0);
-	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6, 0);
+	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 0, NULL);
+	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3, 0, NULL);
+	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5, 0, NULL);
+	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6, 0, NULL);
 	ListNode* testNode1 = ListNode_Create(testEvent1);
 	ListNode* testNode2 = ListNode_Create(testEvent2);
 	ListNode* testNode3 = ListNode_Create(testEvent3);
@@ -267,10 +267,10 @@ void Test7()
 	fprintf(stdout, "\nTest 7: Sorting Two Pre-Sorted Lists\n");
 
 	// Test List 1
-	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 0);
-	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3, 0);
-	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5, 0);
-	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6, 0);
+	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 0, NULL);
+	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3, 0, NULL);
+	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5, 0, NULL);
+	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6, 0, NULL);
 	ListNode* testNode1 = ListNode_Create(testEvent1);
 	ListNode* testNode2 = ListNode_Create(testEvent2);
 	ListNode* testNode3 = ListNode_Create(testEvent3);
@@ -283,10 +283,10 @@ void Test7()
 	ListNode_PrintList(testNode1, "Sorted List 1");
 
 	// Test List 2
-	Event* testEvent5 = Event_Create(ARRIVAL, 1, 1, 0);
-	Event* testEvent6 = Event_Create(ARRIVAL, 1, 2, 0);
-	Event* testEvent7 = Event_Create(ARRIVAL, 1, 3, 0);
-	Event* testEvent8 = Event_Create(ARRIVAL, 1, 9, 0);
+	Event* testEvent5 = Event_Create(ARRIVAL, 1, 1, 0, NULL);
+	Event* testEvent6 = Event_Create(ARRIVAL, 1, 2, 0, NULL);
+	Event* testEvent7 = Event_Create(ARRIVAL, 1, 3, 0, NULL);
+	Event* testEvent8 = Event_Create(ARRIVAL, 1, 9, 0, NULL);
 	ListNode* testNode5 = ListNode_Create(testEvent5);
 	ListNode* testNode6 = ListNode_Create(testEvent6);
 	ListNode* testNode7 = ListNode_Create(testEvent7);
@@ -318,6 +318,11 @@ void Test7()
 	}
 
 	ListNode_DestroyList(merged);
+}
+
+void Test8()
+{
+	
 }
 
 int main(int argc, char** argv)
