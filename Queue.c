@@ -70,3 +70,15 @@ void Queue_AddArrival(Queue* queue0, Queue* queue1, ListNode* node)
 		assert(0); // The arrival could not be added to either queue!
 	}
 }
+
+void Queue_AddTask(Queue* queue0, Queue* queue1, ListNode* task) { }
+
+ListNode* Queue_ScanQueue(Queue* queue, int maxProcessors)
+{
+	return NULL;
+}
+
+ListNode* Queue_ScanQueues(Queue* queue0, Queue* queue1, int maxProcessors)
+{
+	return NULL;
+}

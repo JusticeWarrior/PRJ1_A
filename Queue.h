@@ -34,4 +34,18 @@ ListNode* Queue_Pop(Queue* queue);
 // the node to the correct queue.
 void Queue_AddArrival(Queue* queue0, Queue* queue1, ListNode* node);
 
+// Adds an entire task to the corresponding queue.
+void Queue_AddTask(Queue* queue0, Queue* queue1, ListNode* task);
+
+// Scans through a single queue to see if an entire task can be popped
+// from it based on the number of processors available. Returns an entire
+// task if possible, otherwise, it returns NULL.
+ListNode* Queue_ScanQueue(Queue* queue, int maxProcessors);
+
+// Scans through the 0 priority queue to determine if an entire task can
+// be popped from it. If it cannot, then the function will scan through the
+// 1 priority queue. Returns an entire task if possible, otherwise, it returns
+// NULL.
+ListNode* Queue_ScanQueues(Queue* queue0, Queue* queue1, int maxProcessors);
+
 #endif /* QUEUE_INCLUDED */
