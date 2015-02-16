@@ -207,5 +207,5 @@ ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compF
 
 int ListNode_CompDurTask(ListNode* node1, ListNode* node2)
 {
-	return FALSE;
+	return Event_CompDurTask(node1->Event, node2->Event);
 }
