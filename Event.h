@@ -29,10 +29,18 @@ struct Task_st{
 	int MaxDuration;
 };
 
-// Creates and instance of Event given the type, priority, time, and duration.
-Event* Event_Create(char type, int priority, int time, int duration);
+// Creates an instance of a Task object.
+Task* Task_Create(int subTasks, int minDuration, int maxDuration);
 
-// Destroys the current instance of Event.
+// Destroys an instance of a Task object.
+void Task_Destroy(Task* task);
+
+// Creates and instance of Event given the type, priority, time, and duration.
+Event* Event_Create(char type, int priority, int time, int duration, Task* task);
+
+// Destroys the current instance of Event and clicks down the number of subtasks
+// inside of it's task. If the subtasks becomes 0, then the function calls
+// Task_Destroy.
 void Event_Destroy(Event* event);
 
 // Compares two events according to their time. Returns a positive integer if
