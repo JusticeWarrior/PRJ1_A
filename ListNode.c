@@ -204,3 +204,8 @@ ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compF
 
 	return newHead;
 }
+
+int ListNode_CompDurTask(ListNode* node1, ListNode* node2)
+{
+	return FALSE;
+}
