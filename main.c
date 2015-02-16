@@ -229,6 +229,7 @@ static void printOutput(Output* output)
 	fprintf(file, "%f\n", output->AverageWait1);
 	fprintf(file, "%f\n", output->AverageQueueLength);
 	fprintf(file, "%f", output->AverageUtilization);
+	fprintf(file, "%f\n", output->AverageLoadBalancingFactor);
 
 	fprintf(stdout, "The simulation has finished at time %ds.\n\nOutput is located in file named: %s\n", output->EndTime,OUTPUTNAME);
 
