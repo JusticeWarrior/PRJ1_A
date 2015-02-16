@@ -42,5 +42,8 @@ void Task_Destroy(Task* task) { }
 
 int Event_CompDurTask(Event* event1, Event* event2)
 {
-	return FALSE;
+	if (event1->Task == event2->Task && event1->Duration == event2->Duration)
+		return TRUE; // They are the same
+	else
+		return FALSE;
 }
