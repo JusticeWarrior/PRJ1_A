@@ -19,6 +19,7 @@ struct Output_st{
   float AverageWait1;        //The average wait time of the one priority queue
   float AverageQueueLength;  //The average queue length
   float AverageUtilization;  //Fraction of time the CPU is on
+  float AverageLoadBalancing; //Average load balancing factor
   int EndTime; //The time that the simulation ends
 };
 
@@ -34,7 +35,7 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber);
 Output* Control_Run(FEL* fel);
 
 //Create an Output struture
-Output* Output_Create(float AvgWait0, float AvgWait1, float AvgQueue, float AvgCPU, int EndTime);
+Output* Output_Create(float AvgWait0, float AvgWait1, float AvgQueue, float AvgCPU, float AvgLoadBalancing, int EndTime);
 
 //Destroy an Output structure
 void Output_Destroy(Output* output);

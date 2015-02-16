@@ -161,6 +161,14 @@ ListNode* FEL_PopNode(FEL* futureList)
   return poppedNode;
 }
 
+
+
+void FEL_GenerateAndAddDepartures(FEL* fel, ListNode* subTasks, int currentTime)
+{
+  
+}
+
+
 float FEL_AverageEventDuration(FEL* futureEvents)
 {
 	ListNode* head = futureEvents->EventList;

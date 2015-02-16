@@ -38,11 +38,12 @@ Event* FEL_GenerateRandomArrival(FEL* futureEvents, int  priority, int previousT
 //Generate a new departute event based off of a given arrival event
 Event* FEL_GenerateDeparture(Event* arrival, int currentTime);
 
+//Generate and add to the FEL the departures corresponding to the given
+//list of subtasks
+void FEL_GenerateAndAddDepartures(FEL* fel, ListNode* subTasks, int currentTime);
+
 //Add an event that already exists to the FEL strucure
 void FEL_AddEvent(FEL* futureEvents, Event* event);
-
-//Insert and unsorted list of departures into the FEL
-void FEL_InsertUnsorted(FEL* fel, ListNode* list);
 
 //Appends a list node to the end of FEL.  Best used if FEL is already
 //empty as it doesn't FEL will be sorted by time

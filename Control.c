@@ -179,13 +179,15 @@ Output* Control_Run(FEL* fel)
   float wait1;
   float queueLength;
   float utilization;
+  float balancing;
 
   wait0=SimulationData_AverageWait(simData,0,fel->NumberArrivals[0]);
   wait1=SimulationData_AverageWait(simData,1,fel->NumberArrivals[1]);
   queueLength = SimulationData_AverageQueueLength(simData);
   utilization = SimulationData_Utilization(simData, server->Processors);
+  balancing = SimulationData_AverageLoadBalancing(simData,fel->NumberArrivals[0]+fel->NumberArrivals[1]);
 
-  output = Output_Create(wait0, wait1, queueLength, utilization, simData->CurrentTime);
+  output = Output_Create(wait0, wait1, queueLength, utilization, balancing, simData->CurrentTime);
 
   //Destroy given structures
   SimulationData_Destroy(simData);
@@ -200,7 +202,7 @@ Output* Control_Run(FEL* fel)
 
 
 
-Output* Output_Create(float AvgWait0, float AvgWait1, float AvgQueue, float AvgCPU, int EndTime)
+Output* Output_Create(float AvgWait0, float AvgWait1, float AvgQueue, float AvgCPU, float AvgLoadBalancing, int EndTime)
 {
   Output* output = malloc(sizeof(Output));
 
@@ -208,6 +210,7 @@ Output* Output_Create(float AvgWait0, float AvgWait1, float AvgQueue, float AvgC
   output -> AverageWait1 = AvgWait1;
   output -> AverageQueueLength = AvgQueue;
   output -> AverageUtilization = AvgCPU;
+  output -> AverageLoadBalancing = AvgLoadBalancing;
   output -> EndTime = EndTime;
 
   return output;
