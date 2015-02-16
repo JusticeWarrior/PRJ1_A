@@ -8,6 +8,7 @@ typedef struct Server_st Server;
 #include "Queue.h"
 #include "SimulationData.h"
 #include "ListNode.h"
+#define PROCESSORS 64
 
 struct Server_st{
   int Processors;  //The total number of processors this server has

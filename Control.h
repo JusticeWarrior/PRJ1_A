@@ -19,7 +19,7 @@ struct Output_st{
   float AverageWait1;        //The average wait time of the one priority queue
   float AverageQueueLength;  //The average queue length
   float AverageUtilization;  //Fraction of time the CPU is on
-  float AverageLoadBalancing; //Average load balancing factor
+  float AverageLoadBalancingFactor; //Average load balancing factor
   int EndTime; //The time that the simulation ends
 };
 

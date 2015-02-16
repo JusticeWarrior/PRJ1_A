@@ -1,10 +1,11 @@
 #ifndef LISTNODE_INCLUDED
 #define LISTNODE_INCLUDED
+#define TRUE 1
+#define FALSE 0
 
 // A structure to hold a node of singley linked-list event data.
 typedef struct ListNode_st ListNode;
 
-#include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
 #include "Event.h"
@@ -55,5 +56,10 @@ Event* ListNode_StripEvent(ListNode* node);
 // Takes two sorted lists and merges them together in a sorted manner. Returns
 // a single sorted list. Sorts the lists based on the comparision function provided.
 ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compFunc)(ListNode*, ListNode*));
+
+// Compares two ListNodes according to their event's. If their Events point to
+// different tasks or they have different durations, the function returns FALSE.
+// Otherwise, the function returns TRUE.
+int ListNode_CompDurTask(ListNode* node1, ListNode* node2);
 
 #endif /* LISTNODE_INCLUDED */
