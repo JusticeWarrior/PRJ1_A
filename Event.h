@@ -6,6 +6,10 @@
 // A structure to hold event data of a particular event.
 typedef struct Event_st Event;
 
+// A structure to hold information about an entire task.
+// This includes many subtasks in a single structure.
+typedef struct Task_st Task;
+
 #include<stdlib.h>
 #include <assert.h>
 
@@ -15,6 +19,14 @@ struct Event_st{
 	int Priority;
 	int Time;
 	int Duration;
+	// The task that the event belongs to.
+	Task* Task;
+};
+
+struct Task_st{
+	int SubTasks;
+	int MinDuration;
+	int MaxDuration;
 };
 
 // Creates and instance of Event given the type, priority, time, and duration.
