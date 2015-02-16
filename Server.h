@@ -13,7 +13,7 @@ typedef struct Server_st Server;
 struct Server_st{
   int Processors;  //The total number of processors this server has
   int Available;   //The number of available processors
-  ListNode* Tasks; //A list of tasks currently in the server
+  ListNode* SubTasks; //A list of subtasks currently in the server
 };
 
 //Create a Server structure with the given number of processors
@@ -25,11 +25,15 @@ void Server_Destroy(Server* server);
 //Returns a 1 if there is anything in the server
 int Server_IsBusy(Server* server);
 
-//Attempts to make the server busy, returns 1 if successful, 0 if the server is alread busy
-int Server_AddTask(Server* server, Event* event);
+//Adds a list of subtasks to the server, assuming there are an ample number
+//of processors available
+void Server_AddTask(Server* server, ListNode* task);
 
-//Removes task from server
+//DEPRICATED Removes task from server
 void Server_RemoveTask(Server* server, Event* event);
+
+//Remove a subtask from a server correspoding to the departure given
+void Server_RemoveSubTask(Server* server, ListNode* departure);
 
 
 

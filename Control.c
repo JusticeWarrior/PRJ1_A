@@ -43,7 +43,7 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
 
   
   zeroList = ListNode_MergeSortedLists(zeroList, oneList, ListNode_CompEventTimePriority);
-  FEL_AddNode(fel, zeroList);
+  FEL_Append(fel, zeroList);
 
   return fel;
 }
@@ -162,9 +162,11 @@ Output* Control_Run(FEL* fel)
       }
       if(node != NULL)
       {
+        /* Needs fixin real good
         event = ListNode_StripEvent(node); //Can this handle NULL?
         //Add task
         Server_AddTask(server, event); //Can this handle NULL?
+        */
         departure = FEL_GenerateDeparture(event, simData -> CurrentTime);
         FEL_AddEvent(fel, departure);
       }
