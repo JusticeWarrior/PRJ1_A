@@ -91,7 +91,7 @@ void FEL_AddEvent(FEL* futureEvents, Event* event)
   futureEvents->EventList = ListNode_InsertSorted(node, futureEvents->EventList, ListNode_CompEventTimePriority);
 }
 
-void FEL_AddNode(FEL* fel, ListNode* node)
+void FEL_Append(FEL* fel, ListNode* node)
 {
   ListNode* end; //Find the end of the list
   end = fel->EventList;
@@ -135,6 +135,15 @@ Event* FEL_PopEvent(FEL* futureEvents)
 }
 
 
+ListNode* FEL_Pop(FEL* fel)
+{
+  return NULL;
+}
+
+void FEL_InsertUnsorted(FEL* fel, ListNode* list)
+{
+  return;
+}
 
 static int expDist(float constant)
 {

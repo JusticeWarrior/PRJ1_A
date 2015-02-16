@@ -41,15 +41,23 @@ Event* FEL_GenerateDeparture(Event* arrival, int currentTime);
 //Add an event that already exists to the FEL strucure
 void FEL_AddEvent(FEL* futureEvents, Event* event);
 
+//Insert and unsorted list of departures into the FEL
+void FEL_InsertUnsorted(FEL* fel, ListNode* list);
+
 //Appends a list node to the end of FEL.  Best used if FEL is already
 //empty as it doesn't FEL will be sorted by time
-void FEL_AddNode(FEL* futureEvents, ListNode* node);
+void FEL_Append(FEL* futureEvents, ListNode* node);
 
 //Returns a 1 if there are not more events on the queue
 int FEL_IsEmpty(FEL* futureEvents);
 
 //Return the first event from the FEL and remove it from the FEL list
 Event* FEL_PopEvent(FEL* futureEvents);
+
+//A more generic version of FEL_PopEvent: returns either a list of
+//subtask arrivals (to represent a task) or a departure wrapped in a
+//list node
+ListNode* FEL_Pop(FEL* fel);
 
 // A function to test the average event time within a given FEL list.
 float FEL_AverageEventDuration(FEL* futureEvents);

@@ -6,13 +6,13 @@ Server* Server_Create(int processors)
   Server* server = malloc(sizeof(Server));
   server -> Available = processors;
   server -> Processors = processors;
-  server -> Tasks = NULL;
+  server -> SubTasks = NULL;
   return server;
 }
 
 void Server_Destroy(Server* server)
 {
-  ListNode_DestroyList(server->Tasks);
+  ListNode_DestroyList(server->SubTasks);
   free(server);
 }
 
@@ -24,9 +24,9 @@ int Server_IsBusy(Server* server)
 
 
 
-//Attempts to make the server busy, returns 1 if successful, 0 if the server is alread busy
-int Server_AddTask(Server* server, Event* event)
+void Server_AddTask(Server* server, ListNode* task)
 {
+  /*  FIX THIS STUFF
   if(server -> Available == 0){return 0;} //Failure, server not available
   if(event == NULL ){return 0;}           //No event was given
 
@@ -34,19 +34,24 @@ int Server_AddTask(Server* server, Event* event)
   server->Tasks = ListNode_AppendTail(node, server->Tasks);
   server -> Available = 0;
   return 1;
+  */
 }
 
-//Removes task from server
+//DEPRICATED Removes task from server
 void Server_RemoveTask(Server* server, Event* event)
 {
   ListNode* shortenedList;
 
-  shortenedList = ListNode_PopHead(server->Tasks);
-  ListNode_DestroyList(server->Tasks);
-  server->Tasks = shortenedList;
+  shortenedList = ListNode_PopHead(server->SubTasks);
+  ListNode_DestroyList(server->SubTasks);
+  server->SubTasks = shortenedList;
 
   server -> Available = 1;
   
   Event_Destroy(event);
 }
 
+void Server_RemoveSubTask(Server* server, ListNode* departure)
+{
+
+}
