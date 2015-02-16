@@ -86,7 +86,7 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
       arrivals1++;
     }
 
-    event = Event_Create(ARRIVAL, priority, arrivalTime, duration);
+    event = Event_Create(ARRIVAL, priority, arrivalTime, duration, NULL);
     FEL_AddEvent(fel, event);
 
     fgets(buffer, BUFFER_LEN, file);
