@@ -15,6 +15,8 @@ Event* Event_Create(char type, int priority, int time, int duration, Task* task)
 
 void Event_Destroy(Event* event)
 {
+	assert(event->Task != NULL); // ALL EVENTS SHOULD BE TIED TO A TASK!
+
 	event->Task->SubTasks--;
 	if (event->Task->SubTasks == 0)
 		Task_Destroy(event->Task);

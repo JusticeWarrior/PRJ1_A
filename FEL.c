@@ -68,7 +68,7 @@ Event* FEL_GenerateRandomArrival(FEL* futureEvents, int  priority, int previousT
     eventTime = previousTime + expDist(lambda);
   }
   duration = expDist(futureEvents->Mu);
-  event = Event_Create(ARRIVAL, priority, eventTime, duration, NULL);
+  event = Event_Create(ARRIVAL, priority, eventTime, duration, Task_Create(1, 0, 0));
   
   return event;
 }
@@ -79,7 +79,7 @@ Event* FEL_GenerateDeparture(Event* arrival, int currentTime)
 {
   if(arrival==NULL) {return NULL;} //Protect against NULL events
   Event* event;
-  event = Event_Create(DEPARTURE, arrival->Priority, arrival->Duration + currentTime, arrival->Duration, NULL);
+  event = Event_Create(DEPARTURE, arrival->Priority, arrival->Duration + currentTime, arrival->Duration, Task_Create(1, 0, 0));
   return event;
 }
 
