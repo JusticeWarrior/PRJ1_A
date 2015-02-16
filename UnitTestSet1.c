@@ -324,7 +324,7 @@ void Test8()
 {
 	int success, success2 = TRUE;
 
-	fprintf(stdout, "\nTest 8: Comparing two departures\n");
+	fprintf(stdout, "\nTest 8: Comparing Two Departures\n");
 
 	Task* testTask1 = Task_Create(2, 1, 10);
 	Task* testTask2 = Task_Create(1, 1, 10);
@@ -350,11 +350,24 @@ void Test8()
 		success = FALSE;
 
 
-	if (ListNode_CompDurTask(testNode3, testNode4) == TRUE)
+	if (ListNode_CompDurTask(testNode3, testNode4) == FALSE)
 		success2 = TRUE;
 	else
 		success2 = FALSE;
+
+	if (success == TRUE && success2 == TRUE && ListNode_CompDurTask(testNode5, testNode6) == FALSE)
+		fprintf(stdout, "\nSuccess\n");
+	else
+		fprintf(stdout, "\nFailure\n");
+
+	ListNode_DestroyList(testNode1);
+	ListNode_DestroyList(testNode2);
+	ListNode_DestroyList(testNode3);
+	ListNode_DestroyList(testNode4);
+	ListNode_DestroyList(testNode5);
+	ListNode_DestroyList(testNode6);
 }
+
 
 int main(int argc, char** argv)
 {
@@ -365,6 +378,7 @@ int main(int argc, char** argv)
 	Test5();
 	Test6();
 	Test7();
+	Test8();
 
 	return EXIT_SUCCESS;
 }
