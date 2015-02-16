@@ -210,7 +210,7 @@ Output* Output_Create(float AvgWait0, float AvgWait1, float AvgQueue, float AvgC
   output -> AverageWait1 = AvgWait1;
   output -> AverageQueueLength = AvgQueue;
   output -> AverageUtilization = AvgCPU;
-  output -> AverageLoadBalancing = AvgLoadBalancing;
+  output -> AverageLoadBalancingFactor = AvgLoadBalancing;
   output -> EndTime = EndTime;
 
   return output;
