@@ -8,6 +8,7 @@ Queue* Queue_Create(int priority)
 	queue->Head = NULL;
 	queue->Tail = NULL;
 	queue->Priority = priority;
+	queue->NumTasks = DEFAULTNUMTASKS;
 
 	return queue;
 }

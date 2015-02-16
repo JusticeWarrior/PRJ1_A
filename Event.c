@@ -39,3 +39,8 @@ Task* Task_Create(int subTasks, int minDuration, int maxDuration)
 }
 
 void Task_Destroy(Task* task) { }
+
+int Event_CompDurTask(Event* event1, Event* event2)
+{
+	return FALSE;
+}

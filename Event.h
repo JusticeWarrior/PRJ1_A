@@ -2,6 +2,8 @@
 #define EVENT_INCLUDED
 #define ARRIVAL 'A'
 #define DEPARTURE 'D'
+#define TRUE 1
+#define FALSE 0
 
 // A structure to hold event data of a particular event.
 typedef struct Event_st Event;
@@ -47,5 +49,11 @@ void Event_Destroy(Event* event);
 // event1 has a lower time than event2, a negative integer if event2 has a lower
 // time than event1, and 0 if they are equal.
 int Event_CompTimePriority(Event* event1, Event* event2);
+
+// Compares two events according to the pointer they point to and their duration.
+// If they point to different tasks or they have different durations, the
+// function will return FALSE (they are not the same). Otherwise, the function
+// will return TRUE (because they are the same).
+int Event_CompDurTask(Event* event1, Event* event2);
 
 #endif /* EVENT_INCLUDED */
