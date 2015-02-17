@@ -141,6 +141,7 @@ Output* Control_Run(FEL* fel)
       if(node != NULL)
       {
         event = ListNode_StripEvent(node); //Can this handle NULL?
+        //simData -> WaitingTime[event->Priority] += simData->CurrentTime - event->Time;
         //Add task
         Server_AddTask(server, event); //Can this handle NULL?
         departure = FEL_GenerateDeparture(event, simData -> CurrentTime);
