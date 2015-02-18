@@ -19,6 +19,8 @@ struct SimulationData_st{
   //The amount of time units so far, the CPU has spent handling a task
   int CPUTime;
 
+  int QueueLength;
+
 };
 
 //Create a SimulationData structure
@@ -32,7 +34,7 @@ void SimulationData_Destroy(SimulationData* data);
 float SimulationData_AverageWait(SimulationData* simData, int priority, int arrivals);
 
 //Calculate the average number of objects in the queue
-float SimulationData_AverageQueueLength(SimulationData* simData);
+float SimulationData_AverageQueueLength(SimulationData* simData, int arrivals);
 
 //Calculate the average time the CPU has spent busy
 float SimulationData_Utilization(SimulationData* simData);

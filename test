@@ -1,0 +1,3 @@
+make
+PRJ1_A test3.txt
+cat proj1-a_output

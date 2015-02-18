@@ -107,8 +107,8 @@ Output* Control_Run(FEL* fel)
 
     //Collect statistics
     deltaTime = event->Time - simData->CurrentTime;
-    simData -> WaitingTime[0] += deltaTime * queue0->Count; 
-    simData -> WaitingTime[1] += deltaTime * queue1->Count; 
+    //simData -> WaitingTime[0] += deltaTime * queue0->Count; 
+    //simData -> WaitingTime[1] += deltaTime * queue1->Count; 
     simData -> CPUTime += deltaTime*Server_IsBusy(server);
     
     //Now that statistics have been collected, it is safe to advance the time
@@ -117,6 +117,7 @@ Output* Control_Run(FEL* fel)
     //Handle Event
     if(event->Type == ARRIVAL)
     {
+      simData -> QueueLength += queue0->Count + queue1->Count; 
       Queue_AddArrival(queue0, queue1, ListNode_Create(event));
     }
     if(event->Type == DEPARTURE)
@@ -143,7 +144,8 @@ Output* Control_Run(FEL* fel)
       if(node != NULL)
       {
         event = ListNode_StripEvent(node); //Can this handle NULL?
-        //simData -> WaitingTime[event->Priority] += simData->CurrentTime - event->Time;
+        simData -> WaitingTime[event->Priority] += simData->CurrentTime - event->Time;
+        printf("%d\n", simData->CurrentTime-event->Time);
         //Add task
         Server_AddTask(server, event); //Can this handle NULL?
         departure = FEL_GenerateDeparture(event, simData -> CurrentTime);
@@ -161,7 +163,7 @@ Output* Control_Run(FEL* fel)
 
   wait0=SimulationData_AverageWait(simData,0,fel->NumberArrivals[0]);
   wait1=SimulationData_AverageWait(simData,1,fel->NumberArrivals[1]);
-  queueLength = SimulationData_AverageQueueLength(simData);
+  queueLength = SimulationData_AverageQueueLength(simData, fel->NumberArrivals[0]+ fel->NumberArrivals[1]);
   utilization = SimulationData_Utilization(simData);
 
   output = Output_Create(wait0, wait1, queueLength, utilization, simData->CurrentTime);
