@@ -13,8 +13,9 @@ struct FEL_st{
 
 //This function will return a random exponentially distributed variable
 static int expDist(float constant);
-static ListNode* FEL_PopNode(FEL* futureList);
+static ListNode* FEL_PopNodes(FEL* futureList, int n);
 static void FEL_setRandSeed();
+
 
 FEL* FEL_Create(int arrivals0, int arrivals1, float mu, float lambda0, float lambda1)
 {
@@ -128,7 +129,7 @@ Event* FEL_PopEvent(FEL* futureEvents)
 	if (futureEvents->EventList == NULL)
 		return NULL;
 
-	ListNode* poppedNode = FEL_PopNode(futureEvents);
+	ListNode* poppedNode = FEL_PopNodes(futureEvents,1);
 	Event* event = ListNode_StripEvent(poppedNode);
 
 	return event;
@@ -137,7 +138,16 @@ Event* FEL_PopEvent(FEL* futureEvents)
 
 ListNode* FEL_Pop(FEL* fel)
 {
-  return NULL;
+  ListNode* node;
+  if(fel -> EventList -> Event -> Type == DEPARTURE)
+  {
+    node = FEL_PopNodes(fel, 1);
+  }
+  else
+  {
+    node = FEL_PopNodes(fel,fel->EventList->Event->Task->SubTasks);
+  }
+  return node;
 }
 
 void FEL_InsertUnsorted(FEL* fel, ListNode* list)
@@ -152,13 +162,27 @@ static int expDist(float constant)
   return((int)ceil(-log(uniform)/constant));
 }
 
-ListNode* FEL_PopNode(FEL* futureList)
+ListNode* FEL_PopNodes(FEL* futureList, int n)
 {
-	if (futureList->EventList == NULL)
-		return NULL;
-  ListNode* poppedNode = futureList->EventList;
-  futureList->EventList = ListNode_PopHead(futureList->EventList);
-  return poppedNode;
+  int i=1;
+  ListNode* poppedNodes = futureList -> EventList;
+  ListNode* tail = poppedNodes;
+
+  while(i!=n && tail!=NULL)
+  {
+    i++;
+    tail=tail->Next;
+  }
+  if(tail==NULL)
+  {
+    futureList->EventList=NULL;
+  }
+  else
+  {
+    futureList->EventList = tail->Next;
+    tail->Next=NULL;
+  }
+  return poppedNodes;
 }
 
 

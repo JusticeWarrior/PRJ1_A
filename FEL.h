@@ -45,8 +45,8 @@ void FEL_GenerateAndAddDepartures(FEL* fel, ListNode* subTasks, int currentTime)
 //Add an event that already exists to the FEL strucure
 void FEL_AddEvent(FEL* futureEvents, Event* event);
 
-//Appends a list node to the end of FEL.  Best used if FEL is already
-//empty as it doesn't FEL will be sorted by time
+//Appends a list node to the end of FEL.  Should only be used if it is known
+//That all events are sorted and the FEL is empty
 void FEL_Append(FEL* futureEvents, ListNode* node);
 
 //Returns a 1 if there are not more events on the queue
