@@ -14,6 +14,7 @@ struct Server_st{
   int Processors;  //The total number of processors this server has
   int Available;   //The number of available processors
   ListNode* SubTasks; //A list of subtasks currently in the server
+  ListNode* Tail;     //Keep track of the tail of the subtasks
 };
 
 //Create a Server structure with the given number of processors

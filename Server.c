@@ -7,8 +7,13 @@ Server* Server_Create(int processors)
   server -> Available = processors;
   server -> Processors = processors;
   server -> SubTasks = NULL;
+  server-> Tail = NULL;
   return server;
 }
+
+//Removes the specified node from the list, returning the new list.
+//If the node to be removed is the head, then prev is NULL
+static ListNode* Server_RemoveNode(ListNode* list, ListNode* prev, ListNode* node);
 
 void Server_Destroy(Server* server)
 {
@@ -26,20 +31,26 @@ int Server_IsBusy(Server* server)
 
 void Server_AddTask(Server* server, ListNode* task)
 {
-  /*  FIX THIS STUFF
-  if(server -> Available == 0){return 0;} //Failure, server not available
-  if(event == NULL ){return 0;}           //No event was given
+  int length = ListNode_GetLength(task);
+  assert(length <= server->Available); //Too many subtasks, not enough processors
+  assert(task->Event->Type == ARRIVAL); //Use Server_RemoveSubTask for departures
 
-  ListNode* node = ListNode_Create(event);
-  server->Tasks = ListNode_AppendTail(node, server->Tasks);
-  server -> Available = 0;
-  return 1;
-  */
+  if(server->SubTasks == NULL)
+  {
+    server-> Tail = ListNode_AppendTail(task, server->SubTasks);
+  }
+  else
+  {
+    server-> Tail = ListNode_AppendTail(task, server->Tail);
+  }
+  
+  server -> Available -= length;
 }
 
 //DEPRICATED Removes task from server
 void Server_RemoveTask(Server* server, Event* event)
 {
+  assert(0); //Depricated function!
   ListNode* shortenedList;
 
   shortenedList = ListNode_PopHead(server->SubTasks);
@@ -53,5 +64,33 @@ void Server_RemoveTask(Server* server, Event* event)
 
 void Server_RemoveSubTask(Server* server, ListNode* departure)
 {
+  ListNode* node = server -> SubTasks;
+  ListNode* prev = NULL;
+  while(ListNode_CompDurTask(departure, node) != 1)
+  {
+    prev = node;
+    node = node -> Next;
+  }
+  server-> SubTasks = Server_RemoveNode(server->SubTasks, prev, node);
+  ListNode_DestroyList(node);
+  server -> Available++;
+}
 
+
+static ListNode* Server_RemoveNode(ListNode* list, ListNode* prev, ListNode* node)
+{
+  if(node==NULL)
+  {
+    return list;
+  }
+  if(prev==NULL)
+  {
+    return node;
+  }
+  else
+  {
+    prev->Next = node->Next;
+    node->Next = NULL;
+    return list;
+  }
 }
