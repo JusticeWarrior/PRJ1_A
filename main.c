@@ -28,7 +28,7 @@
 #define NUMARGSMODE2 2
 
 #define DEFAULTLINENUM -1
-#define OUTPUTNAME "proj1-a_output"
+#define OUTPUTNAME "proj1_output"
 
 #define VERSION "2.0"
 
