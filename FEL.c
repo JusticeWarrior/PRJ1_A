@@ -290,16 +290,17 @@ FEL* FEL_PrintPartBTestFile(FEL* fel, const char* testFileName)
 
 	task = FEL_Pop(fel);
 	taskHead = task;
-	fprintf(testFile, "%d %d %d", fel->EventList->Event->Time,
-		fel->EventList->Event->Priority, fel->EventList->Event->Duration);
+	newFel->EventList = task;
+	fprintf(testFile, "%d %d %d", task->Event->Time,
+		task->Event->Priority, task->Event->Duration);
 	while (task->Next != NULL)
 	{
 		task = task->Next;
 		fprintf(testFile, " %d", task->Event->Duration);
 	}
 
+	fprintf(testFile, "\n");
 	newFelTail = ListNode_FindTail(taskHead);
-	newFel->EventList = taskHead;
 
 	while (fel->EventList != NULL)
 	{
@@ -315,10 +316,11 @@ FEL* FEL_PrintPartBTestFile(FEL* fel, const char* testFileName)
 
 		fprintf(testFile, "\n");
 
-		newFelTail = ListNode_AppendTail(task, newFelTail);
+		newFelTail = ListNode_AppendTail(taskHead, newFelTail);
 	}
 
 	fclose(testFile);
+	newFel->LBF = fel->LBF;
 
 	return newFel;
 }
