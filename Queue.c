@@ -160,5 +160,10 @@ ListNode* Queue_ScanQueue(Queue* queue, int maxProcessors)
 
 ListNode* Queue_ScanQueues(Queue* queue0, Queue* queue1, int maxProcessors)
 {
-	return NULL;
+	ListNode* scan = Queue_ScanQueue(queue0, maxProcessors); // Check priority 1
+
+	if (scan == NULL)
+		return Queue_ScanQueue(queue1, maxProcessors); // Check priority 2
+
+	return scan;
 }
