@@ -236,7 +236,7 @@ static void printOutput(Output* output)
 	fprintf(file, "%f\n", output->AverageUtilization);
 	fprintf(file, "%f", output->AverageLoadBalancingFactor);
 
-	fprintf(stdout, "The simulation has finished at time %ds.\n\nOutput is located in file named: %s\n", output->EndTime,OUTPUTNAME);
+	//fprintf(stdout, "The simulation has finished at time %ds.\n\nOutput is located in file named: %s\n", output->EndTime,OUTPUTNAME);
 
 	fclose(file);
 }
@@ -263,7 +263,7 @@ int main(int argc, char** argv)
 	if (printParsingErrors(args->Error))
 		return EXIT_FAILURE;
 
-	fprintf(stdout, "Starting Simulation...\n\n");
+	//fprintf(stdout, "Starting Simulation...\n\n");
 
 	// Fill up a new FEL with the provided mode
 	FEL* fel = NULL;
@@ -286,9 +286,6 @@ int main(int argc, char** argv)
 
 	// Destroy the Argument structure
 	Args_Destroy(args);
-
-	//TESTING ONLY!!!
-	fel = FEL_PrintPartBTestFile(fel, "TestOutput1.txt");
 
 	// Run simulation with generated FEL
 	Output* output = Control_Run(fel);
