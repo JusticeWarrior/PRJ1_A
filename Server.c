@@ -38,6 +38,7 @@ void Server_AddTask(Server* server, ListNode* task)
   if(server->SubTasks == NULL)
   {
     server-> Tail = ListNode_AppendTail(task, server->SubTasks);
+    server->SubTasks = server->Tail;
   }
   else
   {
@@ -76,6 +77,14 @@ void Server_RemoveSubTask(Server* server, ListNode* departure)
   server -> Available++;
 }
 
+void Server_PrintState(Server* server)
+{
+  printf("PRINTING SERVER DATA\n");
+  printf("TOTAL CORES:     %d\n",server->Processors);
+  printf("AVAILABLE CORES: %d\n",server->Available);
+  printf("USED CORES:      %d\n",server->Processors - server->Available);
+  ListNode_PrintList(server->SubTasks, "SERVER SUBTASK LIST"); 
+}
 
 static ListNode* Server_RemoveNode(ListNode* list, ListNode* prev, ListNode* node)
 {
