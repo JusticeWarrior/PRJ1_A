@@ -46,6 +46,9 @@ void ListNode_PrintList(ListNode* head, const char* name);
 // A function to print a list to a test file for testing purposes.
 void ListNode_PrintToTestFile(ListNode* head, const char* testFileName);
 
+// A function to print the FEL to a test file for testing purposes.
+void ListNode_PrintPartBTestFile(ListNode* head, const char* testFileName);
+
 // Gets the length of the list and returns it as an integer.
 int ListNode_GetLength(ListNode* head);
 

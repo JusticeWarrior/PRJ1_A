@@ -32,6 +32,11 @@
 
 #define VERSION "2.0"
 
+#define HELPMODE1 "--help"
+#define HELPMODE2 "-h"
+#define VERSIONMODE1 "-v"
+#define VERSIONMODE2 "--version"
+
 // A structure to hold information about command line arguments.
 typedef struct Args_st{
 	float Lambda0;
@@ -119,11 +124,11 @@ static Args* parseArgs(char ** args, int numArgs)
 		}
 		parsedArgs->NumTasks = numTasks;
 
-		if (parsedArgs->Lambda0 + parsedArgs->Lambda1 >= parsedArgs->Mu)
+		/*if (parsedArgs->Lambda0 + parsedArgs->Lambda1 >= parsedArgs->Mu)
 		{
 			parsedArgs->Error = ERRORRATIO;
 			return parsedArgs;
-		}
+		}*/
 	}
 
 	return parsedArgs;
@@ -239,14 +244,14 @@ static void printOutput(Output* output)
 int main(int argc, char** argv)
 {
 	// Check for -help or -h flag
-	if (argc == 2 && (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0))
+	if (argc == 2 && (strcmp(argv[1], HELPMODE1) == 0 || strcmp(argv[1], HELPMODE2) == 0))
 	{
 		printUsageMessage();
 		return EXIT_SUCCESS;
 	}
 
 	// Check for the -v flag
-	if (argc == 2 && (strcmp(argv[1], "-v") == 0 || strcmp(argv[1], "--version") == 0))
+	if (argc == 2 && (strcmp(argv[1], VERSIONMODE1) == 0 || strcmp(argv[1], VERSIONMODE2) == 0))
 	{
 		printVersionMessage();
 		return EXIT_SUCCESS;

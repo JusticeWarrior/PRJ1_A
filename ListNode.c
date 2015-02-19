@@ -133,6 +133,11 @@ void ListNode_PrintToTestFile(ListNode* head, const char* testFileName)
 	fclose(testFile);
 }
 
+void ListNode_PrintPartBTestFile(ListNode* head, const char* testFileName)
+{
+	
+}
+
 int ListNode_GetLength(ListNode* head)
 {
 	int length = 0;
