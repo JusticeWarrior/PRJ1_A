@@ -4,46 +4,61 @@
 FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTasks)
 {
   FEL* fel = FEL_Create(numTasks, numTasks, mu, lambda0, lambda1);
-  Event* event;
   ListNode* newNode;
+
+  int loadBalancingFactor = 0;
 
   ListNode* zeroList; //A list of all of the zero arrivals
   ListNode* oneList;  //A list of all of the one arrivals
-  ListNode* zeroListTail;  //Keep track of the tail of the lists
-  ListNode* oneListTail;
+
+  ListNode* zeroListTail=NULL;  //Keep track of the tail of the lists
+  ListNode* oneListTail=NULL;
 
   int prevTime0 = -1;
   int prevTime1 = -1;
   int i;
 
-  //Initialize the FEL EventList
+  //Initialize the FEL, calculate load balancing factor 
+  zeroList = FEL_GenerateRandomTask(fel, 0, prevTime0);
+  zeroListTail = ListNode_AppendTail(zeroList, NULL); //Find tail of list 
+  prevTime0 = zeroList->Event->Time;
   /*event = FEL_GenerateRandomArrival(fel, 0, prevTime0);
   zeroList = ListNode_Create(event);
-  zeroListTail = zeroList;
+  zeroListTail = zeroList;*/
 
-  event = FEL_GenerateRandomArrival(fel, 1, prevTime1);
+  oneList = FEL_GenerateRandomTask(fel, 1, prevTime1);
+  oneListTail = ListNode_AppendTail(oneList, NULL); //Find tail of list 
+  prevTime1 = oneList->Event->Time;
+  /*event = FEL_GenerateRandomArrival(fel, 1, prevTime1);
   oneList = ListNode_Create(event);
-  oneListTail = oneList;
+  oneListTail = oneList;*/
   
-  for(i=0;i<numTasks;i++)
+  for(i=1;i<numTasks;i++)
   {
     //Add a zero priority event
-    event = FEL_GenerateRandomArrival(fel,0,prevTime0);
-    newNode = ListNode_Create(event);
+    newNode = FEL_GenerateRandomTask(fel,0,prevTime0);
     zeroListTail = ListNode_AppendTail(newNode, zeroListTail);
-            
-    prevTime0 = event->Time;
+    prevTime0 = newNode->Event->Time;
 
-    //Add a one priority event
-    event = FEL_GenerateRandomArrival(fel,1,prevTime1);
+    /*event = FEL_GenerateRandomArrival(fel,0,prevTime0);
+    newNode = ListNode_Create(event);
+    zeroListTail = ListNode_AppendTail(newNode, zeroListTail);*/
+            
+
+    //Add a one priority event 
+    newNode = FEL_GenerateRandomTask(fel,1,prevTime1);
+    oneListTail = ListNode_AppendTail(newNode, oneListTail);
+    prevTime1 = newNode->Event->Time;
+
+    /*event = FEL_GenerateRandomArrival(fel,1,prevTime1);
     newNode = ListNode_Create(event);
     oneListTail = ListNode_AppendTail(newNode, zeroListTail);
-    prevTime1 = event->Time;
+    prevTime1 = event->Time;*/
   }
 
   
   zeroList = ListNode_MergeSortedLists(zeroList, oneList, ListNode_CompEventTimePriority);
-  FEL_Append(fel, zeroList);*/
+  FEL_Append(fel, zeroList);
 
   return fel;
 }

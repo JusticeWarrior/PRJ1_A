@@ -76,7 +76,15 @@ ListNode* FEL_GenerateRandomTask(FEL* fel, int priority, int previousTime)
   ListNode* subTaskList = NULL;
   ListNode* subTaskListEnd = NULL;
   
-  int newTime = previousTime + expDist(fel->Lambda[priority]);
+  int newTime;
+  if(previousTime<0)
+  {
+    newTime=0;
+  }
+  else
+  {
+    newTime = previousTime + expDist(fel->Lambda[priority]);
+  }
   
   for(i=0;i<numSubTasks;i++)
   {
