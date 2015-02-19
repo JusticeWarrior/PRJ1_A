@@ -102,7 +102,10 @@ static void Queue_AddTask(Queue* queue, ListNode* task)
 
 void Queue_SortTask(Queue* queue0, Queue* queue1, ListNode* task)
 {
-	
+	if (task->Event->Priority == 0)
+		Queue_AddTask(queue0, task);
+	else
+		Queue_AddTask(queue1, task);
 }
 
 // When provided with the first node of a list, the function will remove the list
