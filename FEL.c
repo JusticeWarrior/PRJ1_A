@@ -13,6 +13,7 @@ struct FEL_st{
 
 //This function will return a random exponentially distributed variable
 static int expDist(float constant);
+static int uniDist(int max);
 static ListNode* FEL_PopNodes(FEL* futureList, int n);
 static void FEL_setRandSeed();
 
@@ -54,26 +55,59 @@ void FEL_Destroy(FEL* futureEvents)
 
 
 
-Event* FEL_GenerateRandomArrival(FEL* futureEvents, int  priority, int previousTime)
+ListNode* FEL_GenerateRandomSubTask(FEL* futureEvents, int  priority, int arrivalTime)
 {
-  int eventTime;                //The time that the new event will occur
   int duration;            //How long this task will spend in the server
-  float lambda = futureEvents -> Lambda[priority];
   Event* event;
-  if(previousTime < 0)
-  {
-    eventTime = 0;
-  } 
-  else
-  {
-    eventTime = previousTime + expDist(lambda);
-  }
+
   duration = expDist(futureEvents->Mu);
-  event = Event_Create(ARRIVAL, priority, eventTime, duration, Task_Create(1, 0, 0));
+  event = Event_Create(ARRIVAL, priority, arrivalTime, duration, NULL);
   
-  return event;
+  return ListNode_Create(event);
 }
 
+ListNode* FEL_GenerateRandomTask(FEL* fel, int priority, int previousTime)
+{
+  int i;
+  int duration;
+  int numSubTasks = uniDist(MAX_SUBTASKS);
+  Task* task = Task_Create(numSubTasks, -1, 0);
+  ListNode* subTask;
+  ListNode* subTaskList = NULL;
+  ListNode* subTaskListEnd = NULL;
+  
+  int newTime = previousTime + expDist(fel->Lambda[priority]);
+  
+  for(i=0;i<numSubTasks;i++)
+  {
+    //Create subTask
+    subTask = FEL_GenerateRandomSubTask(fel, priority, newTime);
+    subTask->Event->Task = task;
+    duration = subTask->Event->Duration;
+    if(task->MinDuration==-1||task->MinDuration > duration)
+    {
+      task->MinDuration = duration;
+    } 
+    if(task->MaxDuration < duration);
+    {
+      task->MaxDuration = duration;
+    }
+   
+    //Add to list
+    if(subTaskList==NULL)
+    {
+      subTaskList = subTask;
+      subTaskListEnd = subTask;
+    }
+    else
+    {
+      subTaskListEnd -> Next = subTask;
+      subTaskListEnd = subTaskListEnd -> Next;
+    }
+  }
+  return subTaskList;
+   
+}
 
 
 Event* FEL_GenerateDeparture(Event* arrival, int currentTime)
@@ -160,6 +194,13 @@ static int expDist(float constant)
   //A uniformly distributed random float
   float uniform = (1 - ((float)rand())/((float)RAND_MAX + 1));
   return((int)ceil(-log(uniform)/constant));
+}
+
+
+static int uniDist(int max)
+{ 
+  float uniform = (1 - ((float)rand())/((float)RAND_MAX + 1));
+  return (int)ceil(max*uniform);
 }
 
 ListNode* FEL_PopNodes(FEL* futureList, int n)
