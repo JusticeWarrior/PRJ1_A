@@ -13,7 +13,7 @@ Server* Server_Create(int processors)
 
 //Removes the specified node from the list, returning the new list.
 //If the node to be removed is the head, then prev is NULL
-static ListNode* Server_RemoveNode(ListNode* list, ListNode* prev, ListNode* node);
+static ListNode* Server_RemoveNode(ListNode* list, ListNode* prev, ListNode* node, ListNode** Tail);
 
 void Server_Destroy(Server* server)
 {
@@ -65,6 +65,17 @@ void Server_RemoveTask(Server* server, Event* event)
 
 void Server_RemoveSubTask(Server* server, ListNode* departure)
 {
+  printf("\nAvailable: %d\n",server->Available);
+  ListNode_PrintList(server->SubTasks,"========SERVERSTATUS========");
+  if(server->Processors-server->Available != ListNode_GetLength(server->SubTasks))
+  {
+    //printf("Going to break\n")
+    //ListNode_PrintList(departure, "Departure");
+    //ListNode_PrintList(server->SubTasks, "Server");
+    //assert(0);
+  }
+  assert(server->SubTasks!=NULL);
+  assert(departure!=NULL);
   ListNode* node = server -> SubTasks;
   ListNode* prev = NULL;
   while(ListNode_CompDurTask(departure, node) != 1)
@@ -72,7 +83,7 @@ void Server_RemoveSubTask(Server* server, ListNode* departure)
     prev = node;
     node = node -> Next;
   }
-  server-> SubTasks = Server_RemoveNode(server->SubTasks, prev, node);
+  server-> SubTasks = Server_RemoveNode(server->SubTasks, prev, node, &(server->Tail));
   ListNode_DestroyList(node);
   ListNode_DestroyList(departure);
   server -> Available++;
@@ -87,7 +98,7 @@ void Server_PrintState(Server* server)
   ListNode_PrintList(server->SubTasks, "SERVER SUBTASK LIST"); 
 }
 
-static ListNode* Server_RemoveNode(ListNode* list, ListNode* prev, ListNode* node)
+static ListNode* Server_RemoveNode(ListNode* list, ListNode* prev, ListNode* node, ListNode** Tail)
 {
   ListNode* newList;
   if(node==NULL)
@@ -102,6 +113,10 @@ static ListNode* Server_RemoveNode(ListNode* list, ListNode* prev, ListNode* nod
   }
   else
   {
+    if(node->Next==NULL) //This is the tail node
+    {
+      *Tail=prev;
+    }
     prev->Next = node->Next;
     node->Next = NULL;
     return list;

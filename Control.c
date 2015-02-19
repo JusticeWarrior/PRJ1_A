@@ -113,8 +113,8 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
     //Collect statistics
     task->MinDuration = duration;
     task->MaxDuration = duration;
-    cumuDuration += duration;
-     
+    cumuDuration += duration; 
+    task -> SubTasks++;
 
 
     token = strtok(NULL, "\n ");
@@ -131,6 +131,7 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
         task->MaxDuration = duration;
       if(duration < task->MinDuration)
         task->MinDuration = duration;
+      task -> SubTasks++;
       
       token = strtok(NULL, "\n ");
     }
@@ -240,7 +241,14 @@ Output* Control_Run(FEL* fel)
     //Update Queue
     do
     {
-      node = Queue_ScanQueues(queue0, queue1, server->Processors - server->Available);
+      node = Queue_ScanQueues(queue0, queue1, server->Available);
+      if(node!=NULL)
+      {
+        //ListNode_PrintList(node,"\n\n");
+        //printf("SubTasks:%d\n",node->Event->Task->SubTasks);
+
+        //ListNode_PrintList(server->SubTasks, "\nServer");
+      }
 
       if(node != NULL)
       {
