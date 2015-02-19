@@ -25,7 +25,7 @@ struct Output_st{
 
 //Create and populate arrivals for the FEL for a random simulation.  Returns the
 //load balancing factor as well, which is calculated in the function
-FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTasks, float* loadBalancingFactor);
+FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTasks);
 
 //Create and populate arrivals for the FEL for a simulation given in
 //a text file.  If there is an error, instead return null and set 

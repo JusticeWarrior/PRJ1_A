@@ -1,7 +1,7 @@
 #include "Control.h"
 #define BUFFER_LEN 1000
   
-FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTasks, float* loadBalancingFactor)
+FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTasks)
 {
   FEL* fel = FEL_Create(numTasks, numTasks, mu, lambda0, lambda1);
   ListNode* newNode;
@@ -23,17 +23,11 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
   zeroListTail = ListNode_AppendTail(zeroList, NULL); //Find tail of list 
   prevTime0 = zeroList->Event->Time;
   lbf += (zeroList->Event->Task->MaxDuration - zeroList->Event->Task->MinDuration)*fel->Mu;
-  /*event = FEL_GenerateRandomArrival(fel, 0, prevTime0);
-  zeroList = ListNode_Create(event);
-  zeroListTail = zeroList;*/
 
   oneList = FEL_GenerateRandomTask(fel, 1, prevTime1);
   oneListTail = ListNode_AppendTail(oneList, NULL); //Find tail of list 
   prevTime1 = oneList->Event->Time;
   lbf += (oneList->Event->Task->MaxDuration - oneList->Event->Task->MinDuration)*fel->Mu;
-  /*event = FEL_GenerateRandomArrival(fel, 1, prevTime1);
-  oneList = ListNode_Create(event);
-  oneListTail = oneList;*/
   
   for(i=1;i<numTasks;i++)
   {
@@ -43,10 +37,6 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
     prevTime0 = newNode->Event->Time;
     lbf += (newNode->Event->Task->MaxDuration - newNode->Event->Task->MinDuration)*fel->Mu;
 
-    /*event = FEL_GenerateRandomArrival(fel,0,prevTime0);
-    newNode = ListNode_Create(event);
-    zeroListTail = ListNode_AppendTail(newNode, zeroListTail);*/
-            
 
     //Add a one priority event 
     newNode = FEL_GenerateRandomTask(fel,1,prevTime1);
@@ -54,10 +44,6 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
     prevTime1 = newNode->Event->Time;
     lbf += (newNode->Event->Task->MaxDuration - newNode->Event->Task->MinDuration)*fel->Mu;
 
-    /*event = FEL_GenerateRandomArrival(fel,1,prevTime1);
-    newNode = ListNode_Create(event);
-    oneListTail = ListNode_AppendTail(newNode, zeroListTail);
-    prevTime1 = event->Time;*/
   }
 
   
@@ -65,7 +51,7 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
   FEL_Append(fel, zeroList);
   
   lbf /= numTasks*2;
-  *loadBalancingFactor = lbf;
+  fel->LBF = lbf;
   return fel;
 }
 
@@ -80,42 +66,108 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
   //Keep track of the number of each priority that have arrived
   int arrivals0 = 0;
   int arrivals1 = 0;
+  float lbf=0;      //Load balancing factor
+  float cumuDuration=0; //Cumulative duration of all subtasks
+  float cumuMax=0;      //Cumulative max duration of all tasks
+  float cumuMin=0;      //Cumulative min duration of all tasks
+
 
   //int error = 0; //Whether or not an error has occured
 
   char buffer[BUFFER_LEN];
-  
+  char* token;
+  Task* task;
   int arrivalTime;
   int priority;
   int duration;
 
+  ListNode* taskHead; //The head of the task currently being built
+  ListNode* taskTail; //The tail of hte task currently being built
+
+  //Pointers to hold the head and tail of all of the tasks
+  ListNode* zeroListHead;
+  ListNode* zeroListTail;
+  ListNode* oneListHead;
+  ListNode* oneListTail;
+
   fel = FEL_Create(0,0,0,0,0);
 
+  //Iterate through each line of the file and generate a task for each line
   fgets(buffer, BUFFER_LEN, file);
   while(!feof(file))
   {
+    taskHead=NULL;
+    taskTail=NULL;
+    task = Task_Create(0,-1,0);
     arrivalTime = atoi(strtok(buffer, " "));
     priority = atoi(strtok(NULL, " "));
-    duration = atoi(strtok(NULL, "\n"));
+
+    //Do first subtask (there will always be at least one)
+    duration = atoi(strtok(NULL, "\n "));
+    taskHead = ListNode_Create(Event_Create(ARRIVAL, priority, arrivalTime, duration, task));
+    taskTail = taskHead;
+
+    //Collect statistics
+    task->MinDuration = duration;
+    task->MaxDuration = duration;
+    cumuDuration += duration;
+     
+
+
+    token = strtok(NULL, "\n ");
+    while(token != NULL)
+    {
+      //Add Subtask to list
+      duration = atoi(token);
+      taskTail->Next = ListNode_Create(Event_Create(ARRIVAL, priority, arrivalTime, duration, task));
+      taskTail = taskTail->Next;
+      
+      //Collect statistics
+      cumuDuration = duration;
+      if(duration > task->MaxDuration)
+        task->MaxDuration = duration;
+      if(duration < task->MinDuration)
+        task->MinDuration = duration;
+      
+      token = strtok(NULL, "\n ");
+    }
+    //Add to global statistics
+    cumuMax += task -> MaxDuration;
+    cumuMin += task -> MinDuration;
 
     if(priority==0)
     {
+      if(arrivals0==0)
+      {
+        zeroListHead = taskHead;
+        zeroListTail = taskTail;
+      }
+      else
+      {
+        zeroListTail = ListNode_AppendTail(taskHead, zeroListTail);
+      }
       arrivals0++;
     }
     else
     {
+      if(arrivals1==0)
+      {
+        oneListHead = taskHead;
+        oneListTail = taskTail;
+      }
+      else
+      {
+        oneListTail = ListNode_AppendTail(taskHead, oneListTail);
+      }
       arrivals1++;
     }
-
-	event = Event_Create(ARRIVAL, priority, arrivalTime, duration, Task_Create(1, 0, 0));
-    FEL_AddEvent(fel, event);
-
     fgets(buffer, BUFFER_LEN, file);
   }
   
   fel -> NumberArrivals[0] = arrivals0;
   fel -> NumberArrivals[1] = arrivals1;
-  
+  fel -> LBF = (cumuMax-cumuMin)/(cumuDuration)/(arrivals0+arrivals1);
+
   //Cleanup
   fclose(file);
 

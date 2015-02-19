@@ -24,6 +24,9 @@ struct FEL_st{
 
   //The list of events, ordered by time, of events that will occur in the future
   ListNode* EventList;
+
+  //
+  float LBF; //The average load balancing factor
 };
 
 //Create an FEL structure with the given values
