@@ -420,6 +420,8 @@ void Test9()
 	}
 	
 	Queue_Destroy(testQueue1);
+	ListNode_DestroyList(testNode3);
+	ListNode_DestroyList(testNode5);
 }
 
 int main(int argc, char** argv)
