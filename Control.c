@@ -218,12 +218,7 @@ Output* Control_Run(FEL* fel)
       deltaTime = event->Event->Time - simData->CurrentTime;
       simData -> WaitingTime[0] += deltaTime * queue0->NumTasks; 
       simData -> WaitingTime[1] += deltaTime * queue1->NumTasks; 
-      simData -> CPUTime += deltaTime*(server->Processors - server->Available);
-      if(deltaTime!=0)
-      {
-        printf("DeltaT: %4d, Used cores: %4d, Cumulative: %4d\n", deltaTime, server->Processors - server->Available, simData->CPUTime);
-        printf("Queue 0: %4d, Queue1:%4d\n\n",queue0->Count, queue1->Count);
-      }
+      //simData -> CPUTime += deltaTime*(server->Processors - server->Available);
       
       
       //Now that statistics have been collected, it is safe to advance the time
@@ -234,6 +229,7 @@ Output* Control_Run(FEL* fel)
       {
         //Collect Arrival related stats
         simData->QueueLength += queue0->NumTasks + queue1->NumTasks;
+        simData -> CPUTime += deltaTime*(server->Processors - server->Available);
 
         //Add Arrival to correct queue
         Queue_SortTask(queue0, queue1, event);
@@ -268,7 +264,8 @@ Output* Control_Run(FEL* fel)
   wait0=SimulationData_AverageWait(simData,0,fel->NumberArrivals[0]);
   wait1=SimulationData_AverageWait(simData,1,fel->NumberArrivals[1]);
   queueLength = SimulationData_AverageQueueLength(simData, fel->NumberArrivals[0] + fel->NumberArrivals[1]);
-  utilization = SimulationData_Utilization(simData, server->Processors);
+  //utilization = SimulationData_Utilization(simData, server->Processors);
+  utilization = (float)(simData->CPUTime) / (fel->NumberArrivals[0]+fel->NumberArrivals[1]);
   balancing = fel -> LBF;
 
   output = Output_Create(wait0, wait1, queueLength, utilization, balancing, simData->CurrentTime);
