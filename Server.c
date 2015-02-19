@@ -67,6 +67,7 @@ void Server_RemoveSubTask(Server* server, ListNode* departure)
 {
   assert(server->SubTasks!=NULL);
   assert(departure!=NULL);
+  assert(ListNode_GetLength(server->SubTasks)==server->Processors - server->Available);
   ListNode* node = server -> SubTasks;
   ListNode* prev = NULL;
   while(ListNode_CompDurTask(departure, node) != 1)
