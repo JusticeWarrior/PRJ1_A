@@ -223,3 +223,8 @@ int ListNode_CompDurTask(ListNode* node1, ListNode* node2)
 {
 	return Event_CompDurTask(node1->Event, node2->Event);
 }
+
+ListNode* ListNode_RemoveNodes(ListNode* prevNode, ListNode* node, int length)
+{
+
+}
