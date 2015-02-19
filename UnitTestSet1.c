@@ -370,6 +370,37 @@ void Test8()
 	ListNode_DestroyList(testNode6);
 }
 
+void Test9()
+{
+	int success, success2 = TRUE;
+
+	fprintf(stdout, "\nTest 9: Scanning a Queue\n");
+
+	Task* testTask1 = Task_Create(2, 1, 10);
+	Task* testTask2 = Task_Create(1, 1, 10);
+	Task* testTask3 = Task_Create(3, 1, 10);
+	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 4, testTask1);
+	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3, 4, testTask1);
+	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5, 0, testTask2);
+	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6, 0, testTask3);
+	Event* testEvent5 = Event_Create(ARRIVAL, 0, 5, 22, testTask3);
+	Event* testEvent6 = Event_Create(ARRIVAL, 0, 6, 1, testTask3);
+	ListNode* testNode1 = ListNode_Create(testEvent1);
+	ListNode* testNode2 = ListNode_Create(testEvent2);
+	ListNode* testNode3 = ListNode_Create(testEvent3);
+	ListNode* testNode4 = ListNode_Create(testEvent4);
+	ListNode* testNode5 = ListNode_Create(testEvent5);
+	ListNode* testNode6 = ListNode_Create(testEvent6);
+	Queue* testQueue1 = Queue_Create(0);
+	Queue_Add(testQueue1, testNode1);
+	Queue_Add(testQueue1, testNode2);
+	Queue_Add(testQueue1, testNode3);
+	Queue_Add(testQueue1, testNode4);
+	Queue_Add(testQueue1, testNode5);
+	Queue_Add(testQueue1, testNode6);
+
+
+}
 
 int main(int argc, char** argv)
 {
