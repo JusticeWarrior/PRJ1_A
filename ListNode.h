@@ -64,8 +64,7 @@ ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compF
 int ListNode_CompDurTask(ListNode* node1, ListNode* node2);
 
 // When provided with the first node of a list, the function will remove the list
-// (of the length provided) and reconnect the list together. Returns the head of
-// the new list.
-ListNode* ListNode_RemoveNodes(ListNode* prevNode, ListNode* node, int length);
+// (of the length provided) and reconnect the list together.
+void ListNode_RemoveNodes(ListNode* prevNode, ListNode* node, int length);
 
 #endif /* LISTNODE_INCLUDED */
