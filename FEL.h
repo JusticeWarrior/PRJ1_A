@@ -30,11 +30,11 @@ FEL* FEL_Create(int arrivals0, int arrivals1, float mu, float lambda0, float lam
 //Destroy the FEL structure
 void FEL_Destroy(FEL* FutureEvents);
 
-//Randomly generate a new arrival event of the given prority using the time of
-//The privous arrival.  If the previousTime is <0, then the event will be
-//Scheduled to occur at t=0
-Event* FEL_GenerateRandomArrival(FEL* futureEvents, int  priority, int previousTime);
 
+//Randomly generate the arrival of a new subtask.  Its task will be NULL.
+ListNode* FEL_GenerateRandomSubTask(FEL* futureEvents, int  priority, int previousTime);
+
+//Generate a list of subtasks of random length and random durations
 ListNode* FEL_GenerateRandomTask(FEL* fel, int priority, int previousTime);
 
 //Generate a new departute event based off of a given arrival event
