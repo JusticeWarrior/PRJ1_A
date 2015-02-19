@@ -2,6 +2,7 @@
 
 static void Queue_RemoveTask(Queue* queue, ListNode* prevTask, ListNode* task, int length);
 static void Queue_RemoveNodes(ListNode* prevNode, ListNode* node, int length, ListNode** head, ListNode** tail);
+static void Queue_AddTask(Queue* queue, ListNode* task);
 
 Queue* Queue_Create(int priority)
 {
@@ -75,7 +76,31 @@ void Queue_AddArrival(Queue* queue0, Queue* queue1, ListNode* node)
 	}
 }
 
-void Queue_AddTask(Queue* queue0, Queue* queue1, ListNode* task)
+// Adds a task to a specific queue. Increases count, numtask, updates head,
+// and updates tail.
+static void Queue_AddTask(Queue* queue, ListNode* task)
+{
+	// If adding an empty task, do nothing
+	if (task == NULL)
+		return;
+
+	// If the count is 0 then update the head.
+	if (queue->Count == 0)
+	{
+		queue->Head = task;
+	}
+
+	// Get the new count
+	queue->Count += ListNode_GetLength(task);
+
+	// Update the number of tasks
+	queue->NumTasks++;
+
+	// Append the task list and update tail
+	queue->Tail = ListNode_AppendTail(task, queue->Tail);
+}
+
+void Queue_SortTask(Queue* queue0, Queue* queue1, ListNode* task)
 {
 	
 }
@@ -160,10 +185,10 @@ ListNode* Queue_ScanQueue(Queue* queue, int maxProcessors)
 
 ListNode* Queue_ScanQueues(Queue* queue0, Queue* queue1, int maxProcessors)
 {
-	ListNode* scan = Queue_ScanQueue(queue0, maxProcessors); // Check priority 1
+	ListNode* scan = Queue_ScanQueue(queue0, maxProcessors); // Check priority 0
 
 	if (scan == NULL)
-		return Queue_ScanQueue(queue1, maxProcessors); // Check priority 2
+		return Queue_ScanQueue(queue1, maxProcessors); // Check priority 1
 
 	return scan;
 }

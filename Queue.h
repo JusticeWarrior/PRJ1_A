@@ -38,7 +38,7 @@ void Queue_AddArrival(Queue* queue0, Queue* queue1, ListNode* node);
 
 // Adds an entire task to the corresponding queue and updates the number
 // of tasks.
-void Queue_AddTask(Queue* queue0, Queue* queue1, ListNode* task);
+void Queue_SortTask(Queue* queue0, Queue* queue1, ListNode* task);
 
 // Scans through a single queue to see if an entire task can be popped
 // from it based on the number of processors available. Returns an entire
