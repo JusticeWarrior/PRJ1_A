@@ -46,9 +46,6 @@ void ListNode_PrintList(ListNode* head, const char* name);
 // A function to print a list to a test file for testing purposes.
 void ListNode_PrintToTestFile(ListNode* head, const char* testFileName);
 
-// A function to print the FEL to a test file for testing purposes.
-void ListNode_PrintPartBTestFile(ListNode* head, const char* testFileName);
-
 // Gets the length of the list and returns it as an integer.
 int ListNode_GetLength(ListNode* head);
 
@@ -65,5 +62,8 @@ ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compF
 // different tasks or they have different durations, the function returns FALSE.
 // Otherwise, the function returns TRUE.
 int ListNode_CompDurTask(ListNode* node1, ListNode* node2);
+
+// Finds the tail of the specified list and returns it.
+ListNode* ListNode_FindTail(ListNode* head);
 
 #endif /* LISTNODE_INCLUDED */

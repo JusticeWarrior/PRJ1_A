@@ -1,6 +1,5 @@
 #include "ListNode.h"
 
-static ListNode* ListNode_FindTail(ListNode* head);
 static ListNode* ListNode_CompareAndAddNode(ListNode** list1, ListNode** list2, int(*compFunc)(ListNode*, ListNode*));
 
 ListNode* ListNode_Create(Event* event)
@@ -131,11 +130,6 @@ void ListNode_PrintToTestFile(ListNode* head, const char* testFileName)
 	}
 
 	fclose(testFile);
-}
-
-void ListNode_PrintPartBTestFile(ListNode* head, const char* testFileName)
-{
-	
 }
 
 int ListNode_GetLength(ListNode* head)

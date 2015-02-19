@@ -274,3 +274,51 @@ static void FEL_setRandSeed()
 {
 	srand((unsigned int)time(NULL));
 }
+
+FEL* FEL_PrintPartBTestFile(FEL* fel, const char* testFileName)
+{
+	if (fel->EventList == NULL)
+		return fel;
+
+	FILE* testFile = fopen(testFileName, "wb");
+	FEL* newFel = FEL_Create(fel->NumberArrivals[0], fel->NumberArrivals[1],
+		fel->Mu, fel->Lambda[0], fel->Lambda[1]);
+
+	ListNode* task = NULL;
+	ListNode* taskHead = NULL;
+	ListNode* newFelTail = NULL;
+
+	task = FEL_Pop(fel);
+	taskHead = task;
+	fprintf(testFile, "%d %d %d", fel->EventList->Event->Time,
+		fel->EventList->Event->Priority, fel->EventList->Event->Duration);
+	while (task->Next != NULL)
+	{
+		task = task->Next;
+		fprintf(testFile, " %d", task->Event->Duration);
+	}
+
+	newFelTail = ListNode_FindTail(taskHead);
+	newFel->EventList = taskHead;
+
+	while (fel->EventList != NULL)
+	{
+		task = FEL_Pop(fel);
+		taskHead = task;
+		fprintf(testFile, "%d %d %d", task->Event->Time,
+			task->Event->Priority, task->Event->Duration);
+		while (task->Next != NULL)
+		{
+			task = task->Next;
+			fprintf(testFile, " %d", task->Event->Duration);
+		}
+
+		fprintf(testFile, "\n");
+
+		newFelTail = ListNode_AppendTail(task, newFelTail);
+	}
+
+	fclose(testFile);
+
+	return newFel;
+}

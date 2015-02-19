@@ -70,4 +70,8 @@ ListNode* FEL_Pop(FEL* fel);
 // A function to test the average event time within a given FEL list.
 float FEL_AverageEventDuration(FEL* futureEvents);
 
+// A function to print the FEL to a test file for testing purposes. Since
+// the function changes the original FEL, a copy is passed as output.
+FEL* FEL_PrintPartBTestFile(FEL* fel, const char* testFileName);
+
 #endif /* FEL_INCLUDED */

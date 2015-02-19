@@ -287,6 +287,9 @@ int main(int argc, char** argv)
 	// Destroy the Argument structure
 	Args_Destroy(args);
 
+	//TESTING ONLY!!!
+	//FEL_PrintPartBTestFile(fel, "TestOutput1.txt");
+
 	// Run simulation with generated FEL
 	Output* output = Control_Run(fel);
 
