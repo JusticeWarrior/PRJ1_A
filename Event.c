@@ -19,7 +19,8 @@ void Event_Destroy(Event* event)
 		return;
 	assert(event->Task != NULL); // ALL EVENTS SHOULD BE TIED TO A TASK!
 
-	event->Task->SubTasks--;
+	if (event->Type == ARRIVAL)
+		event->Task->SubTasks--;
 	if (event->Task->SubTasks == 0)
 		Task_Destroy(event->Task);
 	free(event);

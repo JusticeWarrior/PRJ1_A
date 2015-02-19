@@ -43,10 +43,11 @@ void Test2()
 	int success, success2, success3;
 
 	fprintf(stdout, "\nTest 2: Inserting and Popping nodes from a list.\n");
-	Event* testEvent2 = Event_Create(DEPARTURE, 0, 2, 0, Task_Create(1, 0, 0));
-	Event* testEvent3 = Event_Create(DEPARTURE, 0, 3, 0, Task_Create(1, 0, 0));
-	Event* testEvent4 = Event_Create(DEPARTURE, 0, 4, 0, Task_Create(1, 0, 0));
-	Event* testEvent5 = Event_Create(DEPARTURE, 0, 5, 0, Task_Create(1, 0, 0));
+	Task* task = Task_Create(1, 0, 0);
+	Event* testEvent2 = Event_Create(DEPARTURE, 0, 2, 0, task);
+	Event* testEvent3 = Event_Create(DEPARTURE, 0, 3, 0, task);
+	Event* testEvent4 = Event_Create(DEPARTURE, 0, 4, 0, task);
+	Event* testEvent5 = Event_Create(DEPARTURE, 0, 5, 0, task);
 	ListNode* testNode2 = ListNode_Create(testEvent2);
 	ListNode* testNode3 = ListNode_Create(testEvent3);
 	ListNode* testNode4 = ListNode_Create(testEvent4);
@@ -86,6 +87,7 @@ void Test2()
 		success3 = FALSE;
 
 	ListNode_DestroyList(testNode8);
+	Task_Destroy(task);
 
 	if (success == TRUE && success2 == TRUE && success3 == TRUE)
 		fprintf(stdout, "\nSuccess\n");

@@ -16,7 +16,8 @@ typedef struct Task_st Task;
 #include <assert.h>
 
 struct Event_st{
-	// Either an ARRIVAL or a DEPARTURE
+	// Either an ARRIVAL or a 
+
 	char Type;
 	int Priority;
 	int Time;
