@@ -69,9 +69,9 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
   int arrivals0 = 0;
   int arrivals1 = 0;
   int subTaskTotal=0;
-  float cumuDuration=0; //Cumulative duration of all subtasks
-  float cumuMax=0;      //Cumulative max duration of all tasks
-  float cumuMin=0;      //Cumulative min duration of all tasks
+  long long cumuDuration=0; //Cumulative duration of all subtasks
+  long long cumuMax=0;      //Cumulative max duration of all tasks
+  long long cumuMin=0;      //Cumulative min duration of all tasks
 
 
   //int error = 0; //Whether or not an error has occured
@@ -175,10 +175,11 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
   FEL_Append(fel, zeroListHead);  
   fel -> NumberArrivals[0] = arrivals0;
   fel -> NumberArrivals[1] = arrivals1;
-  fel -> LBF = (cumuMax-cumuMin)/(cumuDuration/subTaskTotal)/(arrivals0+arrivals1);
+  fel -> LBF = ((float)(cumuMax-cumuMin))/((float)cumuDuration/subTaskTotal)/(arrivals0+arrivals1);
 
   //Cleanup
   fclose(file);
+
 
   return fel;
 }
