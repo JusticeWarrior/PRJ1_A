@@ -226,5 +226,14 @@ int ListNode_CompDurTask(ListNode* node1, ListNode* node2)
 
 ListNode* ListNode_RemoveNodes(ListNode* prevNode, ListNode* node, int length)
 {
+	// Iterate through the list until the last node of the removed list is reached.
+	int i;
+	for (i = 1; i < length; i++)
+	{
+		node = node->Next;
+	}
 
+
+	if (prevNode != NULL)
+		prevNode->Next = node->Next;
 }
