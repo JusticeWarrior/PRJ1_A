@@ -12,7 +12,7 @@ typedef struct FEL_st FEL;
 #include <stdlib.h>
 #include <time.h>
 
-#define MAX_SUBTASKS 5
+#define MAX_SUBTASKS 32
 
 struct FEL_st{
   //The number of people that have arrived in each priority queue
