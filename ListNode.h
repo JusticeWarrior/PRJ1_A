@@ -63,7 +63,7 @@ ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compF
 // Otherwise, the function returns TRUE.
 int ListNode_CompDurTask(ListNode* node1, ListNode* node2);
 
-// When provided 
+// When provided with a node
 ListNode* ListNode_RemoveNodes(ListNode* prevNode, ListNode* node, int length);
 
 #endif /* LISTNODE_INCLUDED */

@@ -68,7 +68,7 @@ ListNode* ListNode_FindTail(ListNode* head)
 
 	while (head->Next != NULL)
 	{
-		head->Next;
+		head = head->Next;
 	}
 
 	return head; // Now the tail

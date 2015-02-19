@@ -1,6 +1,6 @@
 #include "Queue.h"
 
-static void Queue_RemoveTask(ListNode* task, int length);
+//static void Queue_RemoveTask(ListNode* task, int length);
 
 Queue* Queue_Create(int priority)
 {
