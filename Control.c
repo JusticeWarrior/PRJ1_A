@@ -1,5 +1,8 @@
 #include "Control.h"
 #define BUFFER_LEN 1000
+
+//Return a 1 if both events are departures and occur at the same time
+static int departSameTime(ListNode* a, ListNode* b);
   
 FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTasks)
 {
@@ -163,7 +166,11 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
     }
     fgets(buffer, BUFFER_LEN, file);
   }
-  
+
+
+  zeroListHead = ListNode_MergeSortedLists(zeroListHead, oneListHead, ListNode_CompEventTimePriority);
+
+  FEL_Append(fel, zeroListHead);  
   fel -> NumberArrivals[0] = arrivals0;
   fel -> NumberArrivals[1] = arrivals1;
   fel -> LBF = (cumuMax-cumuMin)/(cumuDuration)/(arrivals0+arrivals1);
@@ -180,14 +187,15 @@ Output* Control_Run(FEL* fel)
 {
   //Initialize main structures
   SimulationData* simData = SimulationData_Create();
-  Server* server = Server_Create(1);
+  Server* server = Server_Create(64);
   Queue* queue0 = Queue_Create(0);
   Queue* queue1 = Queue_Create(1);
   Output* output;
   
   //Initialize other variables
-  Event* event;
-  Event* departure;
+  int iterateInput=1;
+  ListNode* event;
+  ListNode* departure;
   ListNode* node;
   int deltaTime;
   //int cumulativeTime;
@@ -197,54 +205,50 @@ Output* Control_Run(FEL* fel)
   //Main loop
   while(!FEL_IsEmpty(fel))
   {
-    //Grab new event
-    event = FEL_PopEvent(fel);
-
-    //Collect statistics
-    deltaTime = event->Time - simData->CurrentTime;
-    simData -> WaitingTime[0] += deltaTime * queue0->Count; 
-    simData -> WaitingTime[1] += deltaTime * queue1->Count; 
-    simData -> CPUTime += deltaTime*Server_IsBusy(server);
-    
-    //Now that statistics have been collected, it is safe to advance the time
-    simData -> CurrentTime += deltaTime;
-
-    //Handle Event
-    if(event->Type == ARRIVAL)
+    while(iterateInput)
     {
-      Queue_AddArrival(queue0, queue1, ListNode_Create(event));
-    }
-    if(event->Type == DEPARTURE)
-    {
-      Server_RemoveTask(server, event);
+      //Grab new event
+      event = FEL_Pop(fel);
+
+      //Determine if another event needs to be popped as well
+      iterateInput = departSameTime(event, fel->EventList);
+
+      //Collect statistics
+      deltaTime = event->Event->Time - simData->CurrentTime;
+      simData -> WaitingTime[0] += deltaTime * queue0->NumTasks; 
+      simData -> WaitingTime[1] += deltaTime * queue1->NumTasks; 
+      simData -> CPUTime += deltaTime*(server->Processors - server->Available);
+      
+      //Now that statistics have been collected, it is safe to advance the time
+      simData -> CurrentTime += deltaTime;
+  
+      //Handle Event
+      if(event->Event->Type == ARRIVAL)
+      {
+        //Collect Arrival related stats
+        simData->QueueLength += queue0->NumTasks + queue1->NumTasks;
+
+        //Add Arrival to correct queue
+        Queue_SortTask(queue0, queue1, event);
+      }
+      if(event->Event->Type == DEPARTURE)
+      {
+        //Remove subtask from server
+        Server_RemoveSubTask(server, event);
+      }
     }
     //Update Queue
-    if((!Server_IsBusy(server)))
+    do
     {
-      if(queue0->Count != 0)
-      {
-        node = Queue_Pop(queue0);
-      }
-      else if(queue1->Count != 0)
-      {
-        node = Queue_Pop(queue1);
-      }
-      else
-      {
-        node = NULL;
-      }
+      node = Queue_ScanQueues(queue0, queue1, server->Processors - server->Available);
+
       if(node != NULL)
       {
-        /* Needs fixin real good
-        event = ListNode_StripEvent(node); //Can this handle NULL?
-        //Add task
-        Server_AddTask(server, event); //Can this handle NULL?
-        */
-        departure = FEL_GenerateDeparture(event, simData -> CurrentTime);
-        FEL_AddEvent(fel, departure);
+        FEL_GenerateAndAddDepartures(fel, node, simData->CurrentTime);
+        Server_AddTask(server, node);
       }
-    }
-
+    }while(node!=NULL);
+    iterateInput=1;
   }
 
   //Calculate final simulation data values
@@ -256,9 +260,9 @@ Output* Control_Run(FEL* fel)
 
   wait0=SimulationData_AverageWait(simData,0,fel->NumberArrivals[0]);
   wait1=SimulationData_AverageWait(simData,1,fel->NumberArrivals[1]);
-  queueLength = SimulationData_AverageQueueLength(simData);
+  queueLength = SimulationData_AverageQueueLength(simData, fel->NumberArrivals[0] + fel->NumberArrivals[1]);
   utilization = SimulationData_Utilization(simData, server->Processors);
-  balancing = SimulationData_AverageLoadBalancing(simData,fel->NumberArrivals[0]+fel->NumberArrivals[1]);
+  balancing = fel -> LBF;
 
   output = Output_Create(wait0, wait1, queueLength, utilization, balancing, simData->CurrentTime);
 
@@ -294,4 +298,21 @@ Output* Output_Create(float AvgWait0, float AvgWait1, float AvgQueue, float AvgC
 void Output_Destroy(Output* output)
 {
   free(output);
+}
+
+static int departSameTime(ListNode* a, ListNode* b)
+{
+  if(a==NULL || b==NULL)
+  {
+    return 0;
+  }
+  if(a->Event->Type!=DEPARTURE || b->Event->Type!=DEPARTURE)
+  {
+    return 0;
+  }
+  if(a->Event->Time != b->Event->Time)
+  {
+    return 0;
+  }
+  return 1;
 }

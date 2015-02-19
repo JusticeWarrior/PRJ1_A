@@ -22,6 +22,9 @@ struct SimulationData_st{
   //The cumulative load balancing factor of all of the tasks
   int LoadBalancingFactor;
 
+  //The cumulative length of the queue
+  int QueueLength;
+
 };
 
 //Create a SimulationData structure
@@ -35,7 +38,7 @@ void SimulationData_Destroy(SimulationData* data);
 float SimulationData_AverageWait(SimulationData* simData, int priority, int arrivals);
 
 //Calculate the average number of objects in the queue
-float SimulationData_AverageQueueLength(SimulationData* simData);
+float SimulationData_AverageQueueLength(SimulationData* simData, int NumArrivals);
 
 //Calculate the average number of CPU's that are being used
 float SimulationData_Utilization(SimulationData* simData, int processors);

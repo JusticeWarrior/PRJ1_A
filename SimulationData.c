@@ -9,6 +9,7 @@ SimulationData* SimulationData_Create()
   simData -> WaitingTime[0] = 0;
   simData -> WaitingTime[1] = 0;
   simData -> CPUTime = 0;
+  simData -> QueueLength=0;
   simData -> CurrentTime = 0; 
   simData -> LoadBalancingFactor=0; 
   return simData;
@@ -31,16 +32,10 @@ float SimulationData_AverageWait(SimulationData* simData, int priority, int arri
 
 
 
-float SimulationData_AverageQueueLength(SimulationData* simData)
+float SimulationData_AverageQueueLength(SimulationData* simData, int totalArrivals)
 {
-  float length=0;
-  int i;
 
-  for(i=0;i<PRIORITY_LEVELS;i++)
-  {
-    length += (float)(simData->WaitingTime[i]);
-  }
-  return (length/((float)(simData->CurrentTime)));
+  return ((float)(simData->QueueLength)/((float)(totalArrivals)));
 }
  
 
