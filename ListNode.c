@@ -77,6 +77,7 @@ ListNode* ListNode_FindTail(ListNode* head)
 ListNode* ListNode_AppendTail(ListNode* node, ListNode* listTail)
 {
 	assert(node != NULL); // Make sure you don't add a NULL node!
+	assert(node != listTail); // Make sure you aren't trying to append a node to itself!
 
 	if (listTail == NULL)
 		return ListNode_FindTail(node);
@@ -160,7 +161,8 @@ Event* ListNode_StripEvent(ListNode* node)
 }
 
 // Compares the head's of two lists and returns the lesser of the two.
-// Also moves along the pointer of the list grabbed from.
+// Also moves along the pointer of the list grabbed from. Breaks the
+// connection of the returned node to it's next node.
 static ListNode* ListNode_CompareAndAddNode(ListNode** list1, ListNode** list2, int(*compFunc)(ListNode*, ListNode*))
 {
 	assert(*list1 != NULL || *list2 != NULL); // DONT TRY TO ADD ANY NULL LISTS!
@@ -178,6 +180,7 @@ static ListNode* ListNode_CompareAndAddNode(ListNode** list1, ListNode** list2, 
 		(*list2) = (*list2)->Next;
 	}
 
+	addNode->Next = NULL;
 	return addNode;
 }
 
@@ -193,7 +196,7 @@ ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compF
 
 	ListNode* newHead = NULL;
 	ListNode* newTail = NULL;
-	
+
 	// Add the first node
 	newTail = ListNode_AppendTail(ListNode_CompareAndAddNode(&list1, &list2, compFunc), newTail);
 
