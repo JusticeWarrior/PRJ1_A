@@ -425,6 +425,91 @@ void Test9()
 	ListNode_DestroyList(testNode8);
 }
 
+void Test10()
+{
+	int success, success2, success3 = TRUE;
+
+	fprintf(stdout, "\nTest 10: Adding Tasks To Queues\n");
+
+	Task* testTask1 = Task_Create(3, 1, 10);
+	Task* testTask2 = Task_Create(3, 1, 10);
+	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 4, testTask1);
+	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3, 4, testTask1);
+	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5, 0, testTask1);
+	Event* testEvent4 = Event_Create(ARRIVAL, 1, 6, 0, testTask2);
+	Event* testEvent5 = Event_Create(ARRIVAL, 1, 5, 22, testTask2);
+	Event* testEvent6 = Event_Create(ARRIVAL, 1, 6, 1, testTask2);
+	ListNode* testNode1 = ListNode_Create(testEvent1);
+	ListNode* testNode2 = ListNode_Create(testEvent2);
+	ListNode* testNode3 = ListNode_Create(testEvent3);
+	ListNode* testNode4 = ListNode_Create(testEvent4);
+	ListNode* testNode5 = ListNode_Create(testEvent5);
+	ListNode* testNode6 = ListNode_Create(testEvent6);
+	Queue* testQueue1 = Queue_Create(0);
+	Queue* testQueue2 = Queue_Create(1);
+
+	ListNode* testNode7 = ListNode_InsertSorted(testNode2, testNode1, ListNode_CompEventTimePriority);
+	testNode7 = ListNode_InsertSorted(testNode3, testNode7, ListNode_CompEventTimePriority);
+
+	ListNode* testNode8 = ListNode_InsertSorted(testNode5, testNode4, ListNode_CompEventTimePriority);
+	testNode8 = ListNode_InsertSorted(testNode6, testNode8, ListNode_CompEventTimePriority);
+
+	Queue_SortTask(testQueue1, testQueue2, testNode7);
+	Queue_SortTask(testQueue1, testQueue2, testNode8);
+
+	ListNode_PrintList(testQueue1->Head, "Queue Priority 0");
+	ListNode_PrintList(testQueue2->Head, "Queue Priority 1");
+
+	if (testQueue1->Count == 3 && testQueue1->NumTasks == 1 &&
+		testQueue1->Head == testNode1 && testQueue1->Tail == testNode3)
+	{
+		success = TRUE;
+	}
+	else
+	{
+		success = FALSE;
+	}
+	if (testQueue2->Count == 3 && testQueue1->NumTasks == 1 &&
+		testQueue2->Head == testNode5 && testQueue2->Tail == testNode4)
+	{
+		success2 = TRUE;
+	}
+	else
+	{
+		success2 = FALSE;
+	}
+
+	ListNode* testNode9 = Queue_ScanQueues(testQueue1, testQueue2, 3);
+	ListNode* testNode10 = Queue_ScanQueues(testQueue1, testQueue2, 3);
+
+	ListNode_PrintList(testNode9, "1st Time Scanning Queues");
+	ListNode_PrintList(testNode10, "2nd Time Scanning Queues");
+
+	if (ListNode_GetLength(testNode9) == 3 && ListNode_GetLength(testNode10) == 3)
+	{
+		success3 = TRUE;
+	}
+	else
+	{
+		success3 = FALSE;
+	}
+
+	if (success == TRUE && success2 == TRUE && success3 == TRUE
+		&& success3 == TRUE)
+	{
+		fprintf(stdout, "\nSuccess\n");
+	}
+	else
+	{
+		fprintf(stdout, "\nFailure\n");
+	}
+
+	Queue_Destroy(testQueue1);
+	Queue_Destroy(testQueue2);
+	ListNode_DestroyList(testNode9);
+	ListNode_DestroyList(testNode10);
+}
+
 int main(int argc, char** argv)
 {
 	Test1();
@@ -436,6 +521,7 @@ int main(int argc, char** argv)
 	Test7();
 	Test8();
 	Test9();
+	Test10();
 
 	return EXIT_SUCCESS;
 }
