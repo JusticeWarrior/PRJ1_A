@@ -195,6 +195,7 @@ void Test4()
 	else
 		fprintf(stdout, "\nFailure\n");
 
+	Task_Destroy(testEvent2->Task);
 	ListNode_DestroyList(head);
 }
 
