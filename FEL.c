@@ -88,7 +88,7 @@ ListNode* FEL_GenerateRandomTask(FEL* fel, int priority, int previousTime)
     {
       task->MinDuration = duration;
     } 
-    if(task->MaxDuration < duration);
+    if(task->MaxDuration < duration)
     {
       task->MaxDuration = duration;
     }

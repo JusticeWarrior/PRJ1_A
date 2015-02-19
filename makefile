@@ -16,3 +16,6 @@ test3:
 test4:
 	gcc $(flags) $(source) UnitTestSet4.c -o PRJ1_A
 	PRJ1_A
+test5:
+	gcc $(flags) $(source) UnitTestSet5.c -o PRJ1_A
+	PRJ1_A
