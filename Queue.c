@@ -85,7 +85,7 @@ static void Queue_RemoveTask(Queue* queue, ListNode* prevTask, ListNode* task, i
 {
 	assert(!(task != NULL && length <= 0)); // MAKE SURE THAT THE TASK LINES UP WITH THE LENGTH!
 
-	if (task == NULL)
+	if (task == NULL) // Do nothing on empty tasks
 		return;
 
 	// Detach the task from the queue.
@@ -96,10 +96,9 @@ static void Queue_RemoveTask(Queue* queue, ListNode* prevTask, ListNode* task, i
 	{
 		queue->Tail = tail;
 	}
-	// 
+
+	// Decrement the number of tasks
 	queue->NumTasks--;
-	
-	// CALL REMOVE FROM LIST FUNCTION HERE!!
 }
 
 ListNode* Queue_ScanQueue(Queue* queue, int maxProcessors)
