@@ -28,6 +28,7 @@ void ListNode_DestroyList(ListNode* head);
 ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listHead, int (*compFunc)(ListNode*, ListNode*));
 
 // Appends the node to the tail of the list. Returns the new tail of the list.
+// If node is a list itself, the function returns the tail of that list.
 ListNode* ListNode_AppendTail(ListNode* node, ListNode* listTail);
 
 // Pops off the head node of the list. Returns the new list head.
@@ -61,5 +62,8 @@ ListNode* ListNode_MergeSortedLists(ListNode* list1, ListNode* list2, int(*compF
 // different tasks or they have different durations, the function returns FALSE.
 // Otherwise, the function returns TRUE.
 int ListNode_CompDurTask(ListNode* node1, ListNode* node2);
+
+// When provided 
+ListNode* ListNode_RemoveNodes(ListNode* prevNode, ListNode* node, int length);
 
 #endif /* LISTNODE_INCLUDED */

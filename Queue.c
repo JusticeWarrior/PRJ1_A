@@ -1,5 +1,7 @@
 #include "Queue.h"
 
+static void Queue_RemoveTask(ListNode* task, int length);
+
 Queue* Queue_Create(int priority)
 {
 	Queue* queue = malloc(sizeof(Queue));
@@ -72,10 +74,34 @@ void Queue_AddArrival(Queue* queue0, Queue* queue1, ListNode* node)
 	}
 }
 
-void Queue_AddTask(Queue* queue0, Queue* queue1, ListNode* task) { }
+void Queue_AddTask(Queue* queue0, Queue* queue1, ListNode* task)
+{
+	
+}
+
+// This function will remove an entire task from the queue based
+// on the length of the task
+static void Queue_RemoveTask(ListNode* task, int length)
+{
+	int i;
+	for (i = 1; i < length; i++)
+	{
+		task = task->Next;
+	}
+
+	// CALL REMOVE FROM LIST FUNCTION HERE!!
+}
 
 ListNode* Queue_ScanQueue(Queue* queue, int maxProcessors)
 {
+	/*ListNode* head = queue->Head;
+
+	while (head != NULL)
+	{
+		if (head->Event->Task->SubTasks >= maxProcessors)
+			
+	}*/
+
 	return NULL;
 }
 

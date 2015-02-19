@@ -1,5 +1,6 @@
 #include "ListNode.h"
 
+static ListNode* ListNode_FindTail(ListNode* head);
 static ListNode* ListNode_CompareAndAddNode(ListNode** list1, ListNode** list2, int(*compFunc)(ListNode*, ListNode*));
 
 ListNode* ListNode_Create(Event* event)
@@ -60,16 +61,29 @@ ListNode* ListNode_InsertSorted(ListNode* node, ListNode* listHead, int (*compFu
 	return listHead;
 }
 
+ListNode* ListNode_FindTail(ListNode* head)
+{
+	if (head == NULL)
+		return NULL;
+
+	while (head->Next != NULL)
+	{
+		head->Next;
+	}
+
+	return head; // Now the tail
+}
+
 ListNode* ListNode_AppendTail(ListNode* node, ListNode* listTail)
 {
 	assert(node != NULL); // Make sure you don't add a NULL node!
 
 	if (listTail == NULL)
-		return node;
+		return ListNode_FindTail(node);
 
 	listTail->Next = node;
 
-	return node;
+	return ListNode_FindTail(node);
 }
 
 ListNode* ListNode_PopHead(ListNode* headNode)
