@@ -80,7 +80,7 @@ Event* FEL_GenerateDeparture(Event* arrival, int currentTime)
 {
   if(arrival==NULL) {return NULL;} //Protect against NULL events
   Event* event;
-  event = Event_Create(DEPARTURE, arrival->Priority, arrival->Duration + currentTime, arrival->Duration, Task_Create(1, 0, 0));
+  event = Event_Create(DEPARTURE, arrival->Priority, arrival->Duration + currentTime, arrival->Duration, arrival->Task);
   return event;
 }
 
@@ -189,7 +189,16 @@ ListNode* FEL_PopNodes(FEL* futureList, int n)
 
 void FEL_GenerateAndAddDepartures(FEL* fel, ListNode* subTasks, int currentTime)
 {
-  
+  ListNode* node = subTasks;
+  Event* newDeparture;
+
+  //Generate a departure for each arrival in the list
+  while(node != NULL)
+  {
+    newDeparture = FEL_GenerateDeparture(node->Event, currentTime);
+    FEL_AddEvent(fel, newDeparture);
+    node = node -> Next;
+  }
 }
 
 

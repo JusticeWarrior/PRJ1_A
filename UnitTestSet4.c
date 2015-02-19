@@ -13,6 +13,7 @@ int main(int argc, char** argv)
 {
   //Delarations
   FEL* fel = FEL_Create(1,1,1,1,1);
+  Server* server = Server_Create(10);
   ListNode* list = NULL;
   ListNode* list2 = NULL;
   ListNode* tail = NULL;
@@ -36,7 +37,6 @@ int main(int argc, char** argv)
     tail2 = ListNode_AppendTail(ListNode_Create(Event_Create(ARRIVAL,0,1,i,task2)),tail2);
   }
   tail ->Next = list2;
-  tail2->Next = ListNode_Create(Event_Create(DEPARTURE, 2, 1, 1, task));
   FEL_Append(fel,list);
 
   //Clean up lists
@@ -44,22 +44,33 @@ int main(int argc, char** argv)
   list2 = NULL;
   
   ListNode_PrintList(fel->EventList, "FEL");
+  Server_PrintState(server);
+  //scanf("%d",NULL);
 
-  list = FEL_Pop(fel);
   printf("\nPOP1==============\n");
-  ListNode_PrintList(fel->EventList,"FEL");
-  ListNode_PrintList(list, "Popped data");
-  
-  list2 = FEL_Pop(fel);
-  printf("\nPOP2==============\n");
-  ListNode_PrintList(fel->EventList,"FEL");
-  ListNode_PrintList(list2, "Popped data");
+  list = FEL_Pop(fel);
+  FEL_GenerateAndAddDepartures(fel, list, 0);
+  Server_AddTask(server, list);
 
-  
-  tail = FEL_Pop(fel);
-  printf("\nPOP3==============\n");
   ListNode_PrintList(fel->EventList,"FEL");
-  ListNode_PrintList(tail, "Popped data");
+  Server_PrintState(server);
+  scanf("%d", NULL);
+  
+  printf("\nPOP2==============\n");
+  list2 = FEL_Pop(fel); 
+  FEL_GenerateAndAddDepartures(fel, list2, 0);
+  Server_AddTask(server,list2);
+
+  ListNode_PrintList(fel->EventList,"FEL");
+  Server_PrintState(server);
+  scanf("%d", NULL);
+  
+ // tail = FEL_Pop(fel);
+ // printf("\nPOP3==============\n");
+ // ListNode_PrintList(fel->EventList,"FEL");
+ // ListNode_PrintList(tail, "Popped data");
+
+
 
   printf("Ending Test\n\n");
 

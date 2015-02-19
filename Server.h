@@ -36,6 +36,9 @@ void Server_RemoveTask(Server* server, Event* event);
 //Remove a subtask from a server correspoding to the departure given
 void Server_RemoveSubTask(Server* server, ListNode* departure);
 
+//Print the content of the server and the number of available processors 
+void Server_PrintState(Server* server);
+
 
 
 #endif /* SERVER_INCLUDED */
