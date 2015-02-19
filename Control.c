@@ -180,6 +180,7 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
   //Cleanup
   fclose(file);
 
+
   return fel;
 }
 
