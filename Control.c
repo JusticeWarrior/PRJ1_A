@@ -17,7 +17,7 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
   int i;
 
   //Initialize the FEL EventList
-  event = FEL_GenerateRandomArrival(fel, 0, prevTime0);
+  /*event = FEL_GenerateRandomArrival(fel, 0, prevTime0);
   zeroList = ListNode_Create(event);
   zeroListTail = zeroList;
 
@@ -43,7 +43,7 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
 
   
   zeroList = ListNode_MergeSortedLists(zeroList, oneList, ListNode_CompEventTimePriority);
-  FEL_Append(fel, zeroList);
+  FEL_Append(fel, zeroList);*/
 
   return fel;
 }

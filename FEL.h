@@ -12,6 +12,8 @@ typedef struct FEL_st FEL;
 #include <stdlib.h>
 #include <time.h>
 
+#define MAX_SUBTASKS 32
+
 struct FEL_st{
   //The number of people that have arrived in each priority queue
   int* NumberArrivals;
@@ -32,7 +34,7 @@ void FEL_Destroy(FEL* FutureEvents);
 
 
 //Randomly generate the arrival of a new subtask.  Its task will be NULL.
-ListNode* FEL_GenerateRandomSubTask(FEL* futureEvents, int  priority, int previousTime);
+ListNode* FEL_GenerateRandomSubTask(FEL* futureEvents, int  priority, int arrivalTime);
 
 //Generate a list of subtasks of random length and random durations
 ListNode* FEL_GenerateRandomTask(FEL* fel, int priority, int previousTime);
