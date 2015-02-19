@@ -219,7 +219,12 @@ Output* Control_Run(FEL* fel)
       simData -> WaitingTime[0] += deltaTime * queue0->NumTasks; 
       simData -> WaitingTime[1] += deltaTime * queue1->NumTasks; 
       simData -> CPUTime += deltaTime*(server->Processors - server->Available);
-      //printf("DeltaT: %4d, Used cores: %4d\n", deltaTime, server->Processors - server->Available);
+      if(deltaTime!=0)
+      {
+        printf("DeltaT: %4d, Used cores: %4d, Cumulative: %4d\n", deltaTime, server->Processors - server->Available, simData->CPUTime);
+        printf("Queue 0: %4d, Queue1:%4d\n\n",queue0->Count, queue1->Count);
+      }
+      
       
       //Now that statistics have been collected, it is safe to advance the time
       simData -> CurrentTime += deltaTime;
@@ -232,7 +237,6 @@ Output* Control_Run(FEL* fel)
 
         //Add Arrival to correct queue
         Queue_SortTask(queue0, queue1, event);
-  irintf("SUBTASKTOTAL:%f\n",cumuDuration);
       }
       if(event->Event->Type == DEPARTURE)
       {
