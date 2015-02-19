@@ -1,12 +1,12 @@
 #include "Control.h"
 #define BUFFER_LEN 1000
   
-FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTasks)
+FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTasks, float* loadBalancingFactor)
 {
   FEL* fel = FEL_Create(numTasks, numTasks, mu, lambda0, lambda1);
   ListNode* newNode;
 
-  int loadBalancingFactor = 0;
+  float lbf = 0; //cumulative load balancing factor
 
   ListNode* zeroList; //A list of all of the zero arrivals
   ListNode* oneList;  //A list of all of the one arrivals
@@ -22,6 +22,7 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
   zeroList = FEL_GenerateRandomTask(fel, 0, prevTime0);
   zeroListTail = ListNode_AppendTail(zeroList, NULL); //Find tail of list 
   prevTime0 = zeroList->Event->Time;
+  lbf += (zeroList->Event->Task->MaxDuration - zeroList->Event->Task->MinDuration)*fel->Mu;
   /*event = FEL_GenerateRandomArrival(fel, 0, prevTime0);
   zeroList = ListNode_Create(event);
   zeroListTail = zeroList;*/
@@ -29,6 +30,7 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
   oneList = FEL_GenerateRandomTask(fel, 1, prevTime1);
   oneListTail = ListNode_AppendTail(oneList, NULL); //Find tail of list 
   prevTime1 = oneList->Event->Time;
+  lbf += (oneList->Event->Task->MaxDuration - oneList->Event->Task->MinDuration)*fel->Mu;
   /*event = FEL_GenerateRandomArrival(fel, 1, prevTime1);
   oneList = ListNode_Create(event);
   oneListTail = oneList;*/
@@ -39,6 +41,7 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
     newNode = FEL_GenerateRandomTask(fel,0,prevTime0);
     zeroListTail = ListNode_AppendTail(newNode, zeroListTail);
     prevTime0 = newNode->Event->Time;
+    lbf += (newNode->Event->Task->MaxDuration - newNode->Event->Task->MinDuration)*fel->Mu;
 
     /*event = FEL_GenerateRandomArrival(fel,0,prevTime0);
     newNode = ListNode_Create(event);
@@ -49,6 +52,7 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
     newNode = FEL_GenerateRandomTask(fel,1,prevTime1);
     oneListTail = ListNode_AppendTail(newNode, oneListTail);
     prevTime1 = newNode->Event->Time;
+    lbf += (newNode->Event->Task->MaxDuration - newNode->Event->Task->MinDuration)*fel->Mu;
 
     /*event = FEL_GenerateRandomArrival(fel,1,prevTime1);
     newNode = ListNode_Create(event);
@@ -59,7 +63,9 @@ FEL* Control_InitializeModeOne(float lambda0, float lambda1, float mu, int numTa
   
   zeroList = ListNode_MergeSortedLists(zeroList, oneList, ListNode_CompEventTimePriority);
   FEL_Append(fel, zeroList);
-
+  
+  lbf /= numTasks*2;
+  *loadBalancingFactor = lbf;
   return fel;
 }
 

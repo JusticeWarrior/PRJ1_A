@@ -10,25 +10,9 @@
 
 int main(int argc, char** argv)
 {
-  int time=0;
-  FEL* fel = FEL_Create(2,2, 0.009, 0.01, 0.01);
-  ListNode* randTask;
-  ListNode* taskList=NULL;
-  ListNode* taskListTail=NULL;
-  randTask = FEL_GenerateRandomTask(fel, 0, time);
-  //time = randTask->Event->Time;
-
-  taskList = randTask;
-  //taskListTail = ListNode_AppendTail(randTask, taskListTail);
-
-  //randTask = FEL_GenerateRandomTask(fel, 0, time);
-  //taskListTail=ListNode_AppendTail(randTask, taskListTail);
-  
-  
-
-  ListNode_PrintList(taskList, "SubTasks");
-  printf("NumSubTasks: %d\n",randTask->Event->Task->SubTasks);
-  printf("Min Duration: %d\n",randTask->Event->Task->MinDuration);
-  printf("Max Duration: %d\n",randTask->Event->Task->MaxDuration);
+  float lbf;
+  FEL* fel = Control_InitializeModeOne(0.009, 0.01, 0.02, 2, &lbf);
+  ListNode_PrintList(fel->EventList, "SubTaskArrivals");
+  printf("Load Balancing Factor is: %f", lbf);
   return EXIT_SUCCESS;
 }
