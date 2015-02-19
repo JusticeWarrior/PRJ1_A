@@ -76,7 +76,6 @@ void Test2()
 	ListNode* testNode7 = ListNode_PopHead(testNode6);
 	ListNode* testNode8 = ListNode_PopHead(testNode7);
 	ListNode_PopHead(testNode8);
-	tail = ListNode_AppendTail(testNode8, tail);
 	tail = ListNode_AppendTail(testNode7, tail);
 	tail = ListNode_AppendTail(testNode6, tail);
 	tail = ListNode_AppendTail(testNode2, tail);
@@ -372,18 +371,16 @@ void Test8()
 
 void Test9()
 {
-	int success, success2 = TRUE;
-
 	fprintf(stdout, "\nTest 9: Scanning a Queue\n");
 
 	Task* testTask1 = Task_Create(2, 1, 10);
-	Task* testTask2 = Task_Create(1, 1, 10);
-	Task* testTask3 = Task_Create(3, 1, 10);
+	Task* testTask2 = Task_Create(3, 1, 10);
+	Task* testTask3 = Task_Create(1, 1, 10);
 	Event* testEvent1 = Event_Create(ARRIVAL, 0, 2, 4, testTask1);
 	Event* testEvent2 = Event_Create(ARRIVAL, 0, 3, 4, testTask1);
 	Event* testEvent3 = Event_Create(ARRIVAL, 0, 5, 0, testTask2);
-	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6, 0, testTask3);
-	Event* testEvent5 = Event_Create(ARRIVAL, 0, 5, 22, testTask3);
+	Event* testEvent4 = Event_Create(ARRIVAL, 0, 6, 0, testTask2);
+	Event* testEvent5 = Event_Create(ARRIVAL, 0, 5, 22, testTask2);
 	Event* testEvent6 = Event_Create(ARRIVAL, 0, 6, 1, testTask3);
 	ListNode* testNode1 = ListNode_Create(testEvent1);
 	ListNode* testNode2 = ListNode_Create(testEvent2);
@@ -398,8 +395,30 @@ void Test9()
 	Queue_Add(testQueue1, testNode4);
 	Queue_Add(testQueue1, testNode5);
 	Queue_Add(testQueue1, testNode6);
+	testQueue1->NumTasks = 3; // Since at the moment in time there is no implementation of adding to NumTasks
 
+	ListNode_PrintList(testQueue1->Head, "Queue List Before Scan");
 
+	ListNode* testNode7 = Queue_ScanQueue(testQueue1, 2);
+	ListNode_PrintList(testNode7, "First Scanned List");
+
+	ListNode* testNode8 = Queue_ScanQueue(testQueue1, 1);
+	ListNode_PrintList(testNode8, "Second Scanned List");
+
+	ListNode_PrintList(testQueue1->Head, "Queue List After Scans");
+
+	if (testQueue1->Count == 3 && testQueue1->NumTasks == 1 &&
+		testQueue1->Head == testNode3 && testQueue1->Tail == testNode5
+		&& ListNode_GetLength(testNode7) == 2 &&
+		ListNode_GetLength(testNode8) == 1)
+	{
+		fprintf(stdout, "\nSuccess\n");
+	}
+	else
+	{
+		fprintf(stdout, "\nFailure\n");
+	}
+	
 }
 
 int main(int argc, char** argv)
@@ -412,6 +431,7 @@ int main(int argc, char** argv)
 	Test6();
 	Test7();
 	Test8();
+	Test9();
 
 	return EXIT_SUCCESS;
 }

@@ -86,7 +86,7 @@ void Queue_AddTask(Queue* queue0, Queue* queue1, ListNode* task)
 // list has changed, the function will automatically update the head.
 static void Queue_RemoveNodes(ListNode* prevNode, ListNode* node, int length, ListNode** head, ListNode** tail)
 {
-	assert(!(node != NULL && length > 0)); // IF NODE IS NULL, THE LENGTH MUST BE GREATHER THAN 0!
+	assert(!(node == NULL && length > 0)); // IF NODE IS NULL, THE LENGTH MUST BE GREATHER THAN 0!
 
 	if (node == NULL) // If there is no task to elliminate, do nothing
 		return;
@@ -109,6 +109,8 @@ static void Queue_RemoveNodes(ListNode* prevNode, ListNode* node, int length, Li
 	if (prevNode == NULL)
 	{
 		*head = node->Next; // Update the head
+		node->Next = NULL; // Make the node a separate list
+		return;
 	}
 	
 	// Connect the previous node to the node after the removed list
@@ -122,7 +124,7 @@ static void Queue_RemoveNodes(ListNode* prevNode, ListNode* node, int length, Li
 // it has changed.
 static void Queue_RemoveTask(Queue* queue, ListNode* prevTask, ListNode* task, int length)
 {
-	assert(!(task != NULL && length <= 0)); // MAKE SURE THAT THE TASK LINES UP WITH THE LENGTH!
+	assert(!(task == NULL && length > 0)); // MAKE SURE THAT THE TASK LINES UP WITH THE LENGTH!
 
 	if (task == NULL) // Do nothing on empty tasks
 		return;
@@ -132,6 +134,8 @@ static void Queue_RemoveTask(Queue* queue, ListNode* prevTask, ListNode* task, i
 
 	// Decrement the number of tasks
 	queue->NumTasks--;
+	// Decrement the count of the queue
+	queue->Count -= length;
 }
 
 ListNode* Queue_ScanQueue(Queue* queue, int maxProcessors)
