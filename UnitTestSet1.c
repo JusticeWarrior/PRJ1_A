@@ -427,7 +427,7 @@ void Test9()
 
 void Test10()
 {
-	int success, success2 = TRUE;
+	int success, success2, success3 = TRUE;
 
 	fprintf(stdout, "\nTest 10: Adding Tasks To Queues\n");
 
@@ -470,20 +470,44 @@ void Test10()
 		success = FALSE;
 	}
 	if (testQueue2->Count == 3 && testQueue1->NumTasks == 1 &&
-		testQueue2->Head == testNode4 && testQueue2->Tail == testNode6)
+		testQueue2->Head == testNode5 && testQueue2->Tail == testNode4)
 	{
-		success = TRUE;
+		success2 = TRUE;
 	}
 	else
 	{
-		success = FALSE;
+		success2 = FALSE;
 	}
 
 	ListNode* testNode9 = Queue_ScanQueues(testQueue1, testQueue2, 3);
 	ListNode* testNode10 = Queue_ScanQueues(testQueue1, testQueue2, 3);
 
+	ListNode_PrintList(testNode9, "1st Time Scanning Queues");
+	ListNode_PrintList(testNode10, "2nd Time Scanning Queues");
 
+	if (ListNode_GetLength(testNode9) == 3 && ListNode_GetLength(testNode10) == 3)
+	{
+		success3 = TRUE;
+	}
+	else
+	{
+		success3 = FALSE;
+	}
 
+	if (success == TRUE && success2 == TRUE && success3 == TRUE
+		&& success3 == TRUE)
+	{
+		fprintf(stdout, "\nSuccess\n");
+	}
+	else
+	{
+		fprintf(stdout, "\nFailure\n");
+	}
+
+	Queue_Destroy(testQueue1);
+	Queue_Destroy(testQueue2);
+	ListNode_DestroyList(testNode9);
+	ListNode_DestroyList(testNode10);
 }
 
 int main(int argc, char** argv)
@@ -497,6 +521,7 @@ int main(int argc, char** argv)
 	Test7();
 	Test8();
 	Test9();
+	Test10();
 
 	return EXIT_SUCCESS;
 }
