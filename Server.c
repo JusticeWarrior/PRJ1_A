@@ -38,7 +38,7 @@ void Server_AddTask(Server* server, ListNode* task)
   if(server->SubTasks == NULL)
   {
     server-> Tail = ListNode_AppendTail(task, server->SubTasks);
-    server->SubTasks = server->Tail;
+    server->SubTasks = task;
   }
   else
   {
@@ -74,6 +74,7 @@ void Server_RemoveSubTask(Server* server, ListNode* departure)
   }
   server-> SubTasks = Server_RemoveNode(server->SubTasks, prev, node);
   ListNode_DestroyList(node);
+  ListNode_DestroyList(departure);
   server -> Available++;
 }
 
@@ -88,13 +89,16 @@ void Server_PrintState(Server* server)
 
 static ListNode* Server_RemoveNode(ListNode* list, ListNode* prev, ListNode* node)
 {
+  ListNode* newList;
   if(node==NULL)
   {
     return list;
   }
   if(prev==NULL)
   {
-    return node;
+    newList = node->Next;
+    node->Next=NULL;
+    return newList;
   }
   else
   {

@@ -35,7 +35,7 @@ void FEL_Destroy(FEL* FutureEvents);
 //Scheduled to occur at t=0
 Event* FEL_GenerateRandomArrival(FEL* futureEvents, int  priority, int previousTime);
 
-
+ListNode* FEL_GenerateRandomTask(FEL* fel, int priority, int previousTime);
 
 //Generate a new departute event based off of a given arrival event
 Event* FEL_GenerateDeparture(Event* arrival, int currentTime);
