@@ -225,7 +225,6 @@ Output* Control_Run(FEL* fel)
       {
         //Collect Arrival related stats
         simData->QueueLength += queue0->NumTasks + queue1->NumTasks;
-        printf("%d, %d\n",queue0->NumTasks, queue1->NumTasks);
 
         //Add Arrival to correct queue
         Queue_SortTask(queue0, queue1, event);
@@ -259,7 +258,6 @@ Output* Control_Run(FEL* fel)
 
   wait0=SimulationData_AverageWait(simData,0,fel->NumberArrivals[0]);
   wait1=SimulationData_AverageWait(simData,1,fel->NumberArrivals[1]);
-  printf("QUEUE LENGTH: %d\n", simData->QueueLength);
   queueLength = SimulationData_AverageQueueLength(simData, fel->NumberArrivals[0] + fel->NumberArrivals[1]);
   utilization = SimulationData_Utilization(simData, server->Processors);
   balancing = fel -> LBF;
