@@ -224,12 +224,12 @@ int ListNode_CompDurTask(ListNode* node1, ListNode* node2)
 	return Event_CompDurTask(node1->Event, node2->Event);
 }
 
-void ListNode_RemoveNodes(ListNode* prevNode, ListNode* node, int length)
+ListNode* ListNode_RemoveNodes(ListNode* prevNode, ListNode* node, int length)
 {
 	assert(!(node != NULL && length > 0)); // IF NODE IS NULL, THE LENGTH MUST BE GREATHER THAN 0!
 
 	if (node == NULL)
-		return;
+		return NULL;
 
 	// Iterate through the list until the last node of the removed list is reached.
 	int i;
@@ -239,10 +239,14 @@ void ListNode_RemoveNodes(ListNode* prevNode, ListNode* node, int length)
 		node = node->Next;
 	}
 
-	// If the node provided is not the first node of the list and the current
-	// position of the node is not the last element of the list.
-	if (prevNode != NULL && node->Next != NULL)
+	if (node->Next == NULL) // The previous node is the new tail of the list.
+		return prevNode;
+
+	// If the node provided is not the first node of the list.
+	if (prevNode != NULL)
 		prevNode->Next = node->Next; // Connect it to the node after the removed list
 
 	node->Next = NULL; // Make the node a separate list
+
+	return NULL;
 }

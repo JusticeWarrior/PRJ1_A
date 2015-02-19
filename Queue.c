@@ -1,6 +1,6 @@
 #include "Queue.h"
 
-static void Queue_RemoveTask(ListNode* task, int length);
+static void Queue_RemoveTask(Queue* queue, ListNode* prevTask, ListNode* task, int length);
 
 Queue* Queue_Create(int priority)
 {
@@ -81,14 +81,24 @@ void Queue_AddTask(Queue* queue0, Queue* queue1, ListNode* task)
 
 // This function will remove an entire task from the queue based
 // on the length of the task
-static void Queue_RemoveTask(ListNode* task, int length)
+static void Queue_RemoveTask(Queue* queue, ListNode* prevTask, ListNode* task, int length)
 {
-	int i;
-	for (i = 1; i < length; i++)
-	{
-		task = task->Next;
-	}
+	assert(!(task != NULL && length <= 0)); // MAKE SURE THAT THE TASK LINES UP WITH THE LENGTH!
 
+	if (task == NULL)
+		return;
+
+	// Detach the task from the queue.
+	ListNode* tail = ListNode_RemoveNodes(prevTask, task, length);
+	
+	// If the tail has changed, then update it
+	if (tail != NULL)
+	{
+		queue->Tail = tail;
+	}
+	// 
+	queue->NumTasks--;
+	
 	// CALL REMOVE FROM LIST FUNCTION HERE!!
 }
 
