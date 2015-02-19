@@ -64,12 +64,10 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
 {
   FILE* file = fopen(filename, "rb");
   FEL* fel;
-  Event* event;
   
   //Keep track of the number of each priority that have arrived
   int arrivals0 = 0;
   int arrivals1 = 0;
-  float lbf=0;      //Load balancing factor
   float cumuDuration=0; //Cumulative duration of all subtasks
   float cumuMax=0;      //Cumulative max duration of all tasks
   float cumuMin=0;      //Cumulative min duration of all tasks
@@ -196,7 +194,6 @@ Output* Control_Run(FEL* fel)
   //Initialize other variables
   int iterateInput=1;
   ListNode* event;
-  ListNode* departure;
   ListNode* node;
   int deltaTime;
   //int cumulativeTime;
@@ -228,6 +225,7 @@ Output* Control_Run(FEL* fel)
       {
         //Collect Arrival related stats
         simData->QueueLength += queue0->NumTasks + queue1->NumTasks;
+        printf("%d, %d\n",queue0->NumTasks, queue1->NumTasks);
 
         //Add Arrival to correct queue
         Queue_SortTask(queue0, queue1, event);
@@ -242,13 +240,6 @@ Output* Control_Run(FEL* fel)
     do
     {
       node = Queue_ScanQueues(queue0, queue1, server->Available);
-      if(node!=NULL)
-      {
-        //ListNode_PrintList(node,"\n\n");
-        //printf("SubTasks:%d\n",node->Event->Task->SubTasks);
-
-        //ListNode_PrintList(server->SubTasks, "\nServer");
-      }
 
       if(node != NULL)
       {
@@ -268,6 +259,7 @@ Output* Control_Run(FEL* fel)
 
   wait0=SimulationData_AverageWait(simData,0,fel->NumberArrivals[0]);
   wait1=SimulationData_AverageWait(simData,1,fel->NumberArrivals[1]);
+  printf("QUEUE LENGTH: %d\n", simData->QueueLength);
   queueLength = SimulationData_AverageQueueLength(simData, fel->NumberArrivals[0] + fel->NumberArrivals[1]);
   utilization = SimulationData_Utilization(simData, server->Processors);
   balancing = fel -> LBF;

@@ -94,7 +94,7 @@ static void Queue_AddTask(Queue* queue, ListNode* task)
 	queue->Count += ListNode_GetLength(task);
 
 	// Update the number of tasks
-	queue->NumTasks++;
+	queue -> NumTasks++;
 
 	// Append the task list and update tail
 	queue->Tail = ListNode_AppendTail(task, queue->Tail);
@@ -161,7 +161,7 @@ static void Queue_RemoveTask(Queue* queue, ListNode* prevTask, ListNode* task, i
 	Queue_RemoveNodes(prevTask, task, length, &queue->Head, &queue->Tail);
 
 	// Decrement the number of tasks
-	queue->NumTasks--;
+	queue -> NumTasks--;
 	// Decrement the count of the queue
 	queue->Count -= length;
 }

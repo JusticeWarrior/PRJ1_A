@@ -65,15 +65,6 @@ void Server_RemoveTask(Server* server, Event* event)
 
 void Server_RemoveSubTask(Server* server, ListNode* departure)
 {
-  printf("\nAvailable: %d\n",server->Available);
-  ListNode_PrintList(server->SubTasks,"========SERVERSTATUS========");
-  if(server->Processors-server->Available != ListNode_GetLength(server->SubTasks))
-  {
-    //printf("Going to break\n")
-    //ListNode_PrintList(departure, "Departure");
-    //ListNode_PrintList(server->SubTasks, "Server");
-    //assert(0);
-  }
   assert(server->SubTasks!=NULL);
   assert(departure!=NULL);
   ListNode* node = server -> SubTasks;
