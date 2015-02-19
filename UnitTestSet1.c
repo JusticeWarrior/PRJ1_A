@@ -419,6 +419,7 @@ void Test9()
 		fprintf(stdout, "\nFailure\n");
 	}
 	
+	Queue_Destroy(testQueue1);
 }
 
 int main(int argc, char** argv)
