@@ -68,6 +68,7 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
   //Keep track of the number of each priority that have arrived
   int arrivals0 = 0;
   int arrivals1 = 0;
+  int subTaskTotal=0;
   float cumuDuration=0; //Cumulative duration of all subtasks
   float cumuMax=0;      //Cumulative max duration of all tasks
   float cumuMin=0;      //Cumulative min duration of all tasks
@@ -111,7 +112,8 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
     //Collect statistics
     task->MinDuration = duration;
     task->MaxDuration = duration;
-    cumuDuration += duration; 
+    cumuDuration += duration;
+    subTaskTotal++;
     task -> SubTasks++;
 
 
@@ -124,7 +126,8 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
       taskTail = taskTail->Next;
       
       //Collect statistics
-      cumuDuration = duration;
+      cumuDuration += duration;
+      subTaskTotal++;
       if(duration > task->MaxDuration)
         task->MaxDuration = duration;
       if(duration < task->MinDuration)
@@ -172,7 +175,7 @@ FEL* Control_InitializeModeTwo(const char* filename, int* lineNumber)
   FEL_Append(fel, zeroListHead);  
   fel -> NumberArrivals[0] = arrivals0;
   fel -> NumberArrivals[1] = arrivals1;
-  fel -> LBF = (cumuMax-cumuMin)/(cumuDuration)/(arrivals0+arrivals1);
+  fel -> LBF = (cumuMax-cumuMin)/(cumuDuration/subTaskTotal)/(arrivals0+arrivals1);
 
   //Cleanup
   fclose(file);
@@ -216,6 +219,7 @@ Output* Control_Run(FEL* fel)
       simData -> WaitingTime[0] += deltaTime * queue0->NumTasks; 
       simData -> WaitingTime[1] += deltaTime * queue1->NumTasks; 
       simData -> CPUTime += deltaTime*(server->Processors - server->Available);
+      //printf("DeltaT: %4d, Used cores: %4d\n", deltaTime, server->Processors - server->Available);
       
       //Now that statistics have been collected, it is safe to advance the time
       simData -> CurrentTime += deltaTime;
@@ -228,6 +232,7 @@ Output* Control_Run(FEL* fel)
 
         //Add Arrival to correct queue
         Queue_SortTask(queue0, queue1, event);
+  irintf("SUBTASKTOTAL:%f\n",cumuDuration);
       }
       if(event->Event->Type == DEPARTURE)
       {
